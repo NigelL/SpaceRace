@@ -1,16 +1,21 @@
 #include "GameScene.h"
 
 
+Water* curWater = new Water();
 
 GameScene::GameScene()
 {
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
-	meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Test", Color(1, 0, 0), 2, 2, 2),Vector3(0,0,0), Vector3(0, 0, 0), Vector3(10, 1, 1)));
+	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
+
+	curWater->waterMesh = curMesh;
+	meshList.push_back(new GameObject(curMesh,Vector3(-25,-5.0f,25), Vector3(180, 0, 0), Vector3(1, 1, 1)));
 }
 
 GameScene::~GameScene()
 {
+
 }
 static inline float DegreeToRadian(float value)
 {
@@ -332,7 +337,8 @@ static double bounceTime = 0.0;
 
 void GameScene::Update(double dt)
 {
-	
+	curWater->UpdateWater(10, dt);
+
 	short int multipler = 1;
 	//Camera Logic
 	camera.Update((float)dt);
@@ -344,7 +350,7 @@ void GameScene::Update(double dt)
 
 
 	
-	
+
 	if (Application::IsKeyPressed(VK_NUMPAD1)) {
 		glEnable(GL_CULL_FACE);
 	}
@@ -676,6 +682,7 @@ void GameScene::Render()
 
 	*/
 
+
 	//Render Floor
 	/*
 	modelStack.PushMatrix();
@@ -698,11 +705,15 @@ void GameScene::Render()
 		
 		modelStack.PushMatrix();
 		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);		
+
+		modelStack.PushMatrix();
+		modelStack.Rotate(meshList[i]->GetRotation().Length(),meshList[i]->GetRotation().x / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().y / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().z / meshList[i]->GetRotation().Length());
 		modelStack.PushMatrix();
 		modelStack.Scale(meshList[i]->GetScale().x, meshList[i]->GetScale().y, meshList[i]->GetScale().z);
 
-		RenderMesh(meshList[i], true);
+		RenderMesh(meshList[i], false);
 		
+		modelStack.PopMatrix();
 		modelStack.PopMatrix();
 		modelStack.PopMatrix();
 	}

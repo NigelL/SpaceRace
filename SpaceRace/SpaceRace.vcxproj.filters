@@ -13,30 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{e7758495-c432-49bf-80d8-881091201c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\window">
+      <UniqueIdentifier>{58c1e24a-e16c-4b41-9e4b-f73056cfb703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\camera">
+      <UniqueIdentifier>{b4b15e33-3a36-4614-baf5-edb1f619d3b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\load">
+      <UniqueIdentifier>{30431daf-ba5d-4c96-9c66-fe8d48e137bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\material">
+      <UniqueIdentifier>{485a782c-a0ab-4a68-ab78-c9e8d2c70631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\scenes">
+      <UniqueIdentifier>{d4d284e7-2e77-4239-9901-7e784a6b6b00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadOBJ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadTGA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
@@ -45,42 +45,39 @@
     <ClCompile Include="Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shader.cpp">
+    <ClCompile Include="MeshBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MeshBuilder.cpp">
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\src\window</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera2.cpp">
+      <Filter>Source Files\src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadOBJ.cpp">
+      <Filter>Source Files\src\load</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadTGA.cpp">
+      <Filter>Source Files\src\load</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>Source Files\src\material</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files\src\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Water.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadOBJ.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadTGA.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -89,11 +86,38 @@
     <ClInclude Include="Utility.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="shader.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="MeshBuilder.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files\src\window</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera2.h">
+      <Filter>Source Files\src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadTGA.h">
+      <Filter>Source Files\src\load</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadOBJ.h">
+      <Filter>Source Files\src\load</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Source Files\src\material</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.hpp">
+      <Filter>Source Files\src\material</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Source Files\src\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source Files\src\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Water.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

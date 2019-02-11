@@ -128,6 +128,7 @@
     <ClCompile Include="MeshBuilder.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="Water.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Water.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

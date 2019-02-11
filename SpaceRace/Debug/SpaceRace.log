@@ -1,3 +1,4 @@
 ﻿  GameScene.cpp
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(340): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.exe
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

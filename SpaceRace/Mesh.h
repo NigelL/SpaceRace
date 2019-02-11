@@ -30,7 +30,10 @@ public:
 	~Mesh();
 	void Render();
 	void Render(unsigned offset, unsigned count);
+	void UpdateVertices();
+	
 
+	std::vector<Vertex> allVertices;
 	Mesh& operator=(const Mesh& curMesh);
 
 	std::string name;

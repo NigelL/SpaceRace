@@ -8,6 +8,7 @@ class GameObject
 {
 private:
 	Vector3 position,rotation,scale;
+
 	Mesh* curObject;
 public:
 	inline Mesh* GetMesh() const {

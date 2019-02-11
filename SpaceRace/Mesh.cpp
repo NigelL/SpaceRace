@@ -107,6 +107,16 @@ void Mesh::Render()
 
 }
 
+void Mesh::UpdateVertices() {
+	
+	
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, allVertices.size() * sizeof(Vertex),
+		&allVertices[0], GL_STATIC_DRAW);
+}
+
+
 Mesh& Mesh::operator=(const Mesh& other) {
 	if (this != &other) {
 
