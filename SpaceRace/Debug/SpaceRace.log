@@ -1,3 +1,4 @@
 ﻿  GameScene.cpp
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.exe
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(7): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

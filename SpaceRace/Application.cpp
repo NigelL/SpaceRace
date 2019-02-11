@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "Scene.h";
 #include "GameScene.h"
+#include "GameSound.h"
 
 
 GLFWwindow* m_window;

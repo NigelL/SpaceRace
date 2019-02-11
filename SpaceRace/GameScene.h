@@ -16,6 +16,7 @@
 #include "shader.hpp"
 #include "Utility.h"
 #include "Mtx44.h"
+#include "GameSound.h"
 
 #include "LoadTGA.h"
 #include "Application.h"

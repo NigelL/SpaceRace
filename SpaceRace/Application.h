@@ -9,6 +9,8 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "timer.h"
 
 

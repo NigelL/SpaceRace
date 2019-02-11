@@ -4,9 +4,23 @@
 
 GameScene::GameScene()
 {
+	srand(time(0));
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
-	meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Test", Color(1, 0, 0), 2, 2, 2),Vector3(0,0,0), Vector3(0, 0, 0), Vector3(10, 1, 1)));
+	
+
+
+	meshList.push_back(new GameObject(MeshBuilder::GenerateQuad("Floor", Color(0, 1, 0), 2, 2), Vector3(2, 2, 2), Vector3(0, 90, 0), Vector3(10, 5, 5)));
+
+	//for (int numberofislands = 0; numberofislands < 5; numberofislands++)
+	//{
+	//	int islandx = rand() % 5 + 1;
+	//	int islandy = rand() % 5 + 1;
+	//	int islandposx = rand() % 5 + 1;
+	//	int islandposy = rand() % 5 + 1;
+	//	meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Islands", Color(0, 1, 0), islandx, islandy, 2), Vector3(islandposx, islandposy, 0), Vector3(90, 0, 0), Vector3(50, 1, 1)));
+	//}
+	//meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Islands", Color(COLOR), STARTING POSITION OF OBJ), Vector3(POSITION), Vector3(ROTATION), Vector3(SCALE)));
 }
 
 GameScene::~GameScene()
@@ -134,10 +148,11 @@ void GameScene::Init()
 {	
 	//Camera Init
 	camera.Init(Vector3(10, 20, 0),Vector3(0, 0, 0), Vector3(0, 1, 0));
-	
 
-	
-	
+
+	GameSound::instance()->GameBGM->setDefaultVolume(0.8f);
+	GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
+
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -341,8 +356,6 @@ void GameScene::Update(double dt)
 	sceneFPS = 1.0f / (float)dt;
 	double mouseX, mouseY;
 	Application::GetMousePos(mouseX, mouseY);
-
-
 	
 	
 	if (Application::IsKeyPressed(VK_NUMPAD1)) {
@@ -697,30 +710,22 @@ void GameScene::Render()
 	for (int i = 0; i < (int)meshList.size(); i++) {
 		
 		modelStack.PushMatrix();
-		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);		
+		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);	
+
+		modelStack.PushMatrix();
+		modelStack.Rotate(meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().x, meshList[i]->GetRotation().y, meshList[i]->GetRotation().z);
 		modelStack.PushMatrix();
 		modelStack.Scale(meshList[i]->GetScale().x, meshList[i]->GetScale().y, meshList[i]->GetScale().z);
 
-		RenderMesh(meshList[i], true);
+		RenderMesh(meshList[i], false);
 		
+		modelStack.PopMatrix();
 		modelStack.PopMatrix();
 		modelStack.PopMatrix();
 	}
 
-
-
-	
-	
-
-	std::string uiText = "Gold :";
-	RenderTextOnScreen(gameText, uiText, Color(0, 1, 0), 50, 10, 28);
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
 
-	
-
-
-
-	
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(0, 5, 0);

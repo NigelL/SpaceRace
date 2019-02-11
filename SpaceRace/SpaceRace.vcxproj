@@ -76,10 +76,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Common\Source;$(SolutionDir)glfw\include;$(SolutionDir)glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Common\Source;$(SolutionDir)glfw\include;$(SolutionDir)glew\include;$(SolutionDir)SpaceRace\irrklang\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;winmm.lib;Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32.lib;opengl32.lib;winmm.lib;Common.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)SpaceRace\irrklang\lib\Win32-visualStudio;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,6 +122,7 @@
     <ClCompile Include="Camera2.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="LoadOBJ.cpp" />
     <ClCompile Include="LoadTGA.cpp" />
     <ClCompile Include="main.cpp" />
@@ -135,6 +137,7 @@
     <ClInclude Include="Camera2.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameSound.h" />
     <ClInclude Include="LoadOBJ.h" />
     <ClInclude Include="LoadTGA.h" />
     <ClInclude Include="Material.h" />

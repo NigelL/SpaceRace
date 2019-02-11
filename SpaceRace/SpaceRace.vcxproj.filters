@@ -51,6 +51,9 @@
     <ClCompile Include="MeshBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameSound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="MeshBuilder.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSound.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
