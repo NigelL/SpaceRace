@@ -15,6 +15,7 @@ void Camera2::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->position = defaultPosition = pos;
 	this->target = defaultTarget = target;
 	Vector3 view = (target - position).Normalized();
+	position = -view * 100.0f;
 	Vector3 right = view.Cross(up);
 	right.y = 0;
 	right.Normalize();
@@ -30,21 +31,21 @@ void Camera2::Update(double dt)
 	
 	
 	
-		if (Application::IsKeyPressed('A') && position.z <= 32.5f) {
+		if (Application::IsKeyPressed('A') && position.z <= 100.0f) {
 			
 			position = position - right * (float)dt;
 			target = position + view;
 		}
-		if (Application::IsKeyPressed('D') && position.z >= -32.5f) {
+		if (Application::IsKeyPressed('D') && position.z >= -100.0f) {
 			position = position + right * (float)dt;
 			target = position + view;
 			
 		}
-		if (Application::IsKeyPressed('W') && position.x >= -20.0f) {
+		if (Application::IsKeyPressed('W') && position.x >= -100.0f) {
 			position = position - Vector3(20.0f, 0, 0) * (float)dt;
 			target = position + view;
 		}
-		if (Application::IsKeyPressed('S') && position.x <= 20.0f) {
+		if (Application::IsKeyPressed('S') && position.x <= 100.0f) {
 			position = position + Vector3(20.0f, 0, 0) * (float)dt;
 			target = position + view;			
 		}

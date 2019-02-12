@@ -1,17 +1,26 @@
 #include "GameScene.h"
 
-
 Water* curWater = new Water();
+
+
 
 GameScene::GameScene()
 {
 	srand(time(0));
+
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
+
 	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
 	curMesh->textureID = LoadTGA("Image//Water.tga");
-	curWater->waterMesh = curMesh;
-	meshList.push_back(new GameObject(curMesh,Vector3(-25,-5.0f,25), Vector3(180, 0, 0), Vector3(1, 1, 1)));
+
+	curMesh->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	curMesh->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
+	curMesh->material.kShininess = 1.0f;
+	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
+	
+	curWater->waterMesh = curMesh;	
+	meshList.push_back(new GameObject(curMesh,Vector3(-50,-5.0f,50),180, Vector3(1, 0, 0), Vector3(1, 1, 1)));
 	
 
 
@@ -258,7 +267,7 @@ void GameScene::Init()
 
 	light[0].type = Light::LIGHT_POINT;
 	light[0].position.Set(-16, 2, 0.5);
-	light[0].color.Set(1, 0, 0);
+	light[0].color.Set(1, 1, 1);
 	light[0].power = 0.5f;
 	light[0].kC = 1.0f;
 	light[0].kL = 0.01f;
@@ -721,13 +730,13 @@ void GameScene::Render()
 		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);		
 
 		modelStack.PushMatrix();
-		modelStack.Rotate(meshList[i]->GetRotation().Length(),meshList[i]->GetRotation().x / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().y / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().z / meshList[i]->GetRotation().Length());
+		modelStack.Rotate(meshList[i]->GetAmt(),meshList[i]->GetRotation().x / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().y / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().z / meshList[i]->GetRotation().Length());
 		
 
 		modelStack.PushMatrix();
 		modelStack.Scale(meshList[i]->GetScale().x, meshList[i]->GetScale().y, meshList[i]->GetScale().z);
 
-		RenderMesh(meshList[i], false);
+		RenderMesh(meshList[i], true);
 		
 		modelStack.PopMatrix();
 		modelStack.PopMatrix();

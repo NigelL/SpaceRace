@@ -16,13 +16,13 @@ float Deg2Rad(float curDeg) {
 void Water::UpdateWater(int lengthX,float dt) {
 	if (slowDelay <= 0) {
 		for (int i = 0; i < waterMesh->allVertices.size(); i++) {
-			curDeg += (15.0f * dt);
+			curDeg += ((rand() % 15) * dt);
 			if (curDeg >= 720.0f) { curDeg = 0.0f; }
-			waterMesh->allVertices[i].pos.Set(waterMesh->allVertices[i].pos.x, sin(Deg2Rad(curDeg)), waterMesh->allVertices[i].pos.z);
+			waterMesh->allVertices[i].pos.Set(waterMesh->allVertices[i].pos.x, waterMesh->allVertices[i].pos.y + sin(Deg2Rad(curDeg)), waterMesh->allVertices[i].pos.z);
 		}
 		
 		waterMesh->UpdateVertices();
-		slowDelay = 0.1f;
+		slowDelay = 0.25f;
 	}
 	else {
 		slowDelay -= 2.5f * dt;		

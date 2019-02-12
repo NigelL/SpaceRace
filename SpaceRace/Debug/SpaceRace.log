@@ -1,3 +1,4 @@
-﻿  GameSound.cpp
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(356,5): error MSB6003: The specified task executable "CL.exe" could not be run. The requested operation cannot be performed on a file with a user-mapped section open.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(356,5): error MSB6003: 
+﻿  Water.cpp
+d:\users\l533\desktop\cgp\spacerace\spacerace\water.cpp(18): warning C4018: '<': signed/unsigned mismatch
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.exe
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

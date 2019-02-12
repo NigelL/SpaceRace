@@ -7,6 +7,7 @@
 class GameObject
 {
 private:
+	float amt;
 	Vector3 position,rotation,scale;
 
 	Mesh* curObject;
@@ -23,11 +24,25 @@ public:
 	inline Vector3 GetScale() const {
 		return scale;
 	}
-
+	inline void SetPosition(Vector3 pos) {
+		position = pos;
+	}
+	inline void SetRotation(Vector3 rot) {
+		rotation = rot;
+	}
+	inline void SetScale(Vector3 scal)  {
+		scale = scal;
+	}
+	inline float GetAmt() const {
+		return amt;
+	}
+	inline void SetAmt(float _amt) {
+		amt = _amt;
+	}
 
 
 	GameObject(Mesh* _curObject);
-	GameObject(Mesh* _curObject,Vector3 _pos,Vector3 _rotation ,Vector3 _scale);
+	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
 	~GameObject();
 };
 #endif;
