@@ -40,6 +40,10 @@ public:
 		amt = _amt;
 	}
 
+	float translateX = 0;
+	float translateY = 0;
+	float translateZ = 0;
+	float rotate = 0;
 
 	GameObject(Mesh* _curObject);
 	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);

@@ -15,7 +15,7 @@ void Camera2::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->position = defaultPosition = pos;
 	this->target = defaultTarget = target;
 	Vector3 view = (target - position).Normalized();
-	position = -view * 100.0f;
+	position = -view * 10.0f;
 	Vector3 right = view.Cross(up);
 	right.y = 0;
 	right.Normalize();

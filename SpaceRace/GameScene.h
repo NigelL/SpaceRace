@@ -25,6 +25,10 @@
 #include "LoadTGA.h"
 #include "Application.h"
 
+#include <iostream>
+
+using namespace std;
+
 
 class GameScene : public Scene
 {
@@ -131,6 +135,7 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+
 };
 
 #endif

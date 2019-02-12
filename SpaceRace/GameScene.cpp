@@ -1,7 +1,7 @@
 #include "GameScene.h"
 
 Water* curWater = new Water();
-
+GameObject* Ship;
 
 
 GameScene::GameScene()
@@ -20,10 +20,19 @@ GameScene::GameScene()
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	
 	curWater->waterMesh = curMesh;	
-	meshList.push_back(new GameObject(curMesh,Vector3(-50,-5.0f,50),180, Vector3(1, 0, 0), Vector3(1, 1, 1)));
+	meshList.push_back(new GameObject(curMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
 	
+	Mesh* ship = MeshBuilder::GenerateOBJ("ship", "OBJ//ship.obj");
+	ship->textureID = LoadTGA("Image//ship.tga");
+	ship->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	ship->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
+	ship->material.kShininess = 1.0f;
+	ship->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
+	Ship = new GameObject(ship, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	meshList.push_back(Ship);
 
-
+	
+	
 	//meshList.push_back(new GameObject(MeshBuilder::GenerateQuad("Floor", Color(0, 1, 0), 2, 2), Vector3(2, 2, 2), Vector3(0, 90, 0), Vector3(10, 5, 5)));
 
 	//for (int numberofislands = 0; numberofislands < 5; numberofislands++)
@@ -41,6 +50,7 @@ GameScene::~GameScene()
 {
 
 }
+
 static inline float DegreeToRadian(float value)
 {
 	return value * 3.142f / 180.0f;
@@ -117,7 +127,6 @@ void GameScene::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 
 	glEnable(GL_DEPTH_TEST);
 }
-	
 			
 void GameScene::RenderUI(Mesh* mesh ,float size, float
 	x, float y) {
@@ -154,7 +163,6 @@ void GameScene::RenderUI(Mesh* mesh ,float size, float
 	glEnable(GL_DEPTH_TEST);
 }
 
-
 inline void GameScene::SetGameText(Mesh* curtext)  {
 	gameText = curtext;
 }
@@ -165,9 +173,8 @@ void GameScene::Init()
 	camera.Init(Vector3(10, 20, 0),Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 
-	GameSound::instance()->GameBGM->setDefaultVolume(0.8f);
-	GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
-
+	// GameSound::instance()->GameBGM->setDefaultVolume(0.8f);
+	// GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -372,7 +379,51 @@ void GameScene::Update(double dt)
 	sceneFPS = 1.0f / (float)dt;
 	double mouseX, mouseY;
 	Application::GetMousePos(mouseX, mouseY);
-	
+
+	if (Application::IsKeyPressed(VK_UP))
+	{
+		Ship->translateX = 25 * dt;
+
+		Vector3 pos;
+
+		pos.Set(Ship->GetPosition().x - Ship->translateX, Ship->GetPosition().y, Ship->GetPosition().z);
+
+		Ship->SetPosition(pos);
+	}
+	if (Application::IsKeyPressed(VK_DOWN))
+	{
+		Ship->translateX = 25 * dt;
+
+		Vector3 pos;
+
+		pos.Set(Ship->translateX + Ship->GetPosition().x, Ship->GetPosition().y, Ship->GetPosition().z);
+
+		Ship->SetPosition(pos);
+	}
+	if (Application::IsKeyPressed(VK_LEFT))
+	{
+		Ship->translateZ = 10 * dt;
+		Ship->rotate = 45 * dt;
+
+		Vector3 pos;
+		Vector3 rot;
+
+		pos.Set(Ship->GetPosition().x, Ship->GetPosition().y, Ship->translateZ + Ship->GetPosition().z);
+		rot.Set(Ship->GetRotation().x, Ship->GetRotation().y + Ship->rotate, Ship->GetRotation().z);
+
+		Ship->SetPosition(pos);
+		Ship->SetRotation(rot);
+	}
+	if (Application::IsKeyPressed(VK_RIGHT))
+	{
+		Ship->translateZ = 25 * dt;
+
+		Vector3 pos;
+
+		pos.Set(Ship->GetPosition().x, Ship->GetPosition().y, Ship->GetPosition().z - Ship->translateZ);
+
+		Ship->SetPosition(pos);
+	}
 
 	if (Application::IsKeyPressed(VK_NUMPAD1)) {
 		glEnable(GL_CULL_FACE);
