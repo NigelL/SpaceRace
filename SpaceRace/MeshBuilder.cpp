@@ -238,7 +238,7 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName,Color color, float l
 	for (int i = 0; i < lengthY + 1; i++) {
 		for (int j = 0; j < lengthX + 1; j++) {
 			v.pos.Set(j, 0, i);
-			v.texCoord.Set(j / lengthX + 1, i / lengthY + 1);
+			v.texCoord.Set((j / (lengthX + 1)), (i / (lengthY + 1)));
 			v.color.Set(color.r, color.g, color.b);			
 			vertex_buffer_data.push_back(v);
 

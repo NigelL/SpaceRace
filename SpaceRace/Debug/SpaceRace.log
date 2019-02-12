@@ -1,4 +1,3 @@
-﻿  GameScene.cpp
-d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(340): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.exe
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)
+﻿  GameSound.cpp
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(356,5): error MSB6003: The specified task executable "CL.exe" could not be run. The requested operation cannot be performed on a file with a user-mapped section open.
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(356,5): error MSB6003: 

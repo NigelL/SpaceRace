@@ -136,8 +136,6 @@ Mesh& Mesh::operator=(const Mesh& other) {
 void Mesh::Render(unsigned offset, unsigned count)
 {
 
-	
-
 	glEnableVertexAttribArray(0); // 1st attribute buffer : vertices
 	glEnableVertexAttribArray(1); // 2nd attribute buffer : colors
 	glEnableVertexAttribArray(2); // 3rd attribute : normals
