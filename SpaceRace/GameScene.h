@@ -5,7 +5,7 @@
 
 
 #include "Scene.h"
-#include "Camera3.h"
+#include "Camera2.h"
 #include "GameObject.h"
 #include "Light.h"
 #include "MatrixStack.h"
@@ -117,7 +117,7 @@ private:
 	std::vector<GameObject*> meshList;
 
 	Light light[3];
-	Camera3 camera;
+	Camera2 camera;
 
 
 	void RenderMesh(GameObject* curMesh, bool enableLight);
