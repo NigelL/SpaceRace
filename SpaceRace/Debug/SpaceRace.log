@@ -1,7 +1,7 @@
 ﻿  GameScene.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(10): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(32): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(379): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(597): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(31): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(378): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(587): warning C4305: 'argument': truncation from 'double' to 'float'
   SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.exe
   SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

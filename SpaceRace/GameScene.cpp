@@ -4,7 +4,6 @@ Water* curWater = new Water();
 GameObject* ship_01;
 GameObject* ship_02;
 
-
 GameScene::GameScene()
 {
 	srand(time(0));
@@ -15,7 +14,7 @@ GameScene::GameScene()
 	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
 	curMesh->textureID = LoadTGA("Image//Water.tga");
 
-	curMesh->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	curMesh->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
 	curMesh->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
@@ -25,19 +24,19 @@ GameScene::GameScene()
 	
 	Mesh* Ship_01 = MeshBuilder::GenerateOBJ("ship 01", "OBJ//ship.obj");
 	Ship_01->textureID = LoadTGA("Image//ship.tga");
-	Ship_01->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
-	Ship_01->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
+	Ship_01->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+	Ship_01->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Ship_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 	Ship_01->material.kShininess = 1.0f;
-	Ship_01->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
 	meshList.push_back(ship_01);
 
 	Mesh* Ship_02 = MeshBuilder::GenerateOBJ("ship 02", "OBJ//ship2.obj");
 	Ship_02->textureID = LoadTGA("Image//ship2.tga");
-	Ship_02->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
-	Ship_02->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
-	Ship_02->material.kShininess = 0.5f;
-	Ship_02->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
+	Ship_02->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+	Ship_02->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Ship_02->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+	Ship_02->material.kShininess = 1.0f;
 	ship_02 = new GameObject(Ship_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
 	meshList.push_back(ship_02);
 	
@@ -389,208 +388,199 @@ void GameScene::Update(double dt)
 
 	// ship stuff
 	Vector3 pos, rot, scale;
-	ship_01->translateX = (float)(10 * dt);
-	ship_01->translateY = (float)(10 * dt);
-	ship_01->translateZ = (float)(10 * dt);
 
+	ship_01->translateX = (float)(5 * dt);
+	ship_01->translateY = (float)(5 * dt);
+	ship_01->translateZ = (float)(5 * dt);
+
+	ship_02->translateX = (float)(15 * dt);
+	ship_02->translateY = (float)(15 * dt);
+	ship_02->translateZ = (float)(15 * dt);
+
+	// control the ship
 	if (Application::IsKeyPressed(VK_UP)) // 270
 	{
-		if (!(ship_01->GetPosition().x < -45))
+		if (!(ship_01->GetPosition().x < -45) && !(ship_01->GetPosition().x > 45) && !(ship_01->GetPosition().z < -45) && !(ship_01->GetPosition().z > 45))
 		{
-			if (ship_01->rotate >= 180 && ship_01->rotate != 270)
-			{
-				pos.Set(ship_01->GetPosition().x - ship_01->translateX, ship_01->GetPosition().y, ship_01->GetPosition().z + (ship_01->translateZ / 2));
-			}
-			else if (ship_01->rotate <= 360 && ship_01->rotate != 270)
-			{
-				pos.Set(ship_01->GetPosition().x - ship_01->translateX, ship_01->GetPosition().y, ship_01->GetPosition().z - (ship_01->translateZ / 2));
-			}
-			else
-			{
-				pos.Set(ship_01->GetPosition().x - ship_01->translateX, ship_01->GetPosition().y, ship_01->GetPosition().z);
-			}
+			float direction = DegreeToRadian(ship_01->rotate);
 
+			pos.Set(ship_01->GetPosition().x + (sin(direction) * ship_01->translateX), ship_01->GetPosition().y, ship_01->GetPosition().z + (cos(direction) * ship_01->translateZ));
 			ship_01->SetPosition(pos);
 		}
 
-		cout << endl;
-		cout << " X : " << ship_01->GetPosition().x << endl;
-		cout << " Z : " << ship_01->GetPosition().z << endl;
-		cout << " Angle : " << ship_01->rotate << endl;
-
-		if (ship_01->rotate > 0 && ship_01->rotate < 270)
+		if (Application::IsKeyPressed(VK_LEFT)) // 0
 		{
 			ship_01->rotate += (int)(2);
-		}
-		else if (ship_01->rotate == 0 || ship_01->rotate > 270)
-		{
-			if (ship_01->rotate == 0)
-			{
-				ship_01->rotate = 360;
-				ship_01->rotate -= (int)(2);
-			}
-			else
-			{
-				ship_01->rotate -= (int)(2);
-			}
-		}
-		rot.Set(0, 1, 0);
-		ship_01->SetRotation(rot, ship_01->rotate);
-	}
-	if (Application::IsKeyPressed(VK_DOWN)) // 90
-	{
-		if (!(ship_01->GetPosition().x > 45))
-		{
-			if (ship_01->rotate >= 0 && ship_01->rotate != 90)
-			{
-				pos.Set(ship_01->translateX + ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z - (ship_01->translateZ / 2));
-			}
-			else if (ship_01->rotate <= 180 && ship_01->rotate != 90)
-			{
-				pos.Set(ship_01->translateX + ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z + (ship_01->translateZ / 2));
-			}
-			else
-			{
-				pos.Set(ship_01->translateX + ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
-			}
 
-			ship_01->SetPosition(pos);
+			rot.Set(0, 1, 0);
+			ship_01->SetRotation(rot, ship_01->rotate);
 		}
-
-		if (ship_01->rotate > 90)
+		if (Application::IsKeyPressed(VK_RIGHT)) // 180
 		{
 			ship_01->rotate -= (int)(2);
+			rot.Set(0, 1, 0);
+			ship_01->SetRotation(rot, ship_01->rotate);
 		}
-		else if (ship_01->rotate < 90)
-		{
-			ship_01->rotate += (int)(2);
-		}
-		rot.Set(0, 1, 0);
-		ship_01->SetRotation(rot, ship_01->rotate);
 	}
-	if (Application::IsKeyPressed(VK_LEFT)) // 0
-	{
-		if (!(ship_01->GetPosition().z > 45))
-		{
-			if (ship_01->rotate >= 270 && ship_01->rotate !=  360)
-			{
-				pos.Set(ship_01->GetPosition().x + (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->translateZ + ship_01->GetPosition().z);
-			}
-			else if (ship_01->rotate <= 90 && ship_01->rotate != 0)
-			{
-				pos.Set(ship_01->GetPosition().x - (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->translateZ + ship_01->GetPosition().z);
-			}
-			else
-			{
-				pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->translateZ + ship_01->GetPosition().z);
-			}
-
-			ship_01->SetPosition(pos);
-		}
-
-		if (ship_01->rotate >= 270 && ship_01->rotate < 360)
-		{
-			ship_01->rotate += (int)(2);
-		}
-		else if (ship_01->rotate > 0 && ship_01->rotate < 270)
-		{
-			ship_01->rotate -= (int)(2);
-		}
-		rot.Set(0, 1, 0);
-		ship_01->SetRotation(rot, ship_01->rotate);
-	}
-	if (Application::IsKeyPressed(VK_RIGHT)) // 180
-	{
-		if (!(ship_01->GetPosition().z < -45))
-		{
-			if (ship_01->rotate >= 90 && ship_01->rotate != 180)
-			{
-				pos.Set(ship_01->GetPosition().x - (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->GetPosition().z - ship_01->translateZ);
-			}
-			else if (ship_01->rotate <= 270 && ship_01->rotate != 180)
-			{
-				pos.Set(ship_01->GetPosition().x + (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->GetPosition().z - ship_01->translateZ);
-			}
-			else
-			{
-				pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z - ship_01->translateZ);
-			}
-
-			ship_01->SetPosition(pos);
-		}
-
-		if (ship_01->rotate < 180 && ship_01->rotate >= 0)
-		{
-			ship_01->rotate += (int)(2);
-		}
-		else if (ship_01->rotate <= 270 && ship_01->rotate > 180)
-		{
-			ship_01->rotate -= (int)(2);
-		}
-		rot.Set(0, 1, 0);
-		ship_01->SetRotation(rot, ship_01->rotate);
-	}
-	if (Application::IsKeyPressed(VK_SPACE))
+	if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
 	{
 		//ship_01->scaleObject += (float)(1.5 * dt);
-		ship_01->scaleObject = 0.5;
-		scale.Set(ship_01->scaleObject, ship_01->scaleObject, ship_01->scaleObject);
-		ship_01->SetScale(scale);
+		ship_02->scaleObject = 1;
+		scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
+		ship_02->SetScale(scale);
 	}
 
-	if (Application::IsKeyPressed('F'))
-	{
-		ship_02->translateX = (float)(10 * dt);
-		if (!(ship_02->GetPosition().x < -45))
-		{
-			pos.Set(ship_02->GetPosition().x - ship_02->translateX, ship_02->GetPosition().y, ship_02->GetPosition().z);
-			ship_02->SetPosition(pos);
-		}
+	//if (Application::IsKeyPressed('F')) // 270
+	//{
+	//	if (!(ship_02->GetPosition().x < -45))
+	//	{
+	//		if (ship_02->rotate > 90 && ship_02->rotate < 270)
+	//		{
+	//			pos.Set(ship_02->GetPosition().x - ship_02->translateX, ship_02->GetPosition().y, ship_02->GetPosition().z + (ship_02->translateZ / 2));
+	//		}
+	//		else if ((ship_02->rotate < 90 && ship_02->rotate > 0) || (ship_02->rotate > 270 && ship_02->rotate < 360))
+	//		{
+	//			pos.Set(ship_02->GetPosition().x - ship_02->translateX, ship_02->GetPosition().y, ship_02->GetPosition().z - (ship_02->translateZ / 2));
+	//		}
+	//		else
+	//		{
+	//			pos.Set(ship_02->GetPosition().x - ship_02->translateX, ship_02->GetPosition().y, ship_02->GetPosition().z);
+	//		}
 
-		rot.Set(0, 1, 0);
-		ship_02->SetRotation(rot, 270);
-	}
-	if (Application::IsKeyPressed('V'))
-	{
-		ship_02->translateX = (float)(10 * dt);
-		if (!(ship_02->GetPosition().x > 45))
-		{
-			pos.Set(ship_02->translateX + ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z);
-			ship_02->SetPosition(pos);
-		}
+	//		ship_02->SetPosition(pos);
+	//	}
 
-		rot.Set(0, 1, 0);
-		ship_02->SetRotation(rot, 90);
-	}
-	if (Application::IsKeyPressed('C'))
-	{
-		ship_02->translateZ = (float)(10 * dt);
-		if (!(ship_02->GetPosition().z > 45))
-		{
-			pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->translateZ + ship_02->GetPosition().z);
-			ship_02->SetPosition(pos);
-		}
+	//	cout << endl;
+	//	cout << " Angle : " << ship_02->rotate << endl;
 
-		rot.Set(0, 1, 0);
-		ship_02->SetRotation(rot, 0);
-	}
-	if (Application::IsKeyPressed('B'))
-	{
-		ship_02->translateZ = (float)(10 * dt);
-		if (!(ship_02->GetPosition().z < -45))
-		{
-			pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z - ship_02->translateZ);
-			ship_02->SetPosition(pos);
-		}
+	//	if (ship_02->rotate >= 90 && ship_02->rotate < 270)
+	//	{
+	//		ship_02->rotate += (int)(15);
+	//	}
+	//	else if (ship_02->rotate == 0 || ship_02->rotate > 270 || (ship_02->rotate < 90 && ship_02->rotate > 0))
+	//	{
+	//		if (ship_02->rotate == 0)
+	//		{
+	//			ship_02->rotate = 360;
+	//		}
 
-		rot.Set(0, 1, 0);
-		ship_02->SetRotation(rot, 180);
-	}
+	//		ship_02->rotate -= (int)(15);
+	//	}
+	//	rot.Set(0, 1, 0);
+	//	ship_02->SetRotation(rot, ship_02->rotate);
+	//}
+	//if (Application::IsKeyPressed('V')) // 90
+	//{
+	//	if (!(ship_02->GetPosition().x > 45))
+	//	{
+	//		if ((ship_02->rotate > 270 && ship_02->rotate < 360) || (ship_02->rotate >= 0 && ship_02->rotate < 90))
+	//		{
+	//			pos.Set(ship_02->translateX + ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z + (ship_02->translateZ / 2));
+	//		}
+	//		else if (ship_02->rotate < 270 && ship_02->rotate > 90)
+	//		{
+	//			pos.Set(ship_02->translateX + ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z - (ship_02->translateZ / 2));
+	//		}
+	//		else
+	//		{
+	//			pos.Set(ship_02->translateX + ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z);
+	//		}
+
+	//		ship_02->SetPosition(pos);
+	//	}
+
+	//	cout << endl;
+	//	cout << " Angle : " << ship_02->rotate << endl;
+
+	//	if (ship_02->rotate > 90 && ship_02->rotate <= 270)
+	//	{
+	//		ship_02->rotate -= (int)(15);
+	//	}
+	//	else if (ship_02->rotate < 90 || (ship_02->rotate > 270 && ship_02->rotate <= 360))
+	//	{
+	//		if (ship_02->rotate == 360)
+	//		{
+	//			ship_02->rotate = 0;
+	//		}
+	//		ship_02->rotate += (int)(15);
+	//	}
+	//	rot.Set(0, 1, 0);
+	//	ship_02->SetRotation(rot, ship_02->rotate);
+	//}
+	//if (Application::IsKeyPressed('C')) // 0
+	//{
+	//	if (!(ship_02->GetPosition().z > 45))
+	//	{
+	//		if (ship_02->rotate > 180 && ship_02->rotate < 360)
+	//		{
+	//			pos.Set(ship_02->GetPosition().x + (ship_02->translateX / 2), ship_02->GetPosition().y, ship_02->translateZ + ship_02->GetPosition().z);
+	//		}
+	//		else if (ship_02->rotate < 180 && ship_02->rotate > 0)
+	//		{
+	//			pos.Set(ship_02->GetPosition().x - (ship_02->translateX / 2), ship_02->GetPosition().y, ship_02->translateZ + ship_02->GetPosition().z);
+	//		}
+	//		else
+	//		{
+	//			pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->translateZ + ship_02->GetPosition().z);
+	//		}
+
+	//		ship_02->SetPosition(pos);
+	//	}
+
+	//	cout << endl;
+	//	cout << " Angle : " << ship_02->rotate << endl;
+
+	//	if (ship_02->rotate > 180 && ship_02->rotate < 360)
+	//	{
+	//		ship_02->rotate += (int)(15);
+	//	}
+	//	else if (ship_02->rotate > 0 && ship_02->rotate <= 180)
+	//	{
+	//		ship_02->rotate -= (int)(15);
+	//	}
+	//	rot.Set(0, 1, 0);
+	//	ship_02->SetRotation(rot, ship_02->rotate);
+	//}
+	//if (Application::IsKeyPressed('B')) // 180
+	//{
+	//	if (!(ship_02->GetPosition().z < -45))
+	//	{
+	//		if (ship_02->rotate > 0 && ship_02->rotate < 180)
+	//		{
+	//			pos.Set(ship_02->GetPosition().x + (ship_02->translateX / 2), ship_02->GetPosition().y, ship_02->GetPosition().z - ship_02->translateZ);
+	//		}
+	//		else if (ship_02->rotate > 180 && ship_02->rotate < 360)
+	//		{
+	//			pos.Set(ship_02->GetPosition().x - (ship_02->translateX / 2), ship_02->GetPosition().y, ship_02->GetPosition().z - ship_02->translateZ);
+	//		}
+	//		else
+	//		{
+	//			pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z - ship_02->translateZ);
+	//		}
+
+	//		ship_02->SetPosition(pos);
+	//	}
+
+	//	cout << endl;
+	//	cout << " Angle : " << ship_02->rotate << endl;
+
+	//	if (ship_02->rotate < 180 && ship_02->rotate >= 0)
+	//	{
+	//		ship_02->rotate += (int)(15);
+	//	}
+	//	else if (ship_02->rotate <= 360 && ship_02->rotate > 180)
+	//	{
+	//		ship_02->rotate -= (int)(15);
+	//	}
+	//	rot.Set(0, 1, 0);
+	//	ship_02->SetRotation(rot, ship_02->rotate);
+	//}
 
 	if (Application::IsKeyPressed('R'))
 	{
 		Vector3 initial;
-		initial.Set(-2, 0, 2);
+		// ship_01
+		initial.Set(2, 0, -2);
 		ship_01->SetPosition(initial);
 		initial.Set(0, 1, 0);
 		ship_01->SetRotation(initial, 90);
@@ -602,6 +592,19 @@ void GameScene::Update(double dt)
 		ship_01->translateX = 0;
 		ship_01->translateY = 0;
 		ship_01->translateZ = 0;
+		// ship_02
+		initial.Set(-2, 0, -2);
+		ship_02->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_02->SetRotation(initial, 90);
+		initial.Set(0.25, 0.25, 0.25);
+		ship_02->SetScale(initial);
+
+		ship_02->rotate = 90;
+		ship_02->scaleObject = 0;
+		ship_02->translateX = 0;
+		ship_02->translateY = 0;
+		ship_02->translateZ = 0;
 	}
 
 
@@ -701,6 +704,7 @@ void GameScene::RenderMesh(GameObject* curType, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
+
 void GameScene::RenderMesh(GEOMETRY_TYPE curType, bool enableLight)
 {	
 	Mtx44 modelView, modelView_inverse_transpose;
@@ -745,7 +749,6 @@ void GameScene::RenderMesh(GEOMETRY_TYPE curType, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
-
 
 void GameScene::Render()
 {
@@ -843,7 +846,6 @@ void GameScene::Render()
 	
 
 	//Skybox
-	
 	/*
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -600);
@@ -944,9 +946,6 @@ void GameScene::Render()
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 	*/
-	
-	
-
 
 	for (int i = 0; i < (int)meshList.size(); i++) {
 		
