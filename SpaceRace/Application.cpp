@@ -14,6 +14,7 @@ GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 
+
 //Define an error callback
 static void error_callback(int error, const char* description)
 {
@@ -86,6 +87,7 @@ void Application::Init()
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(1920, 1440, "Test Window", NULL, NULL);
 
+
 	//If the window couldn't be created
 	if (!m_window)
 	{
@@ -133,8 +135,20 @@ void Application::Run()
 {
 	//Main Loop
 	Scene* scene = new GameScene();
+	//Scene* scene2 = scene;
+
+	//glViewport(0, 0, 1920 / 2, 1440 / 2);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
 	scene->Init();
+
+	//glViewport(1920 / 2, 1440 / 2, 1920 / 2, 1440 / 2);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//scene->Init();
+
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
+
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))

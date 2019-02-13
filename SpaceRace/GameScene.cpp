@@ -3,6 +3,9 @@
 Water* curWater = new Water();
 GameObject* ship_01;
 GameObject* ship_02;
+GameObject* pirateShip;
+GameObject* islands;
+GameObject* parts;
 
 GameScene::GameScene()
 {
@@ -39,18 +42,77 @@ GameScene::GameScene()
 	Ship_02->material.kShininess = 1.0f;
 	ship_02 = new GameObject(Ship_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
 	meshList.push_back(ship_02);
-	
-	//meshList.push_back(new GameObject(MeshBuilder::GenerateQuad("Floor", Color(0, 1, 0), 2, 2), Vector3(2, 2, 2), Vector3(0, 90, 0), Vector3(10, 5, 5)));
 
-	//for (int numberofislands = 0; numberofislands < 5; numberofislands++)
-	//{
-	//	int islandx = rand() % 5 + 1;
-	//	int islandy = rand() % 5 + 1;
-	//	int islandposx = rand() % 5 + 1;
-	//	int islandposy = rand() % 5 + 1;
-	//	meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Islands", Color(0, 1, 0), islandx, islandy, 2), Vector3(islandposx, islandposy, 0), Vector3(90, 0, 0), Vector3(50, 1, 1)));
-	//}
-	//meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Islands", Color(COLOR), STARTING POSITION OF OBJ), Vector3(POSITION), Vector3(ROTATION), Vector3(SCALE)));
+
+	Mesh* PirateShip = MeshBuilder::GenerateOBJ("PShip", "OBJ//PirateShip.obj");
+	PirateShip->textureID = LoadTGA("Image//PirateShipTexture.tga");
+	PirateShip->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	PirateShip->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	PirateShip->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	PirateShip->material.kShininess = 1.0f;
+	pirateShip = new GameObject(PirateShip, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	meshList.push_back(pirateShip);
+
+	Mesh* Islands = MeshBuilder::GenerateOBJ("Islands", "OBJ//Island.obj");
+	Islands->textureID = LoadTGA("Image//IslandTextures.tga");
+	Islands->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	Islands->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Islands->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	Islands->material.kShininess = 1.0f;
+
+	Mesh* Parts = MeshBuilder::GenerateOBJ("Parts", "OBJ//Parts.obj");
+	Parts->textureID = LoadTGA("Image//PartsTexture.tga");
+	Parts->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	Parts->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Parts->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	Parts->material.kShininess = 1.0f;
+
+	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
+
+
+	for (int numberofislands = 0; numberofislands < 18; numberofislands++)
+	{
+		bool overlaps = false;
+		islandposx = rand() % 100 + (-50);
+		islandposz = rand() % 100 + (-50);
+		islandposxA[numberofislands] = islandposx;
+		islandposzA[numberofislands] = islandposz;
+
+		// To prevent islands from overlapping
+		for (int islands = 0; islands < numberofislands + 1; islands++)
+		{
+			// So that it won't check the same island as itself
+			if (islands == numberofislands) { continue; }
+
+			// Check all four directions to see if the island will land in them
+			if ((islandposx <= islandposxA[islands] + 10 && islandposx >= islandposxA[islands] - 10 && islandposz <= islandposzA[islands] + 10 && islandposz >= islandposzA[islands] - 10) /* && not equal to the starting points of the ships*/)
+			{
+				// If overlaps, the boolean will become true, not printing out a an island
+				overlaps = true;
+				numberofislands--;
+				break;
+			}
+		}
+
+
+		// If it doesn't overlap, overlaps is still fase, and will print out an island
+		if (overlaps == false)
+		{
+			if (numberofislands <= 8)
+			{
+				islands = new GameObject(Islands, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				meshList.push_back(islands);
+			}
+			else
+			{
+				parts = new GameObject(Parts, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				meshList.push_back(parts);
+			}
+
+			std::cout << "Island Overlapped, making a new one..." << std::endl;
+		}
+
+	}
 }
 
 GameScene::~GameScene()
@@ -180,8 +242,8 @@ void GameScene::Init()
 	camera.Init(Vector3(10, 20, 0),Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 
-	// GameSound::instance()->GameBGM->setDefaultVolume(0.8f);
-	// GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
+	GameSound::instance()->GameBGM->setDefaultVolume(0.1f);
+	GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);

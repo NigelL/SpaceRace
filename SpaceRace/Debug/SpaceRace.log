@@ -1,7 +1,4 @@
-﻿  GameScene.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(31): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(378): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(587): warning C4305: 'argument': truncation from 'double' to 'float'
-  SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.exe
-  SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)
+﻿  Application.cpp
+d:\users\l533\desktop\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)
