@@ -380,6 +380,11 @@ void GameScene::Update(double dt)
 	short int multipler = 1;
 	//Camera Logic
 	camera.Update((float)dt);
+	float yaw = DegreeToRadian(ship_01->rotate);
+	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
+	Vector3 position = ship_01->GetPosition() - direction * 3;
+	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
+	camera.SetPosition(position.x, position.y + 1, position.z);
 	
 	//Game Logic
 	sceneFPS = 1.0f / (float)dt;
@@ -841,112 +846,6 @@ void GameScene::Render()
 				&lightPosition_cameraspace.x);
 		}
 
-	
-
-	
-
-	//Skybox
-	/*
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -600);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180,1,0,0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 0, 1, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-	
-	RenderMesh(GEO_FRONT, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 600);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_BACK, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Translate(-700, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_LEFT, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(700, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 0, 1, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_RIGHT, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Translate(200, 700, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(90,1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_TOP, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-200, -700, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(90, -1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(2000, 2000, 2000);
-
-	RenderMesh(GEO_BOTTOM, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-
-	*/
-
-
-	//Render Floor
-	/*
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -1, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(50, 50, 50);
-		
-	RenderMesh(GEO_QUAD, true);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	*/
-
 	for (int i = 0; i < (int)meshList.size(); i++) {
 		
 		modelStack.PushMatrix();
@@ -966,16 +865,11 @@ void GameScene::Render()
 		modelStack.PopMatrix();
 	}
 
-	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
-
-
-	//modelStack.PushMatrix();
-	//modelStack.Translate(0, 5, 0);
-	//meshList[GEO_PIKACHUEARS]->Render();
-
-
-	//modelStack.PopMatrix();
-
+	//RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
+	float direction = DegreeToRadian(ship_01->rotate);
+	RenderTextOnScreen(gameText, "Direction : " + std::to_string(direction), Color(0, 1, 0), 30, 0, 28);
+	RenderTextOnScreen(gameText, "PosX : " + std::to_string(ship_01->GetPosition().x), Color(0, 1, 0), 30, 0, 26);
+	RenderTextOnScreen(gameText, "CamX : " + std::to_string(camera.position.x), Color(0, 1, 0), 30, 0, 24);
 
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
