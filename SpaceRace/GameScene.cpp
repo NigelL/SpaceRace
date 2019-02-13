@@ -442,7 +442,12 @@ void GameScene::Update(double dt)
 	short int multipler = 1;
 	//Camera Logic
 	camera.Update((float)dt);
-	
+	float yaw = DegreeToRadian(ship_01->rotate);
+	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
+	Vector3 position = ship_01->GetPosition() - direction * 3;
+	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
+	camera.SetPosition(position.x, position.y + 1, position.z);
+
 	//Game Logic
 	sceneFPS = 1.0f / (float)dt;
 	double mouseX, mouseY;
