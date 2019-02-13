@@ -27,8 +27,9 @@ public:
 	inline void SetPosition(Vector3 pos) {
 		position = pos;
 	}
-	inline void SetRotation(Vector3 rot) {
+	inline void SetRotation(Vector3 rot, float _amt) {
 		rotation = rot;
+		amt = _amt;
 	}
 	inline void SetScale(Vector3 scal)  {
 		scale = scal;
@@ -43,7 +44,8 @@ public:
 	float translateX = 0;
 	float translateY = 0;
 	float translateZ = 0;
-	float rotate = 0;
+	float scaleObject = 0;
+	float rotate = 90;
 
 	GameObject(Mesh* _curObject);
 	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);

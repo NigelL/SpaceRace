@@ -1,7 +1,8 @@
 #include "GameScene.h"
 
 Water* curWater = new Water();
-GameObject* Ship;
+GameObject* ship_01;
+GameObject* ship_02;
 
 
 GameScene::GameScene()
@@ -19,19 +20,26 @@ GameScene::GameScene()
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	
-	curWater->waterMesh = curMesh;	
+	curWater->waterMesh = curMesh;
 	meshList.push_back(new GameObject(curMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
 	
-	Mesh* ship = MeshBuilder::GenerateOBJ("ship", "OBJ//ship.obj");
-	ship->textureID = LoadTGA("Image//ship.tga");
-	ship->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
-	ship->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
-	ship->material.kShininess = 1.0f;
-	ship->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
-	Ship = new GameObject(ship, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(Ship);
+	Mesh* Ship_01 = MeshBuilder::GenerateOBJ("ship 01", "OBJ//ship.obj");
+	Ship_01->textureID = LoadTGA("Image//ship.tga");
+	Ship_01->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	Ship_01->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
+	Ship_01->material.kShininess = 1.0f;
+	Ship_01->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
+	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	meshList.push_back(ship_01);
 
-	
+	Mesh* Ship_02 = MeshBuilder::GenerateOBJ("ship 02", "OBJ//ship2.obj");
+	Ship_02->textureID = LoadTGA("Image//ship2.tga");
+	Ship_02->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	Ship_02->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
+	Ship_02->material.kShininess = 0.5f;
+	Ship_02->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
+	ship_02 = new GameObject(Ship_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+	meshList.push_back(ship_02);
 	
 	//meshList.push_back(new GameObject(MeshBuilder::GenerateQuad("Floor", Color(0, 1, 0), 2, 2), Vector3(2, 2, 2), Vector3(0, 90, 0), Vector3(10, 5, 5)));
 
@@ -361,7 +369,6 @@ static bool openShop = false;
 int shopItem;
 
 Vector3 ray_wor;
-
 Vector3 ray_Clip;
 Vector3 curHitPoint;
 
@@ -380,50 +387,223 @@ void GameScene::Update(double dt)
 	double mouseX, mouseY;
 	Application::GetMousePos(mouseX, mouseY);
 
-	if (Application::IsKeyPressed(VK_UP))
+	// ship stuff
+	Vector3 pos, rot, scale;
+	ship_01->translateX = (float)(10 * dt);
+	ship_01->translateY = (float)(10 * dt);
+	ship_01->translateZ = (float)(10 * dt);
+
+	if (Application::IsKeyPressed(VK_UP)) // 270
 	{
-		Ship->translateX = 25 * dt;
+		if (!(ship_01->GetPosition().x < -45))
+		{
+			if (ship_01->rotate >= 180 && ship_01->rotate != 270)
+			{
+				pos.Set(ship_01->GetPosition().x - ship_01->translateX, ship_01->GetPosition().y, ship_01->GetPosition().z + (ship_01->translateZ / 2));
+			}
+			else if (ship_01->rotate <= 360 && ship_01->rotate != 270)
+			{
+				pos.Set(ship_01->GetPosition().x - ship_01->translateX, ship_01->GetPosition().y, ship_01->GetPosition().z - (ship_01->translateZ / 2));
+			}
+			else
+			{
+				pos.Set(ship_01->GetPosition().x - ship_01->translateX, ship_01->GetPosition().y, ship_01->GetPosition().z);
+			}
 
-		Vector3 pos;
+			ship_01->SetPosition(pos);
+		}
 
-		pos.Set(Ship->GetPosition().x - Ship->translateX, Ship->GetPosition().y, Ship->GetPosition().z);
+		cout << endl;
+		cout << " X : " << ship_01->GetPosition().x << endl;
+		cout << " Z : " << ship_01->GetPosition().z << endl;
+		cout << " Angle : " << ship_01->rotate << endl;
 
-		Ship->SetPosition(pos);
+		if (ship_01->rotate > 0 && ship_01->rotate < 270)
+		{
+			ship_01->rotate += (int)(2);
+		}
+		else if (ship_01->rotate == 0 || ship_01->rotate > 270)
+		{
+			if (ship_01->rotate == 0)
+			{
+				ship_01->rotate = 360;
+				ship_01->rotate -= (int)(2);
+			}
+			else
+			{
+				ship_01->rotate -= (int)(2);
+			}
+		}
+		rot.Set(0, 1, 0);
+		ship_01->SetRotation(rot, ship_01->rotate);
 	}
-	if (Application::IsKeyPressed(VK_DOWN))
+	if (Application::IsKeyPressed(VK_DOWN)) // 90
 	{
-		Ship->translateX = 25 * dt;
+		if (!(ship_01->GetPosition().x > 45))
+		{
+			if (ship_01->rotate >= 0 && ship_01->rotate != 90)
+			{
+				pos.Set(ship_01->translateX + ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z - (ship_01->translateZ / 2));
+			}
+			else if (ship_01->rotate <= 180 && ship_01->rotate != 90)
+			{
+				pos.Set(ship_01->translateX + ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z + (ship_01->translateZ / 2));
+			}
+			else
+			{
+				pos.Set(ship_01->translateX + ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
+			}
 
-		Vector3 pos;
+			ship_01->SetPosition(pos);
+		}
 
-		pos.Set(Ship->translateX + Ship->GetPosition().x, Ship->GetPosition().y, Ship->GetPosition().z);
-
-		Ship->SetPosition(pos);
+		if (ship_01->rotate > 90)
+		{
+			ship_01->rotate -= (int)(2);
+		}
+		else if (ship_01->rotate < 90)
+		{
+			ship_01->rotate += (int)(2);
+		}
+		rot.Set(0, 1, 0);
+		ship_01->SetRotation(rot, ship_01->rotate);
 	}
-	if (Application::IsKeyPressed(VK_LEFT))
+	if (Application::IsKeyPressed(VK_LEFT)) // 0
 	{
-		Ship->translateZ = 10 * dt;
-		Ship->rotate = 45 * dt;
+		if (!(ship_01->GetPosition().z > 45))
+		{
+			if (ship_01->rotate >= 270 && ship_01->rotate !=  360)
+			{
+				pos.Set(ship_01->GetPosition().x + (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->translateZ + ship_01->GetPosition().z);
+			}
+			else if (ship_01->rotate <= 90 && ship_01->rotate != 0)
+			{
+				pos.Set(ship_01->GetPosition().x - (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->translateZ + ship_01->GetPosition().z);
+			}
+			else
+			{
+				pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->translateZ + ship_01->GetPosition().z);
+			}
 
-		Vector3 pos;
-		Vector3 rot;
+			ship_01->SetPosition(pos);
+		}
 
-		pos.Set(Ship->GetPosition().x, Ship->GetPosition().y, Ship->translateZ + Ship->GetPosition().z);
-		rot.Set(Ship->GetRotation().x, Ship->GetRotation().y + Ship->rotate, Ship->GetRotation().z);
-
-		Ship->SetPosition(pos);
-		Ship->SetRotation(rot);
+		if (ship_01->rotate >= 270 && ship_01->rotate < 360)
+		{
+			ship_01->rotate += (int)(2);
+		}
+		else if (ship_01->rotate > 0 && ship_01->rotate < 270)
+		{
+			ship_01->rotate -= (int)(2);
+		}
+		rot.Set(0, 1, 0);
+		ship_01->SetRotation(rot, ship_01->rotate);
 	}
-	if (Application::IsKeyPressed(VK_RIGHT))
+	if (Application::IsKeyPressed(VK_RIGHT)) // 180
 	{
-		Ship->translateZ = 25 * dt;
+		if (!(ship_01->GetPosition().z < -45))
+		{
+			if (ship_01->rotate >= 90 && ship_01->rotate != 180)
+			{
+				pos.Set(ship_01->GetPosition().x - (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->GetPosition().z - ship_01->translateZ);
+			}
+			else if (ship_01->rotate <= 270 && ship_01->rotate != 180)
+			{
+				pos.Set(ship_01->GetPosition().x + (ship_01->translateX / 2), ship_01->GetPosition().y, ship_01->GetPosition().z - ship_01->translateZ);
+			}
+			else
+			{
+				pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z - ship_01->translateZ);
+			}
 
-		Vector3 pos;
+			ship_01->SetPosition(pos);
+		}
 
-		pos.Set(Ship->GetPosition().x, Ship->GetPosition().y, Ship->GetPosition().z - Ship->translateZ);
-
-		Ship->SetPosition(pos);
+		if (ship_01->rotate < 180 && ship_01->rotate >= 0)
+		{
+			ship_01->rotate += (int)(2);
+		}
+		else if (ship_01->rotate <= 270 && ship_01->rotate > 180)
+		{
+			ship_01->rotate -= (int)(2);
+		}
+		rot.Set(0, 1, 0);
+		ship_01->SetRotation(rot, ship_01->rotate);
 	}
+	if (Application::IsKeyPressed(VK_SPACE))
+	{
+		//ship_01->scaleObject += (float)(1.5 * dt);
+		ship_01->scaleObject = 0.5;
+		scale.Set(ship_01->scaleObject, ship_01->scaleObject, ship_01->scaleObject);
+		ship_01->SetScale(scale);
+	}
+
+	if (Application::IsKeyPressed('F'))
+	{
+		ship_02->translateX = (float)(10 * dt);
+		if (!(ship_02->GetPosition().x < -45))
+		{
+			pos.Set(ship_02->GetPosition().x - ship_02->translateX, ship_02->GetPosition().y, ship_02->GetPosition().z);
+			ship_02->SetPosition(pos);
+		}
+
+		rot.Set(0, 1, 0);
+		ship_02->SetRotation(rot, 270);
+	}
+	if (Application::IsKeyPressed('V'))
+	{
+		ship_02->translateX = (float)(10 * dt);
+		if (!(ship_02->GetPosition().x > 45))
+		{
+			pos.Set(ship_02->translateX + ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z);
+			ship_02->SetPosition(pos);
+		}
+
+		rot.Set(0, 1, 0);
+		ship_02->SetRotation(rot, 90);
+	}
+	if (Application::IsKeyPressed('C'))
+	{
+		ship_02->translateZ = (float)(10 * dt);
+		if (!(ship_02->GetPosition().z > 45))
+		{
+			pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->translateZ + ship_02->GetPosition().z);
+			ship_02->SetPosition(pos);
+		}
+
+		rot.Set(0, 1, 0);
+		ship_02->SetRotation(rot, 0);
+	}
+	if (Application::IsKeyPressed('B'))
+	{
+		ship_02->translateZ = (float)(10 * dt);
+		if (!(ship_02->GetPosition().z < -45))
+		{
+			pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y, ship_02->GetPosition().z - ship_02->translateZ);
+			ship_02->SetPosition(pos);
+		}
+
+		rot.Set(0, 1, 0);
+		ship_02->SetRotation(rot, 180);
+	}
+
+	if (Application::IsKeyPressed('R'))
+	{
+		Vector3 initial;
+		initial.Set(-2, 0, 2);
+		ship_01->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_01->SetRotation(initial, 90);
+		initial.Set(0.1, 0.1, 0.1);
+		ship_01->SetScale(initial);
+
+		ship_01->rotate = 90;
+		ship_01->scaleObject = 0;
+		ship_01->translateX = 0;
+		ship_01->translateY = 0;
+		ship_01->translateZ = 0;
+	}
+
 
 	if (Application::IsKeyPressed(VK_NUMPAD1)) {
 		glEnable(GL_CULL_FACE);
@@ -437,8 +617,6 @@ void GameScene::Update(double dt)
 	else if (Application::IsKeyPressed(VK_NUMPAD4)) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
-	
-
 
 	if (Application::IsKeyPressed('I'))
 		light[0].position.z -= (float)(LSPEED * dt);
@@ -474,12 +652,7 @@ void GameScene::Update(double dt)
 	else {
 		bounceTime -= dt;
 	}
-
-
 }
-
-
-
 
 void GameScene::RenderMesh(GameObject* curType, bool enableLight)
 {
