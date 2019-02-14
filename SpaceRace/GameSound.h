@@ -19,6 +19,10 @@ public:
 	irrklang::ISoundSource* Melee = engine->addSoundSourceFromFile("OST/MeleeAttack.wav");
 
 	irrklang::ISoundSource* GameBGM = engine->addSoundSourceFromFile("OST/GameBGM.wav");
+	
+	irrklang::ISoundSource* CannonFire = engine->addSoundSourceFromFile("OST/CannonFire.wav");
+
+	irrklang::ISoundSource* PaintSplat = engine->addSoundSourceFromFile("OST/PaintSplat.wav");
 
 	irrklang::ISoundSource* CannonFire = engine->addSoundSourceFromFile("OST/CannonFire.wav");
 
