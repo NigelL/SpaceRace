@@ -68,41 +68,4 @@ void Camera3::Update(double dt)
 		position = position - view;
 		target = target - view;
 	}
-	/*if (Application::IsKeyPressed(VK_LEFT))
-	{
-		Mtx44 rotation;
-		float yaw = (float)(CAMERA_SPEED * dt);
-		rotation.SetToRotation(yaw, up.x, up.y, up.z);
-
-		view = rotation * view;
-		target = position + view;
-	}
-	if (Application::IsKeyPressed(VK_RIGHT))
-	{
-		Mtx44 rotation;
-		float yaw = (float)(CAMERA_SPEED * dt);
-		rotation.SetToRotation(-yaw, up.x, up.y, up.z);
-
-		view = rotation * view;
-		target = position + view;
-	}
-	if (Application::IsKeyPressed(VK_UP))
-	{
-		Mtx44 rotation;
-		float pitch = (float)(CAMERA_SPEED * dt);
-		rotation.SetToRotation(pitch, right.x, right.y, right.z);
-
-		view = rotation * view;
-		target = position + view;
-
-	}
-	if (Application::IsKeyPressed(VK_DOWN))
-	{
-		Mtx44 rotation;
-		float pitch = (float)(CAMERA_SPEED * dt);
-		rotation.SetToRotation(-pitch, right.x, right.y, right.z);
-
-		view = rotation * view;
-		target = position + view;
-	}*/
 }
