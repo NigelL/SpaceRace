@@ -1,2 +1,6 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.14393.0
+<<<<<<< HEAD
 Debug|Win32|D:\Users\l533\Desktop\CGP\SpaceRace\|
+=======
+Debug|Win32|D:\Users\l533\Documents\GitHub\SpaceRace\|
+>>>>>>> b3cf0aee085bd0ad9328ade669ba24727a0cc3d5
