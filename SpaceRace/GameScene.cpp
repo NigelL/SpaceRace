@@ -10,6 +10,7 @@ GameObject* cannon_01;
 GameObject* cannon_02;
 bool cannonOut_01 = false;
 bool cannonOut_02 = false;
+GameObject* speedUp;
 
 GameScene::GameScene()
 {
@@ -35,6 +36,7 @@ GameScene::GameScene()
 	Ship_01->material.kShininess = 1.0f;
 	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
 	meshList.push_back(ship_01);
+	ship_01->SetBounds(Vector3 (2.5,2.5,2.5));
 
 	Mesh* Ship_02 = MeshBuilder::GenerateOBJ("ship 02", "OBJ//ship2.obj");
 	Ship_02->textureID = LoadTGA("Image//ship2.tga");
@@ -78,6 +80,7 @@ GameScene::GameScene()
 	Islands->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	Islands->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	Islands->material.kShininess = 1.0f;
+	islands->SetBounds(Vector3(5, 5, 5));
 
 	Mesh* Parts = MeshBuilder::GenerateOBJ("Parts", "OBJ//Parts.obj");
 	Parts->textureID = LoadTGA("Image//PartsTexture.tga");
@@ -85,6 +88,13 @@ GameScene::GameScene()
 	Parts->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	Parts->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	Parts->material.kShininess = 1.0f;
+
+	Mesh* SpeedUp = MeshBuilder::GenerateOBJ("Speed Up", "OBJ//SpeedUp.obj");
+	SpeedUp->textureID = LoadTGA("Image//SpeedUpTexture.tga");
+	SpeedUp->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	SpeedUp->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kShininess = 1.0f;
 
 	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
 
@@ -113,7 +123,7 @@ GameScene::GameScene()
 			}
 		}
 
-		// If it doesn't overlap, overlaps is still fase, and will print out an island
+		// If it doesn't overlap, overlaps is still false, and will print out an island
 		if (overlaps == false)
 		{
 			if (numberofislands <= 8)
@@ -125,6 +135,8 @@ GameScene::GameScene()
 			{
 				parts = new GameObject(Parts, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
 				meshList.push_back(parts);
+				speedUp = new GameObject(SpeedUp, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				meshList.push_back(speedUp);
 			}
 
 			std::cout << "Island Overlapped, making a new one..." << std::endl;
@@ -454,12 +466,13 @@ void GameScene::Update(double dt)
 	curWater->UpdateWater(10, dt);
 
 	short int multipler = 1;
+
 	//Camera Logic
-	camera.Update((float)dt);
+	//camera.Update((float)dt);
 	float yaw = DegreeToRadian(ship_01->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = ship_01->GetPosition() - direction * 3;
-	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
+	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
 	camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
