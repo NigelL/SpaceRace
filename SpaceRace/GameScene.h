@@ -36,7 +36,7 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	float sceneFPS;
-
+	float islandposx, islandposz;
 
 public:
 	GameScene();
@@ -129,7 +129,7 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float
 		x, float y);
 
-
+	void SpawnPowerUp();
 public:
 	virtual void Init();
 	virtual void Update(double dt);
@@ -137,6 +137,8 @@ public:
 	virtual void Exit();
 
 };
+
+
 
 #endif
 

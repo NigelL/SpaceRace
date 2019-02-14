@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Application.h"
+#include "Application.h";
 #include "Scene.h";
 #include "GameScene.h"
 #include "GameSound.h"
-
+#include "MainMenu.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -134,6 +134,8 @@ void Application::GetMousePos(double& x, double& y) {
 void Application::Run()
 {
 	//Main Loop
+	//Scene* scene = new MainMenu();
+	//if ()
 	Scene* scene = new GameScene();
 	//Scene* scene2 = scene;
 

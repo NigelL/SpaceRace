@@ -78,6 +78,9 @@
     <ClCompile Include="Camera3.cpp">
       <Filter>Source Files\src\camera</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\src\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vertex.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Camera3.h">
       <Filter>Source Files\src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Source Files\src\scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -127,6 +127,7 @@
     <ClCompile Include="LoadOBJ.cpp" />
     <ClCompile Include="LoadTGA.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshBuilder.cpp" />
     <ClCompile Include="shader.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="GameSound.h" />
     <ClInclude Include="LoadOBJ.h" />
     <ClInclude Include="LoadTGA.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshBuilder.h" />

@@ -10,6 +10,9 @@ GameObject* cannon_01;
 GameObject* cannon_02;
 bool cannonOut_01 = false;
 bool cannonOut_02 = false;
+GameObject* speedUp;
+GameObject* restoreHP;
+GameObject* powerUp[15];
 
 GameScene::GameScene()
 {
@@ -35,6 +38,7 @@ GameScene::GameScene()
 	Ship_01->material.kShininess = 1.0f;
 	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
 	meshList.push_back(ship_01);
+	ship_01->SetBounds(Vector3 (2.5,2.5,2.5));
 
 	Mesh* Ship_02 = MeshBuilder::GenerateOBJ("ship 02", "OBJ//ship2.obj");
 	Ship_02->textureID = LoadTGA("Image//ship2.tga");
@@ -86,7 +90,7 @@ GameScene::GameScene()
 	Parts->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	Parts->material.kShininess = 1.0f;
 
-	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
+	int islandx, islandz, islandposxA[18], islandposzA[18];
 
 
 	for (int numberofislands = 0; numberofislands < 18; numberofislands++)
@@ -130,6 +134,8 @@ GameScene::GameScene()
 			std::cout << "Island Overlapped, making a new one..." << std::endl;
 		}
 	}
+
+
 }
 
 GameScene::~GameScene()
@@ -436,6 +442,8 @@ void GameScene::Init()
 		"textColor");
 
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
+
+	SpawnPowerUp();
 }
 
 static double LSPEED = 10.0;
@@ -449,17 +457,67 @@ Vector3 curHitPoint;
 
 static double bounceTime = 0.0;
 
+void GameScene::SpawnPowerUp()
+{
+	srand(time(NULL));
+
+	int powerUpSpawn;
+	float powerUpX, powerUpZ;
+
+	Mesh* SpeedUp = MeshBuilder::GenerateOBJ("Speed Up", "OBJ//SpeedUp.obj");
+	SpeedUp->textureID = LoadTGA("Image//SpeedUpTexture.tga");
+	SpeedUp->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	SpeedUp->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kShininess = 1.0f;
+
+	Mesh* RestoreHP = MeshBuilder::GenerateOBJ("HP Restore", "OBJ//RestoreHP.obj");
+	RestoreHP->textureID = LoadTGA("Image//RestoreHPTexture.tga");
+	RestoreHP->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	RestoreHP->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	RestoreHP->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	RestoreHP->material.kShininess = 1.0f;
+
+	for (int numberOfPowerUps = 0; numberOfPowerUps <= 15; numberOfPowerUps++)
+	{
+		powerUpX = rand() % 100 + (-50);
+		powerUpZ = rand() % 100 + (-50);
+		powerUpSpawn = rand() % 2;
+		if (powerUpSpawn == 0)
+		{
+			powerUp[numberOfPowerUps] = new GameObject(SpeedUp, Vector3(powerUpX, 0, powerUpZ), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+			meshList.push_back(powerUp[numberOfPowerUps]);
+		}
+		if (powerUpSpawn == 1)
+		{
+			powerUp[numberOfPowerUps] = new GameObject(RestoreHP, Vector3(powerUpX, 0, powerUpZ), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
+			meshList.push_back(powerUp[numberOfPowerUps]);
+		}
+		//}
+		//if (powerUpSpawn == 2)
+		//{
+
+		//}
+		//if (powerUpSpawn == 3)
+		//{
+
+		//}
+	}
+}
+
 void GameScene::Update(double dt)
 {
 	curWater->UpdateWater(10, dt);
 
 	short int multipler = 1;
+
+
 	//Camera Logic
-	camera.Update((float)dt);
+	//camera.Update((float)dt);
 	float yaw = DegreeToRadian(ship_01->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = ship_01->GetPosition() - direction * 3;
-	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
+	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
 	camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
@@ -1054,15 +1112,6 @@ void GameScene::Render()
 	}
 
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
-
-
-	//modelStack.PushMatrix();
-	//modelStack.Translate(0, 5, 0);
-	//meshList[GEO_PIKACHUEARS]->Render();
-
-
-	//modelStack.PopMatrix();
-
 
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
