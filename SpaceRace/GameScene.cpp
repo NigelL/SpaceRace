@@ -1,5 +1,7 @@
 #include "GameScene.h"
 
+#define SIZE 5
+
 Water* curWater = new Water();
 GameObject* Ship;
 
@@ -20,8 +22,11 @@ GameScene::GameScene()
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	
 	curWater->waterMesh = curMesh;	
-	meshList.push_back(new GameObject(curMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
-	
+	for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < SIZE; i++) {
+		//	meshList.push_back(new GameObject(curMesh, Vector3( i * (SIZE), -5.0f, (j * SIZE)), 180, Vector3(1, 0, 0), Vector3(10.1f, 1, 10.1f)));
+		}
+	}
 	Mesh* ship = MeshBuilder::GenerateOBJ("ship", "OBJ//ship.obj");
 	ship->textureID = LoadTGA("Image//ship.tga");
 	ship->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
@@ -29,10 +34,15 @@ GameScene::GameScene()
 	ship->material.kShininess = 1.0f;
 	ship->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	Ship = new GameObject(ship, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(Ship);
+	//meshList.push_back(Ship);
+	Mesh* curCube = MeshBuilder::GenerateCube("Cube", Color(1, 1, 1), 1, 1, 1);
+	curCube->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	curCube->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
+	curCube->material.kShininess = 1.0f;
+	curCube->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
+	meshList.push_back(new GameObject(curCube, Vector3(0.25, 0, 0), 0, Vector3(0, 1, 0), Vector3(1, 1, 1)));
+	meshList.push_back(new GameObject(curCube, Vector3(1.25f,0,0.5f), 45, Vector3(0, 1, 0), Vector3(1, 1, 1)));
 
-	
-	
 	//meshList.push_back(new GameObject(MeshBuilder::GenerateQuad("Floor", Color(0, 1, 0), 2, 2), Vector3(2, 2, 2), Vector3(0, 90, 0), Vector3(10, 5, 5)));
 
 	//for (int numberofislands = 0; numberofislands < 5; numberofislands++)
@@ -370,6 +380,14 @@ static double bounceTime = 0.0;
 void GameScene::Update(double dt)
 {
 	curWater->UpdateWater(10, dt);
+
+
+	for (int j = 0; j < meshList.size(); j++) {
+		for (int i = 0; i < meshList.size(); i++) {
+			if (i == j) { continue; }
+			meshList[i]->CheckCollision(*meshList[j]);
+		}
+	}
 
 	short int multipler = 1;
 	//Camera Logic
@@ -796,6 +814,7 @@ void GameScene::Render()
 
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
 
+	RenderTextOnScreen(gameText, "Collisions : " + std::to_string(meshList[0]->collidedList.size()), Color(0, 1, 0), 30, 0, 10);
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(0, 5, 0);

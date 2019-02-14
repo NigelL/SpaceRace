@@ -14,6 +14,6 @@ public:
 
 Vector4 operator*(const Mtx44*lhs, const Position& rhs);
 Position operator*(const Mtx44& lhs, const Position& rhs);
-
+float Deg2Rad(float deg);
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef WATER
 #define WATER
 
+#include "Utility.h"
 #include "Mesh.h"
 
 class Water 
