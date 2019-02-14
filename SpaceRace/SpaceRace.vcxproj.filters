@@ -75,6 +75,9 @@
     <ClCompile Include="GameSound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera3.cpp">
+      <Filter>Source Files\src\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vertex.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="GameSound.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera3.h">
+      <Filter>Source Files\src\camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,12 +3,31 @@
 #define SIZE 5
 
 Water* curWater = new Water();
-GameObject* Ship;
-
+GameObject* ship_01;
+GameObject* ship_02;
+GameObject* pirateShip;
+GameObject* islands;
+GameObject* parts;
+GameObject* speedUp;
+Mesh* curCube;
 
 GameScene::GameScene()
 {
 	srand(time(0));
+
+
+	curCube = MeshBuilder::GenerateCube("Cube", Color(1, 1, 1), 1, 1, 1);
+	Mesh* Ship_01 = MeshBuilder::GenerateOBJ("ship 01", "OBJ//ship.obj");
+	Ship_01->textureID = LoadTGA("Image//ship.tga");
+	Ship_01->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+	Ship_01->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Ship_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+	Ship_01->material.kShininess = 1.0f;
+	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	ship_01->SetBounds(Vector3(0.5f, 0.5f, 2.0f));
+
+	meshList.push_back(ship_01);
+
 
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
@@ -16,44 +35,110 @@ GameScene::GameScene()
 	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
 	curMesh->textureID = LoadTGA("Image//Water.tga");
 
-	curMesh->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
+	curMesh->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
 	curMesh->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	
-	curWater->waterMesh = curMesh;	
-	for (int j = 0; j < SIZE; j++) {
-		for (int i = 0; i < SIZE; i++) {
-		//	meshList.push_back(new GameObject(curMesh, Vector3( i * (SIZE), -5.0f, (j * SIZE)), 180, Vector3(1, 0, 0), Vector3(10.1f, 1, 10.1f)));
+	curWater->waterMesh = curMesh;
+	meshList.push_back(new GameObject(curMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
+	
+
+
+	Mesh* Ship_02 = MeshBuilder::GenerateOBJ("ship 02", "OBJ//ship2.obj");
+	Ship_02->textureID = LoadTGA("Image//ship2.tga");
+	Ship_02->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+	Ship_02->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Ship_02->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+	Ship_02->material.kShininess = 1.0f;
+	ship_02 = new GameObject(Ship_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+	meshList.push_back(ship_02);
+
+
+	Mesh* PirateShip = MeshBuilder::GenerateOBJ("PShip", "OBJ//PirateShip.obj");
+	PirateShip->textureID = LoadTGA("Image//PirateShipTexture.tga");
+	PirateShip->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	PirateShip->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	PirateShip->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	PirateShip->material.kShininess = 1.0f;
+	pirateShip = new GameObject(PirateShip, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	meshList.push_back(pirateShip);
+
+	Mesh* Islands = MeshBuilder::GenerateOBJ("Islands", "OBJ//Island.obj");
+	Islands->textureID = LoadTGA("Image//IslandTextures.tga");
+	Islands->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	Islands->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Islands->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	Islands->material.kShininess = 1.0f;
+	islands = new GameObject(Islands, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	islands->SetBounds(Vector3(0.5f, 0.5f, 0.5f));
+
+	Mesh* Parts = MeshBuilder::GenerateOBJ("Parts", "OBJ//Parts.obj");
+	Parts->textureID = LoadTGA("Image//PartsTexture.tga");
+	Parts->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	Parts->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Parts->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	Parts->material.kShininess = 1.0f;
+
+	parts = new GameObject(Parts, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	meshList.push_back(parts);
+
+	Mesh* SpeedUp = MeshBuilder::GenerateOBJ("Speed Up", "OBJ//SpeedUp.obj");
+	SpeedUp->textureID = LoadTGA("Image//SpeedUpTexture.tga");
+	SpeedUp->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	SpeedUp->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kShininess = 1.0f;
+
+	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
+
+
+	for (int numberofislands = 0; numberofislands < 18; numberofislands++)
+	{
+		bool overlaps = false;
+		islandposx = rand() % 100 + (-50);
+		islandposz = rand() % 100 + (-50);
+		islandposxA[numberofislands] = islandposx;
+		islandposzA[numberofislands] = islandposz;
+
+		// To prevent islands from overlapping
+		for (int islands = 0; islands < numberofislands + 1; islands++)
+		{
+			// So that it won't check the same island as itself
+			if (islands == numberofislands) { continue; }
+
+			// Check all four directions to see if the island will land in them
+			if ((islandposx <= islandposxA[islands] + 10 && islandposx >= islandposxA[islands] - 10 && islandposz <= islandposzA[islands] + 10 && islandposz >= islandposzA[islands] - 10) /* && not equal to the starting points of the ships*/)
+			{
+				// If overlaps, the boolean will become true, not printing out a an island
+				overlaps = true;
+				numberofislands--;
+				break;
+			}
 		}
+
+
+		// If it doesn't overlap, overlaps is still false, and will print out an island
+		if (overlaps == false)
+		{
+			if (numberofislands <= 8)
+			{
+				islands = new GameObject(Islands, Vector3(islandposx, -2, islandposz), 0, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				islands->SetBounds(Vector3(2.5f, 2.5f, 2.5f));
+				meshList.push_back(islands);
+			}
+			else
+			{
+				parts = new GameObject(Parts, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				meshList.push_back(parts);
+				speedUp = new GameObject(SpeedUp, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				meshList.push_back(speedUp);
+			}
+
+			std::cout << "Island Overlapped, making a new one..." << std::endl;
+		}
+
 	}
-	Mesh* ship = MeshBuilder::GenerateOBJ("ship", "OBJ//ship.obj");
-	ship->textureID = LoadTGA("Image//ship.tga");
-	ship->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
-	ship->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
-	ship->material.kShininess = 1.0f;
-	ship->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
-	Ship = new GameObject(ship, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	//meshList.push_back(Ship);
-	Mesh* curCube = MeshBuilder::GenerateCube("Cube", Color(1, 1, 1), 1, 1, 1);
-	curCube->material.kAmbient.Set(1.0f, 1.0f, 1.0f);
-	curCube->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
-	curCube->material.kShininess = 1.0f;
-	curCube->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
-	meshList.push_back(new GameObject(curCube, Vector3(0.25, 0, 0), 0, Vector3(0, 1, 0), Vector3(1, 1, 1)));
-	meshList.push_back(new GameObject(curCube, Vector3(1.25f,0,0.5f), 45, Vector3(0, 1, 0), Vector3(1, 1, 1)));
-
-	//meshList.push_back(new GameObject(MeshBuilder::GenerateQuad("Floor", Color(0, 1, 0), 2, 2), Vector3(2, 2, 2), Vector3(0, 90, 0), Vector3(10, 5, 5)));
-
-	//for (int numberofislands = 0; numberofislands < 5; numberofislands++)
-	//{
-	//	int islandx = rand() % 5 + 1;
-	//	int islandy = rand() % 5 + 1;
-	//	int islandposx = rand() % 5 + 1;
-	//	int islandposy = rand() % 5 + 1;
-	//	meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Islands", Color(0, 1, 0), islandx, islandy, 2), Vector3(islandposx, islandposy, 0), Vector3(90, 0, 0), Vector3(50, 1, 1)));
-	//}
-	//meshList.push_back(new GameObject(MeshBuilder::GenerateCube("Islands", Color(COLOR), STARTING POSITION OF OBJ), Vector3(POSITION), Vector3(ROTATION), Vector3(SCALE)));
 }
 
 GameScene::~GameScene()
@@ -183,8 +268,8 @@ void GameScene::Init()
 	camera.Init(Vector3(10, 20, 0),Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 
-	// GameSound::instance()->GameBGM->setDefaultVolume(0.8f);
-	// GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
+	GameSound::instance()->GameBGM->setDefaultVolume(0.1f);
+	GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -371,7 +456,6 @@ static bool openShop = false;
 int shopItem;
 
 Vector3 ray_wor;
-
 Vector3 ray_Clip;
 Vector3 curHitPoint;
 
@@ -390,58 +474,96 @@ void GameScene::Update(double dt)
 	}
 
 	short int multipler = 1;
+
 	//Camera Logic
 	camera.Update((float)dt);
-	
+	float yaw = DegreeToRadian(ship_01->rotate);
+	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
+	Vector3 position = ship_01->GetPosition() - direction * 3;
+//	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
+	//camera.SetPosition(position.x, position.y + 1, position.z);
+
 	//Game Logic
 	sceneFPS = 1.0f / (float)dt;
 	double mouseX, mouseY;
 	Application::GetMousePos(mouseX, mouseY);
 
-	if (Application::IsKeyPressed(VK_UP))
+	// ship stuff
+	Vector3 pos, rot, scale;
+
+	ship_01->translateX = (float)(5 * dt);
+	ship_01->translateY = (float)(5 * dt);
+	ship_01->translateZ = (float)(5 * dt);
+
+	ship_02->translateX = (float)(15 * dt);
+	ship_02->translateY = (float)(15 * dt);
+	ship_02->translateZ = (float)(15 * dt);
+
+	// control the ship
+	if (Application::IsKeyPressed(VK_UP)) // 270
 	{
-		Ship->translateX = 25 * dt;
+		if (!(ship_01->GetPosition().x < -45) && !(ship_01->GetPosition().x > 45) && !(ship_01->GetPosition().z < -45) && !(ship_01->GetPosition().z > 45))
+		{
+			float direction = DegreeToRadian(ship_01->rotate);
 
-		Vector3 pos;
+			pos.Set(ship_01->GetPosition().x + (sin(direction) * ship_01->translateX), ship_01->GetPosition().y, ship_01->GetPosition().z + (cos(direction) * ship_01->translateZ));
+			ship_01->SetPosition(pos);
 
-		pos.Set(Ship->GetPosition().x - Ship->translateX, Ship->GetPosition().y, Ship->GetPosition().z);
+		}
 
-		Ship->SetPosition(pos);
+		if (Application::IsKeyPressed(VK_LEFT)) // 0
+		{
+			ship_01->rotate += (int)(2);
+
+			rot.Set(0, 1, 0);
+			ship_01->SetRotation(rot, ship_01->rotate);
+		}
+		if (Application::IsKeyPressed(VK_RIGHT)) // 180
+		{
+			ship_01->rotate -= (int)(2);
+			rot.Set(0, 1, 0);
+			ship_01->SetRotation(rot, ship_01->rotate);
+		}
 	}
-	if (Application::IsKeyPressed(VK_DOWN))
+	if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
 	{
-		Ship->translateX = 25 * dt;
-
-		Vector3 pos;
-
-		pos.Set(Ship->translateX + Ship->GetPosition().x, Ship->GetPosition().y, Ship->GetPosition().z);
-
-		Ship->SetPosition(pos);
+		//ship_01->scaleObject += (float)(1.5 * dt);
+		ship_02->scaleObject = 1;
+		scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
+		ship_02->SetScale(scale);
 	}
-	if (Application::IsKeyPressed(VK_LEFT))
+
+	if (Application::IsKeyPressed('R'))
 	{
-		Ship->translateZ = 10 * dt;
-		Ship->rotate = 45 * dt;
+		Vector3 initial;
+		// ship_01
+		initial.Set(2, 0, -2);
+		ship_01->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_01->SetRotation(initial, 90);
+		initial.Set(0.1, 0.1, 0.1);
+		ship_01->SetScale(initial);
 
-		Vector3 pos;
-		Vector3 rot;
+		ship_01->rotate = 90;
+		ship_01->scaleObject = 0;
+		ship_01->translateX = 0;
+		ship_01->translateY = 0;
+		ship_01->translateZ = 0;
+		// ship_02
+		initial.Set(-2, 0, -2);
+		ship_02->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_02->SetRotation(initial, 90);
+		initial.Set(0.25, 0.25, 0.25);
+		ship_02->SetScale(initial);
 
-		pos.Set(Ship->GetPosition().x, Ship->GetPosition().y, Ship->translateZ + Ship->GetPosition().z);
-		rot.Set(Ship->GetRotation().x, Ship->GetRotation().y + Ship->rotate, Ship->GetRotation().z);
-
-		Ship->SetPosition(pos);
-		Ship->SetRotation(rot);
+		ship_02->rotate = 90;
+		ship_02->scaleObject = 0;
+		ship_02->translateX = 0;
+		ship_02->translateY = 0;
+		ship_02->translateZ = 0;
 	}
-	if (Application::IsKeyPressed(VK_RIGHT))
-	{
-		Ship->translateZ = 25 * dt;
 
-		Vector3 pos;
-
-		pos.Set(Ship->GetPosition().x, Ship->GetPosition().y, Ship->GetPosition().z - Ship->translateZ);
-
-		Ship->SetPosition(pos);
-	}
 
 	if (Application::IsKeyPressed(VK_NUMPAD1)) {
 		glEnable(GL_CULL_FACE);
@@ -455,8 +577,6 @@ void GameScene::Update(double dt)
 	else if (Application::IsKeyPressed(VK_NUMPAD4)) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
-	
-
 
 	if (Application::IsKeyPressed('I'))
 		light[0].position.z -= (float)(LSPEED * dt);
@@ -492,12 +612,7 @@ void GameScene::Update(double dt)
 	else {
 		bounceTime -= dt;
 	}
-
-
 }
-
-
-
 
 void GameScene::RenderMesh(GameObject* curType, bool enableLight)
 {
@@ -546,6 +661,53 @@ void GameScene::RenderMesh(GameObject* curType, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
+
+void GameScene::RenderMesh(Mesh* curMesh, bool enableLight) {
+	Mtx44 modelView, modelView_inverse_transpose;
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	Mtx44 posPM = projectionStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	modelView = viewStack.Top() * modelStack.Top();
+
+	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
+	if (enableLight)
+	{
+		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
+		glUniform1i(m_parameters[U_LIGHT1ENABLED], 1);
+		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
+		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE,
+			&modelView_inverse_transpose.a[0]);
+		//load material
+		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &curMesh->material.kAmbient.r);
+		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &curMesh->material.kDiffuse.r);
+		glUniform3fv(m_parameters[U_MATERIAL_SPECULAR], 1, &curMesh->material.kSpecular.r);
+		glUniform1f(m_parameters[U_MATERIAL_SHININESS], curMesh->material.kShininess);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+		glUniform1i(m_parameters[U_LIGHT1ENABLED], 0);
+	}
+	if (curMesh->textureID > 0)
+	{
+		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, curMesh->textureID);
+		glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 0);
+	}
+
+	curMesh->Render();
+
+	if (curMesh->textureID > 0)
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+}
+
 void GameScene::RenderMesh(GEOMETRY_TYPE curType, bool enableLight)
 {	
 	Mtx44 modelView, modelView_inverse_transpose;
@@ -590,7 +752,6 @@ void GameScene::RenderMesh(GEOMETRY_TYPE curType, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
-
 
 void GameScene::Render()
 {
@@ -688,7 +849,6 @@ void GameScene::Render()
 	
 
 	//Skybox
-	
 	/*
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -600);
@@ -789,12 +949,29 @@ void GameScene::Render()
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 	*/
-	
+
 	
 
 
 	for (int i = 0; i < (int)meshList.size(); i++) {
 		
+		/*
+			for (int j = 0; j < 8; j++) {
+
+				
+				modelStack.PushMatrix();
+				modelStack.Translate(meshList[i]->allBounds[j].x, meshList[i]->allBounds[j].y, meshList[i]->allBounds[j].z);
+
+				modelStack.PushMatrix();
+				modelStack.Scale(0.1f, 0.1f, 0.1f);
+				RenderMesh(curCube, false);
+				modelStack.PopMatrix();
+				modelStack.PopMatrix();
+			}
+		*/
+		
+		
+
 		modelStack.PushMatrix();
 		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);		
 

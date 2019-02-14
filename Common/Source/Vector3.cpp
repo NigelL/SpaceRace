@@ -17,6 +17,7 @@ bool Vector3::IsEqual(float a, float b) const
 
 
 
+
 /******************************************************************************/
 /*!
 \brief	Vector3 default constructor
@@ -364,6 +365,7 @@ Normalize this vector and return a reference to it
 Vector3& Vector3::Normalize( void ) throw( DivideByZero )
 {
 	float d = Length();
+	
 	if(d <= Math::EPSILON && -d <= Math::EPSILON)
 	  throw DivideByZero();
 	x /= d;
