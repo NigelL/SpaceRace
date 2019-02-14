@@ -13,10 +13,6 @@ bool cannonOut_02 = false;
 GameObject* speedUp;
 GameObject* restoreHP;
 GameObject* powerUp[15];
-GameObject* cannon_01;
-GameObject* cannon_02;
-bool cannonOut_01 = false;
-bool cannonOut_02 = false;
 
 GameScene::GameScene()
 {

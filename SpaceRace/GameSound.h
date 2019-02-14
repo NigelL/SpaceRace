@@ -24,11 +24,6 @@ public:
 
 	irrklang::ISoundSource* PaintSplat = engine->addSoundSourceFromFile("OST/PaintSplat.wav");
 
-	irrklang::ISoundSource* CannonFire = engine->addSoundSourceFromFile("OST/CannonFire.wav");
-
-	irrklang::ISoundSource* PaintSplat = engine->addSoundSourceFromFile("OST/PaintSplat.wav");
-
-
 	static GameSound *instance()
 	{
 		if (!s_instance)
