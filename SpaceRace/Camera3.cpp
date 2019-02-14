@@ -17,6 +17,13 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->up = defaultUp = up;
 }
 
+void Camera3::Init2(const Vector3& pos, const Vector3& target, const Vector3& up)
+{
+	this->position = defaultPosition = pos;
+	this->target = defaultTarget = target;
+	this->up = defaultUp = up;
+}
+
 void Camera3::SetTarget(float _x, float _y, float _z)
 {
 	target.x = _x;

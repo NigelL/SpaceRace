@@ -135,17 +135,9 @@ void Application::Run()
 {
 	//Main Loop
 	Scene* scene = new GameScene();
-	//Scene* scene2 = scene;
-
-	//glViewport(0, 0, 1920 / 2, 1440 / 2);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
 	scene->Init();
-
-	//glViewport(1920 / 2, 1440 / 2, 1920 / 2, 1440 / 2);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//scene->Init();
+	Scene* scene2 = scene;
+	scene2->Init2();
 
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 
@@ -157,11 +149,13 @@ void Application::Run()
 		scene->Render();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
+
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
 		glfwPollEvents();
-        m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.   
+		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 	} //Check if the ESC key had been pressed or if the window had been closed
+
 	scene->Exit();
 	delete scene;
 }

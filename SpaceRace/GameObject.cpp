@@ -5,6 +5,7 @@
 GameObject::GameObject(Mesh* _curObject)
 {
 	curObject = _curObject;
+	boxHalf = Vector3(0.5f, 0.5f, 0.5f);
 }
 
 GameObject::GameObject(Mesh* _curObject, Vector3 _position,float deg, Vector3 _rotation, Vector3 _scale)
@@ -14,6 +15,7 @@ GameObject::GameObject(Mesh* _curObject, Vector3 _position,float deg, Vector3 _r
 	rotation = _rotation;
 	scale = _scale;
 	amt = deg;
+	boxHalf = Vector3(0.5f, 0.5f, 0.5f);
 }
 
 void GameObject::CheckCollision(GameObject& other) {

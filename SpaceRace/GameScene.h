@@ -132,6 +132,7 @@ private:
 
 public:
 	virtual void Init();
+	virtual void Init2();
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
