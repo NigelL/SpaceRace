@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Application.h"
+#include "Application.h";
 #include "Scene.h";
 #include "GameScene.h"
 #include "GameSound.h"

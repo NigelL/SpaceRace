@@ -13,5 +13,12 @@ d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(469): warning C4244: '='
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(470): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(496): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
+  Compiling...
+  Application.cpp
+d:\users\l533\desktop\spacerace\spacerace\application.cpp(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\users\l533\desktop\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

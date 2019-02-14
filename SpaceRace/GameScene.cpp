@@ -953,4 +953,8 @@ void GameScene::Render()
 	glDisableVertexAttribArray(0);
 }
 
-
+void GameScene::Exit()
+{
+	glDeleteVertexArrays(1, &m_vertexArrayID);
+	glDeleteProgram(m_programID);
+}
