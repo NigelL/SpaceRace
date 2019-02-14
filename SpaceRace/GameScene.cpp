@@ -1120,7 +1120,7 @@ void GameScene::Render()
 
 	for (int i = 0; i < (int)meshList.size(); i++) {
 		
-		/*
+		
 			for (int j = 0; j < 8; j++) {
 
 				
@@ -1133,7 +1133,7 @@ void GameScene::Render()
 				modelStack.PopMatrix();
 				modelStack.PopMatrix();
 			}
-		*/
+	
 		
 		
 

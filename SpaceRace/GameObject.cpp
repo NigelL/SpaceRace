@@ -89,16 +89,16 @@ void GameObject::GenerateBounds() {
 
 
 
-	allBounds[0] = Vector3( - boxHalf.x  , position.y + boxHalf.y, + boxHalf.z ); //Top Left
-	allBounds[1] = Vector3(+ boxHalf.x , position.y + boxHalf.y,  + boxHalf.z ); // TR
-	allBounds[2] = Vector3(- boxHalf.x , position.y - boxHalf.y,  + boxHalf.z ); // BL
-	allBounds[3] = Vector3(+ boxHalf.x , position.y - boxHalf.y, + boxHalf.z ); // BR
+	allBounds[0] = Vector3(- boxHalf.x ,  + boxHalf.y, + boxHalf.z ); //Top Left
+	allBounds[1] = Vector3(+ boxHalf.x ,  + boxHalf.y,  + boxHalf.z ); // TR
+	allBounds[2] = Vector3(- boxHalf.x ,  - boxHalf.y,  + boxHalf.z ); // BL
+	allBounds[3] = Vector3(+ boxHalf.x ,  - boxHalf.y, + boxHalf.z ); // BR
 
 
-	allBounds[4] = Vector3(- boxHalf.x , position.y + boxHalf.y,  - boxHalf.z);
-	allBounds[5] = Vector3(+ boxHalf.x , position.y + boxHalf.y, - boxHalf.z);
-	allBounds[6] = Vector3(- boxHalf.x , position.y - boxHalf.y,  - boxHalf.z);
-	allBounds[7] = Vector3(+ boxHalf.x , position.y - boxHalf.y,  - boxHalf.z );
+	allBounds[4] = Vector3(- boxHalf.x ,  + boxHalf.y,  - boxHalf.z);
+	allBounds[5] = Vector3(+ boxHalf.x ,  + boxHalf.y, - boxHalf.z);
+	allBounds[6] = Vector3(- boxHalf.x ,  - boxHalf.y,  - boxHalf.z);
+	allBounds[7] = Vector3(+ boxHalf.x ,  - boxHalf.y,  - boxHalf.z );
 
 	//Mtx44 curMat = Mtx44(cos(angleB) * cos(angleC), (sin(angleA) *sin(angleB) * cos(angleC)) + (cos(angleA) * sin(angleC), -cos(angleA) * sin(angleB) * cos(angleC) + sin(angleA) * sin(angleC), 0, -cos(angleB) *sin(angleC), -sin(angleA) * sin(angleB) * sin(angleC) + cos(angleA) * cos(angleC),
 	//	cos(angleA) * sin(angleB) * sin(angleC) + sin(angleA) * cos(angleC), 0, sin(angleB), -sin(angleA) * cos(angleB), cos(angleA) * cos(angleB), 1));
@@ -107,21 +107,19 @@ void GameObject::GenerateBounds() {
 	float angleB = Deg2Rad(rotation.y * -amt);
 	float angleC = Deg2Rad(rotation.z * amt);
 	
-	Mtx44 curMat = Mtx44(cos(angleB), 0, sin(angleB), 0, 0, 1, 0, 0, -sin(angleB), 0, cos(angleB), 0, 0, 0, 0, 1);
+
 	Mtx44 nxtMarix,backMatrix;
 	nxtMarix.SetToIdentity();
 	backMatrix.SetToIdentity();
 
 	for (int i = 0; i < 8; i++) {
+		Mtx44 curMat = Mtx44(cos(angleB), 0, sin(angleB), 0, 0, 1, 0, 0, -sin(angleB), 0, cos(angleB), 0, 0, 0, 0, 1);
 		nxtMarix.a[12] = position.x;
 		nxtMarix.a[13] = position.y;
 		nxtMarix.a[14] = position.z;
 		curMat = curMat * nxtMarix;
 		
-		backMatrix.a[12] = -position.x;
-		backMatrix.a[13] = -position.y;
-		backMatrix.a[14] = -position.z;
-		allBounds[i] = (backMatrix * curMat) * allBounds[i];
+		allBounds[i] = curMat * allBounds[i];
 		
 	}
 	

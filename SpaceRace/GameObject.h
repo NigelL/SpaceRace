@@ -65,14 +65,11 @@ public:
 	float scaleObject = 0;
 	float rotate = 90;
 
-<<<<<<< HEAD
 	GameObject();
-=======
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
->>>>>>> b3cf0aee085bd0ad9328ade669ba24727a0cc3d5
 	GameObject(Mesh* _curObject);
 	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
 	~GameObject();
