@@ -13,7 +13,9 @@ public:
 	virtual void Init() = 0;
 	virtual void Init2() = 0;
 	virtual void Update(double dt) = 0;
+	virtual void Update2(double dt) = 0;
 	virtual void Render() = 0;
+	virtual void Render2() = 0;
 	virtual void Exit() = 0;
 };
 

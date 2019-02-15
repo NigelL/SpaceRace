@@ -15,8 +15,6 @@ public:
 	~GameSound();
 
 	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
-	
-	irrklang::ISoundSource* Melee = engine->addSoundSourceFromFile("OST/MeleeAttack.wav");
 
 	irrklang::ISoundSource* GameBGM = engine->addSoundSourceFromFile("OST/GameBGM.wav");
 	
@@ -24,6 +22,9 @@ public:
 
 	irrklang::ISoundSource* PaintSplat = engine->addSoundSourceFromFile("OST/PaintSplat.wav");
 
+	irrklang::ISoundSource* SpeedUp = engine->addSoundSourceFromFile("OST/SpeedUp.wav");
+
+	irrklang::ISoundSource* Thud = engine->addSoundSourceFromFile("OST/Thud.wav");
 
 	static GameSound *instance()
 	{

@@ -1,20 +1,4 @@
-﻿  GameScene.cpp
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(17): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(39): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(59): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(68): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(76): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(85): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(95): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(138): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(145): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(105): warning C4101: 'islandz': unreferenced local variable
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(105): warning C4101: 'islandx': unreferenced local variable
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(658): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(822): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(859): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(885): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\splitscreencamera\spacerace\gamescene.cpp(899): warning C4305: 'argument': truncation from 'double' to 'float'
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SPLITSCREENCAMERA\Debug\SpaceRace.exe
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SPLITSCREENCAMERA\Debug\SpaceRace.pdb (Partial PDB)
+﻿  Application.cpp
+d:\users\l533\desktop\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

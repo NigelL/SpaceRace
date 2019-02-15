@@ -47,7 +47,7 @@ GameScene::GameScene()
 	Ship_02->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
 	Ship_02->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 	Ship_02->material.kShininess = 1.0f;
-	ship_02 = new GameObject(Ship_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+	ship_02 = new GameObject(Ship_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
 	meshList.push_back(ship_02);
 
 	Mesh* Cannon_01 = MeshBuilder::GenerateOBJ("cannonball", "OBJ//cannon.obj");
@@ -67,6 +67,7 @@ GameScene::GameScene()
 	Cannon_02->material.kShininess = 1.0f;
 	cannon_02 = new GameObject(Cannon_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
 	meshList.push_back(cannon_02);
+
 	Mesh* PirateShip = MeshBuilder::GenerateOBJ("PShip", "OBJ//PirateShip.obj");
 	PirateShip->textureID = LoadTGA("Image//PirateShipTexture.tga");
 	PirateShip->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
@@ -133,11 +134,13 @@ GameScene::GameScene()
 		// If it doesn't overlap, overlaps is still false, and will print out an island
 		if (overlaps == false)
 		{
+			// Makes 8 islands
 			if (numberofislands <= 8)
 			{
 				islands = new GameObject(Islands, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
 				meshList.push_back(islands);
 			}
+			// The rest of the array will be for parts
 			else
 			{
 				parts = new GameObject(Parts, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
@@ -145,7 +148,7 @@ GameScene::GameScene()
 				speedUp = new GameObject(SpeedUp, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
 				meshList.push_back(speedUp);
 			}
-
+			// Will show this if any islands overlaps
 			std::cout << "Island Overlapped, making a new one..." << std::endl;
 		}
 
@@ -161,6 +164,9 @@ static inline float DegreeToRadian(float value)
 {
 	return value * 3.142f / 180.0f;
 }
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
 
 void GameScene::RenderText(Mesh* mesh, std::string text, Color color)
 {
@@ -234,6 +240,9 @@ void GameScene::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	glEnable(GL_DEPTH_TEST);
 }
 			
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
+
 void GameScene::RenderUI(Mesh* mesh ,float size, float
 	x, float y) {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
@@ -272,6 +281,9 @@ void GameScene::RenderUI(Mesh* mesh ,float size, float
 inline void GameScene::SetGameText(Mesh* curtext)  {
 	gameText = curtext;
 }
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
 
 void GameScene::Init()
 {	
@@ -461,10 +473,13 @@ void GameScene::Init()
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
 }
 
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
+
 void GameScene::Init2()
 {
 	//Camera Init
-	camera.Init2(Vector3(10, 20, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init2(Vector3(10, 20, 0),Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -478,168 +493,6 @@ void GameScene::Init2()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
-	// Init VBO here
-	//m_programID =
-	//	LoadShaders("Shader//Texture.vertexshader", "Shader//Blending.fragmentshader");
-	//m_parameters[U_MVP] = glGetUniformLocation(m_programID, "MVP");
-	//m_parameters[U_MODELVIEW] = glGetUniformLocation(m_programID, "MV");
-	//m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE] =
-	//	glGetUniformLocation(m_programID, "MV_inverse_transpose");
-	//m_parameters[U_MATERIAL_AMBIENT] = glGetUniformLocation(m_programID,
-	//	"material.kAmbient");
-	//m_parameters[U_MATERIAL_DIFFUSE] = glGetUniformLocation(m_programID,
-	//	"material.kDiffuse");
-	//m_parameters[U_MATERIAL_SPECULAR] = glGetUniformLocation(m_programID,
-	//	"material.kSpecular");
-	//m_parameters[U_MATERIAL_SHININESS] = glGetUniformLocation(m_programID,
-	//	"material.kShininess");
-	//m_parameters[U_LIGHT0_POSITION] = glGetUniformLocation(m_programID,
-	//	"lights[0].position_cameraspace");
-	//m_parameters[U_LIGHT0_COLOR] = glGetUniformLocation(m_programID, "lights[0].color");
-	//m_parameters[U_LIGHT0_POWER] = glGetUniformLocation(m_programID,
-	//	"lights[0].power");
-	//m_parameters[U_LIGHT0_KC] = glGetUniformLocation(m_programID, "lights[0].kC");
-	//m_parameters[U_LIGHT0_KL] = glGetUniformLocation(m_programID, "lights[0].kL");
-	//m_parameters[U_LIGHT0_KQ] = glGetUniformLocation(m_programID, "lights[0].kQ");
-	//m_parameters[U_LIGHTENABLED] = glGetUniformLocation(m_programID, "lightEnabled");
-	//m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
-	//m_parameters[U_LIGHT0_TYPE] = glGetUniformLocation(m_programID, "lights[0].type");
-	//m_parameters[U_LIGHT0_SPOTDIRECTION] = glGetUniformLocation(m_programID,
-	//	"lights[0].spotDirection");
-	//m_parameters[U_LIGHT0_COSCUTOFF] = glGetUniformLocation(m_programID,
-	//	"lights[0].cosCutoff");
-	//m_parameters[U_LIGHT0_COSINNER] = glGetUniformLocation(m_programID,
-	//	"lights[0].cosInner");
-	//m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID,
-	//	"lights[0].exponent");
-
-	//m_parameters[U_LIGHT1_POSITION] = glGetUniformLocation(m_programID,
-	//	"lights[1].position_cameraspace");
-	//m_parameters[U_LIGHT1_COLOR] = glGetUniformLocation(m_programID, "lights[1].color");
-	//m_parameters[U_LIGHT1_POWER] = glGetUniformLocation(m_programID,
-	//	"lights[1].power");
-	//m_parameters[U_LIGHT1_KC] = glGetUniformLocation(m_programID, "lights[1].kC");
-	//m_parameters[U_LIGHT1_KL] = glGetUniformLocation(m_programID, "lights[1].kL");
-	//m_parameters[U_LIGHT1_KQ] = glGetUniformLocation(m_programID, "lights[1].kQ");
-
-	//m_parameters[U_LIGHT1_TYPE] = glGetUniformLocation(m_programID, "lights[1].type");
-	//m_parameters[U_LIGHT1_SPOTDIRECTION] = glGetUniformLocation(m_programID,
-	//	"lights[0].spotDirection");
-	//m_parameters[U_LIGHT1_COSCUTOFF] = glGetUniformLocation(m_programID,
-	//	"lights[0].cosCutoff");
-	//m_parameters[U_LIGHT1_COSINNER] = glGetUniformLocation(m_programID,
-	//	"lights[0].cosInner");
-	//m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID,
-	//	"lights[0].exponent");
-
-	//m_parameters[U_LIGHT2_POSITION] = glGetUniformLocation(m_programID,
-	//	"lights[2].position_cameraspace");
-	//m_parameters[U_LIGHT2_COLOR] = glGetUniformLocation(m_programID, "lights[2].color");
-	//m_parameters[U_LIGHT2_POWER] = glGetUniformLocation(m_programID,
-	//	"lights[2].power");
-	//m_parameters[U_LIGHT2_KC] = glGetUniformLocation(m_programID, "lights[2].kC");
-	//m_parameters[U_LIGHT2_KL] = glGetUniformLocation(m_programID, "lights[2].kL");
-	//m_parameters[U_LIGHT2_KQ] = glGetUniformLocation(m_programID, "lights[2].kQ");
-
-	//m_parameters[U_LIGHT2_TYPE] = glGetUniformLocation(m_programID, "lights[2].type");
-	//m_parameters[U_LIGHT2_SPOTDIRECTION] = glGetUniformLocation(m_programID,
-	//	"lights[2].spotDirection");
-	//m_parameters[U_LIGHT2_COSCUTOFF] = glGetUniformLocation(m_programID,
-	//	"lights[2].cosCutoff");
-	//m_parameters[U_LIGHT2_COSINNER] = glGetUniformLocation(m_programID,
-	//	"lights[2].cosInner");
-	//m_parameters[U_LIGHT2_EXPONENT] = glGetUniformLocation(m_programID,
-	//	"lights[2].exponent");
-
-	//m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID,
-	//	"colorTextureEnabled");
-	//m_parameters[U_COLOR_TEXTURE] = glGetUniformLocation(m_programID, "colorTexture");
-
-
-	//// Use our shader
-	//glUseProgram(m_programID);
-
-	//light[0].type = Light::LIGHT_POINT;
-	//light[0].position.Set(-16, 2, 0.5);
-	//light[0].color.Set(1, 1, 1);
-	//light[0].power = 0.5f;
-	//light[0].kC = 1.0f;
-	//light[0].kL = 0.01f;
-	//light[0].kQ = 0.001f;
-	//light[0].cosCutoff = cos(Math::DegreeToRadian(45));
-	//light[0].cosInner = cos(Math::DegreeToRadian(30));
-	//light[0].exponent = 3.0f;
-	//light[0].spotDirection.Set(0.f, 0.0f, 0.f);
-
-	//light[1].type = Light::LIGHT_DIRECTIONAL;
-	//light[1].position.Set(8, 20, 0.5);
-	//light[1].color.Set(1, 1, 1);
-	//light[1].power = 0.1f;
-	//light[1].kC = 1.0f;
-	//light[1].kL = 0.01f;
-	//light[1].kQ = 0.001f;
-	//light[1].cosCutoff = cos(Math::DegreeToRadian(45));
-	//light[1].cosInner = cos(Math::DegreeToRadian(30));
-	//light[1].exponent = 3.0f;
-	//light[1].spotDirection.Set(0.f, 0.0f, 0.f);
-
-	//light[2].type = Light::LIGHT_SPOT;
-	//light[2].position.Set(8, 20, 0.5);
-	//light[2].color.Set(0, 1, 0);
-	//light[2].power = 1.0f;
-	//light[2].kC = 0.1f;
-	//light[2].kL = 0.01f;
-	//light[2].kQ = 0.001f;
-	//light[2].cosCutoff = cos(Math::DegreeToRadian(10));
-	//light[2].cosInner = cos(Math::DegreeToRadian(30));
-	//light[2].exponent = 1.0f;
-	//light[2].spotDirection.Set(0.f, 1.0f, 0.f);
-
-
-
-	////Make sure you pass uniform parameters after glUseProgram()
-
-	//glUniform1i(m_parameters[U_NUMLIGHTS], 3);
-	//glUniform1i(m_parameters[U_LIGHT0_TYPE], light[0].type);
-	//glUniform3fv(m_parameters[U_LIGHT0_COLOR], 1, &light[0].color.r);
-	//glUniform1f(m_parameters[U_LIGHT0_POWER], light[0].power);
-	//glUniform1f(m_parameters[U_LIGHT0_KC], light[0].kC);
-	//glUniform1f(m_parameters[U_LIGHT0_KL], light[0].kL);
-	//glUniform1f(m_parameters[U_LIGHT0_KQ], light[0].kQ);
-	//glUniform1f(m_parameters[U_LIGHT0_COSCUTOFF], light[0].cosCutoff);
-	//glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
-	//glUniform1f(m_parameters[U_LIGHT0_EXPONENT], light[0].exponent);
-
-	//glUniform1i(m_parameters[U_LIGHT1_TYPE], light[1].type);
-	//glUniform3fv(m_parameters[U_LIGHT1_COLOR], 1, &light[1].color.r);
-	//glUniform1f(m_parameters[U_LIGHT1_POWER], light[1].power);
-	//glUniform1f(m_parameters[U_LIGHT1_KC], light[1].kC);
-	//glUniform1f(m_parameters[U_LIGHT1_KL], light[1].kL);
-	//glUniform1f(m_parameters[U_LIGHT1_KQ], light[1].kQ);
-	//glUniform1f(m_parameters[U_LIGHT1_COSCUTOFF], light[1].cosCutoff);
-	//glUniform1f(m_parameters[U_LIGHT1_COSINNER], light[1].cosInner);
-	//glUniform1f(m_parameters[U_LIGHT1_EXPONENT], light[1].exponent);
-
-	//glUniform1i(m_parameters[U_LIGHT2_TYPE], light[2].type);
-	//glUniform3fv(m_parameters[U_LIGHT2_COLOR], 1, &light[2].color.r);
-	//glUniform1f(m_parameters[U_LIGHT2_POWER], light[2].power);
-	//glUniform1f(m_parameters[U_LIGHT2_KC], light[2].kC);
-	//glUniform1f(m_parameters[U_LIGHT2_KL], light[2].kL);
-	//glUniform1f(m_parameters[U_LIGHT2_KQ], light[2].kQ);
-	//glUniform1f(m_parameters[U_LIGHT2_COSCUTOFF], light[2].cosCutoff);
-	//glUniform1f(m_parameters[U_LIGHT2_COSINNER], light[2].cosInner);
-	//glUniform1f(m_parameters[U_LIGHT2_EXPONENT], light[2].exponent);
-
-
-
-	//m_programID = LoadShaders("Shader//Texture.vertexshader",
-	//	"Shader//Text.fragmentshader");
-	//m_parameters[U_TEXT_ENABLED] = glGetUniformLocation(m_programID,
-	//	"textEnabled");
-	//m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
-	//	"textColor");
-
-	//glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
 }
 
 static double LSPEED = 10.0;
@@ -652,6 +505,9 @@ Vector3 ray_Clip;
 Vector3 curHitPoint;
 
 static double bounceTime = 0.0;
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
 
 void GameScene::Update(double dt)
 {
@@ -677,10 +533,6 @@ void GameScene::Update(double dt)
 	ship_01->translateX = (float)(2 * dt);
 	ship_01->translateY = (float)(2 * dt);
 	ship_01->translateZ = (float)(2 * dt);
-
-	ship_02->translateX = (float)(5 * dt);
-	ship_02->translateY = (float)(5 * dt);
-	ship_02->translateZ = (float)(5 * dt);
 
 	// control the ship_01
 	if (Application::IsKeyPressed(VK_UP)) // 270
@@ -735,59 +587,6 @@ void GameScene::Update(double dt)
 		bounceTime -= dt;
 	}
 
-	// control the ship_02
-	if (Application::IsKeyPressed(VK_NUMPAD5)) // 270
-	{
-		if (!(ship_02->GetPosition().x < -45) && !(ship_02->GetPosition().x > 45) && !(ship_02->GetPosition().z < -45) && !(ship_02->GetPosition().z > 45))
-		{
-
-		}
-
-		float direction = DegreeToRadian(ship_02->rotate);
-		pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
-		ship_02->SetPosition(pos);
-
-		if (Application::IsKeyPressed(VK_NUMPAD1)) // 0
-		{
-			ship_02->rotate += (int)(5);
-
-			if (ship_02->rotate >= 360)
-			{
-				ship_02->rotate = 0;
-			}
-
-			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
-		}
-		if (Application::IsKeyPressed(VK_NUMPAD3)) // 180
-		{
-			ship_02->rotate -= (int)(5);
-
-			if (ship_02->rotate <= 0)
-			{
-				ship_02->rotate = 360;
-			}
-
-			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
-		}
-	}
-	if (bounceTime <= 0)
-	{
-		if (Application::IsKeyPressed(VK_NUMPAD2) && !cannonOut_02) // shoot cannonball
-		{
-			cannonOut_02 = true;
-			cannon_02->rotate = ship_02->rotate;
-			ship_02->x = ship_02->GetPosition().x; // get position of ship
-			ship_02->z = ship_02->GetPosition().z;
-			bounceTime = 0.5;
-		}
-	}
-	else
-	{
-		bounceTime -= dt;
-	}
-
 	if (cannonOut_01)
 	{
 		if (cannon_01->translateX == 0 && cannon_01->translateZ == 0) // && cannon_01->translateY == 0
@@ -823,12 +622,172 @@ void GameScene::Update(double dt)
 		cannon_01->SetPosition(pos);
 	}
 
+	if (Application::IsKeyPressed('R'))
+	{
+		Vector3 initial;
+		// ship_01
+		ship_01->rotate = 90;
+		ship_01->scaleObject = 0;
+		ship_01->translateX = 0;
+		ship_01->translateY = 0;
+		ship_01->translateZ = 0;
+
+		initial.Set(2, 0, -2);
+		ship_01->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_01->SetRotation(initial, ship_01->rotate);
+		initial.Set(0.1, 0.1, 0.1);
+		ship_01->SetScale(initial);
+
+	}
+
+
+	/*if (Application::IsKeyPressed(VK_NUMPAD1)) {
+		glEnable(GL_CULL_FACE);
+	}
+	else if (Application::IsKeyPressed(VK_NUMPAD2)) {
+		glDisable(GL_CULL_FACE);
+	}
+	else if (Application::IsKeyPressed(VK_NUMPAD3)) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+	else if (Application::IsKeyPressed(VK_NUMPAD4)) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}*/
+}
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
+
+void GameScene::Update2(double dt)
+{
+	//Camera Logic
+	camera.Update((float)dt);
+	float yaw = DegreeToRadian(ship_02->rotate);
+	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
+	Vector3 position = ship_02->GetPosition() - direction * 3;
+	camera.SetTarget(ship_02->GetPosition().x, ship_02->GetPosition().y + 1, ship_02->GetPosition().z);
+	camera.SetPosition(position.x, position.y + 1, position.z);
+
+	//Game Logic
+	sceneFPS = 1.0f / (float)dt;
+	double mouseX, mouseY;
+	Application::GetMousePos(mouseX, mouseY);
+
+	// ship stuff
+	Vector3 pos, rot, scale;
+
+	ship_02->translateX = (float)(2 * dt);
+	ship_02->translateY = (float)(2 * dt);
+	ship_02->translateZ = (float)(2 * dt);
+
+	// control the ship_02
+
+	position = ship_02->GetPosition() - direction * 3;
+	camera.SetTarget(ship_02->GetPosition().x, ship_02->GetPosition().y + 1, ship_02->GetPosition().z);
+	camera.SetPosition(position.x, position.y + 1, position.z);
+
+	//if (Application::IsKeyPressed(VK_NUMPAD5)) // 270
+	//{
+	//	if (!(ship_02->GetPosition().x < -45) && !(ship_02->GetPosition().x > 45) && !(ship_02->GetPosition().z < -45) && !(ship_02->GetPosition().z > 45))
+	//	{
+
+	//	}
+
+	//	float direction = DegreeToRadian(ship_02->rotate);
+	//	pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
+	//	ship_02->SetPosition(pos);
+
+	//	if (Application::IsKeyPressed(VK_NUMPAD1)) // 0
+	//	{
+	//		ship_02->rotate += (int)(5);
+
+	//		if (ship_02->rotate >= 360)
+	//		{
+	//			ship_02->rotate = 0;
+	//		}
+
+	//		rot.Set(0, 1, 0);
+	//		ship_02->SetRotation(rot, ship_02->rotate);
+	//	}
+	//	if (Application::IsKeyPressed(VK_NUMPAD3)) // 180
+	//	{
+	//		ship_02->rotate -= (int)(5);
+
+	//		if (ship_02->rotate <= 0)
+	//		{
+	//			ship_02->rotate = 360;
+	//		}
+
+	//		rot.Set(0, 1, 0);
+	//		ship_02->SetRotation(rot, ship_02->rotate);
+	//	}
+	//}
+
+	if (Application::IsKeyPressed('W')) // 270
+	{
+		if (!(ship_02->GetPosition().x - 1 < -45) && !(ship_02->GetPosition().x + 1 > 45) && !(ship_02->GetPosition().z - 1 < -45) && !(ship_02->GetPosition().z + 1 > 45))
+		{
+
+		}
+
+		float direction = DegreeToRadian(ship_02->rotate);
+		pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
+		ship_02->SetPosition(pos);
+
+		if (Application::IsKeyPressed('A')) // 0
+		{
+			ship_02->rotate += (int)(2);
+
+			if (ship_02->rotate >= 360)
+			{
+				ship_02->rotate = 0;
+			}
+
+			rot.Set(0, 1, 0);
+			ship_02->SetRotation(rot, ship_02->rotate);
+		}
+	}
+
+		if (Application::IsKeyPressed('D')) // 180
+		{
+			ship_02->rotate -= (int)(2);
+
+			if (ship_02->rotate <= 0)
+			{
+				ship_02->rotate = 360;
+			}
+
+			rot.Set(0, 1, 0);
+			ship_02->SetRotation(rot, ship_02->rotate);
+		}
+
+		if (bounceTime <= 0)
+		{
+			if (Application::IsKeyPressed('S') && !cannonOut_02) // shoot cannonball
+			{
+				cannonOut_02 = true;
+				cannon_02->rotate = ship_02->rotate;
+				ship_02->x = ship_02->GetPosition().x; // get position of ship
+				ship_02->z = ship_02->GetPosition().z;
+				bounceTime = 0.5;
+			}
+		}
+		else
+		{
+			bounceTime -= dt;
+		}
+
 	if (cannonOut_02)
 	{
 		if (cannon_02->translateX == 0 && cannon_02->translateZ == 0) // && cannon_02->translateY == 0
 		{
 			GameSound::instance()->PaintSplat->setDefaultVolume(1.f);
 			GameSound::instance()->engine->play2D(GameSound::instance()->PaintSplat, false);
+		}
+		else
+		{
+			bounceTime -= dt;
 		}
 
 		cannon_02->translateX += (float)(15 * dt);
@@ -860,32 +819,10 @@ void GameScene::Update(double dt)
 		cannon_02->SetPosition(pos);
 	}
 
-	if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
-	{
-		//ship_01->scaleObject += (float)(1.5 * dt);
-		ship_02->scaleObject = 0.25;
-		scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
-		ship_02->SetScale(scale);
-	}
-
 	if (Application::IsKeyPressed('R'))
 	{
 		Vector3 initial;
-		// ship_01
-		ship_01->rotate = 90;
-		ship_01->scaleObject = 0;
-		ship_01->translateX = 0;
-		ship_01->translateY = 0;
-		ship_01->translateZ = 0;
 
-		initial.Set(2, 0, -2);
-		ship_01->SetPosition(initial);
-		initial.Set(0, 1, 0);
-		ship_01->SetRotation(initial, ship_01->rotate);
-		initial.Set(0.1, 0.1, 0.1);
-		ship_01->SetScale(initial);
-
-		// ship_02
 		ship_02->rotate = 90;
 		ship_02->scaleObject = 0;
 		ship_02->translateX = 0;
@@ -900,55 +837,17 @@ void GameScene::Update(double dt)
 		ship_02->SetScale(initial);
 	}
 
-
-	/*if (Application::IsKeyPressed(VK_NUMPAD1)) {
-		glEnable(GL_CULL_FACE);
-	}
-	else if (Application::IsKeyPressed(VK_NUMPAD2)) {
-		glDisable(GL_CULL_FACE);
-	}
-	else if (Application::IsKeyPressed(VK_NUMPAD3)) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
-	else if (Application::IsKeyPressed(VK_NUMPAD4)) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}*/
-
-	if (Application::IsKeyPressed('I'))
-		light[0].position.z -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('K'))
-		light[0].position.z += (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('J'))
-		light[0].position.x -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('L'))
-		light[0].position.x += (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('O'))
-		light[0].position.y -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('P'))
-		light[0].position.y += (float)(LSPEED * dt);
-
-	if (bounceTime <= 0.0) {
-		if (Application::IsKeyPressed('G')) {
-			openShop = !openShop;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('1')) {
-			shopItem = 1;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('2')) {
-			shopItem = 2;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('3')) {
-			shopItem = 3;
-			bounceTime = 0.5;
-		}
-	}
-	else {
-		bounceTime -= dt;
+	if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
+	{
+		//ship_01->scaleObject += (float)(1.5 * dt);
+		ship_02->scaleObject = 0.25;
+		scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
+		ship_02->SetScale(scale);
 	}
 }
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
 
 void GameScene::RenderMesh(GameObject* curType, bool enableLight)
 {
@@ -1043,22 +942,25 @@ void GameScene::RenderMesh(GEOMETRY_TYPE curType, bool enableLight)
 	}
 }
 
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
+
 void GameScene::Render()
 {
 	// Render VBO here
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 1, 1);
 
+	//viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
+
 
 	modelStack.LoadIdentity();
 
 	viewStack.LoadIdentity();
 
-
-
 	glEnable(GL_SCISSOR_TEST);
-
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
+
 
 	glViewport(0, 0, 1920 / 2, 1440);
 	glScissor(0, 0, 1920 / 2, 1440);
@@ -1160,11 +1062,25 @@ void GameScene::Render()
 
 
 	glDisable(GL_SCISSOR_TEST);
+}
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
+
+void GameScene::Render2()
+{
+
+	//viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 
 
+	modelStack.LoadIdentity();
+
+	viewStack.LoadIdentity();
 
 
 	glEnable(GL_SCISSOR_TEST);
+
+	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 
 	glViewport(1920 / 2, 0, 1920 / 2, 1440);
 	glScissor(1920 / 2, 0, 1920 / 2, 1440);
@@ -1268,6 +1184,9 @@ void GameScene::Render()
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
 }
+
+//************************************************************************************************************************************************************
+//************************************************************************************************************************************************************
 
 void GameScene::Exit()
 {
