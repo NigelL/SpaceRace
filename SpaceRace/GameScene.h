@@ -119,7 +119,7 @@ private:
 	Light light[3];
 	Camera3 camera;
 
-
+	void SpawnPowerUp();
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 
