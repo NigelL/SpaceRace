@@ -130,12 +130,16 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float
 		x, float y);
+	
 
 
 public:
 	virtual void Init();
+	virtual void Init2();
 	virtual void Update(double dt);
+	virtual void Update2(double dt);
 	virtual void Render();
+	virtual void Render2();
 	virtual void Exit();
 
 };
