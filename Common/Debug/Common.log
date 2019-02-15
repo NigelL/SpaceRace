@@ -1,14 +1,1 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\common\debug\common.pdb' is denied.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\common\debug\common.idb' is denied.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\debug\common.pdb' is denied.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\common\debug\common.tlog\cl.read.1.tlog' is denied.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\common\debug\common.tlog\cl.write.1.tlog' is denied.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\common\debug\common.tlog\lib-link.read.1.tlog' is denied.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppClean.targets(76,5): warning : Access to the path 'd:\users\l533\desktop\cgp\spacerace\common\debug\common.tlog\lib-link.write.1.tlog' is denied.
-  Vector3.cpp
-  timer.cpp
-  Mtx44.cpp
-  MatrixStack.cpp
-  Generating Code...
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(356,5): error MSB6003: The specified task executable "CL.exe" could not be run. The requested operation cannot be performed on a file with a user-mapped section open.
-C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(356,5): error MSB6003: 
+﻿  Common.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\Common.lib

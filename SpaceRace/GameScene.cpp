@@ -29,7 +29,7 @@ GameScene::GameScene()
 	Ship_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 	Ship_01->material.kShininess = 1.0f;
 	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	ship_01->SetBounds(Vector3(0.5f, 0.5f, 2.0f));
+	ship_01->SetBounds(Vector3(2.0f, 2.0f, 2.0f));
 
 	meshList.push_back(ship_01);
 
@@ -44,7 +44,7 @@ GameScene::GameScene()
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	curWater->waterMesh = curMesh;
-	meshList.push_back(new GameObject(curMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
+	meshList.push_back(new GameObject(curMesh, Vector3(-50, -2.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
 	
 
 
@@ -144,7 +144,7 @@ GameScene::GameScene()
 			if (numberofislands <= 8)
 			{
 				islands = new GameObject(Islands, Vector3(islandposx, -2, islandposz), 0, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
-				islands->SetBounds(Vector3(2.5f, 2.5f, 2.5f));
+				islands->SetBounds(Vector3(2.5f,2.5f, 2.5f));
 				meshList.push_back(islands);
 			}
 			else
@@ -483,21 +483,25 @@ void GameScene::Update(double dt)
 
 
 	for (int j = 0; j < meshList.size(); j++) {
+		/*
 		for (int i = 0; i < meshList.size(); i++) {
 			if (i == j) { continue; }
 			meshList[i]->CheckCollision(*meshList[j]);
 		}
+		*/
+		if (j == 0) { continue; }
+		meshList[0]->CheckCollision(*meshList[j]);
 	}
 
 	short int multipler = 1;
 
 	//Camera Logic
-	camera.Update((float)dt);
+	//camera.Update((float)dt);
 	float yaw = DegreeToRadian(ship_01->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = ship_01->GetPosition() - direction * 3;
-//	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
-	//camera.SetPosition(position.x, position.y + 1, position.z);
+	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
+	camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
 	sceneFPS = 1.0f / (float)dt;
@@ -929,244 +933,231 @@ void GameScene::Render()
 	glClearColor(0, 0, 1, 1);
 
 
-
 	modelStack.LoadIdentity();
 
 	viewStack.LoadIdentity();
 
-	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z,
-		camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y,
-		camera.up.z);
-	
 
-		if (light[0].type == Light::LIGHT_DIRECTIONAL)
-		{
-			Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
-			Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
-				&lightDirection_cameraspace.x);
-		}
-		else if (light[0].type == Light::LIGHT_SPOT)
-		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
-			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
-				&lightPosition_cameraspace.x);
-			Vector3 spotDirection_cameraspace = viewStack.Top() *
-				light[0].spotDirection;
-			glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1,
-				&spotDirection_cameraspace.x);
-		}
-		else
-		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
-			glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
-				&lightPosition_cameraspace.x);
-		}
+	glEnable(GL_SCISSOR_TEST);
 
-		if (light[1].type == Light::LIGHT_DIRECTIONAL)
-		{
-			Vector3 lightDir(light[1].position.x, light[1].position.y, light[1].position.z);
-			Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-			glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
-				&lightDirection_cameraspace.x);
-		}
-		else if (light[1].type == Light::LIGHT_SPOT)
-		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-			glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
-				&lightPosition_cameraspace.x);
-			Vector3 spotDirection_cameraspace = viewStack.Top() *
-				light[1].spotDirection;
-			glUniform3fv(m_parameters[U_LIGHT1_SPOTDIRECTION], 1,
-				&spotDirection_cameraspace.x);
-		}
-		else
-		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-			glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
-				&lightPosition_cameraspace.x);
-		}
+	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 
-		if (light[2].type == Light::LIGHT_DIRECTIONAL)
-		{
-			Vector3 lightDir(light[2].position.x, light[2].position.y, light[2].position.z);
-			Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-			glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
-				&lightDirection_cameraspace.x);
-		}
-		else if (light[2].type == Light::LIGHT_SPOT)
-		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[2].position;
-			glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
-				&lightPosition_cameraspace.x);
-			Vector3 spotDirection_cameraspace = viewStack.Top() *
-				light[2].spotDirection;
-			glUniform3fv(m_parameters[U_LIGHT2_SPOTDIRECTION], 1,
-				&spotDirection_cameraspace.x);
-		}
-		else
-		{
-			Position lightPosition_cameraspace = viewStack.Top() * light[2].position;
-			glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
-				&lightPosition_cameraspace.x);
-		}
+	glViewport(0, 0, 1920 / 2, 1440);
+	glScissor(0, 0, 1920 / 2, 1440);
 
-	
+	if (light[0].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
+			&lightDirection_cameraspace.x);
+	}
+	else if (light[0].type == Light::LIGHT_SPOT)
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
+			&lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() *
+			light[0].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1,
+			&spotDirection_cameraspace.x);
+	}
+	else
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
+			&lightPosition_cameraspace.x);
+	}
 
-	
+	if (light[1].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[1].position.x, light[1].position.y, light[1].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
+			&lightDirection_cameraspace.x);
+	}
+	else if (light[1].type == Light::LIGHT_SPOT)
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
+		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
+			&lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() *
+			light[1].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT1_SPOTDIRECTION], 1,
+			&spotDirection_cameraspace.x);
+	}
+	else
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
+		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
+			&lightPosition_cameraspace.x);
+	}
 
-	//Skybox
-	/*
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -600);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180,1,0,0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 0, 1, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-	
-	RenderMesh(GEO_FRONT, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
+	if (light[2].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[2].position.x, light[2].position.y, light[2].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
+			&lightDirection_cameraspace.x);
+	}
+	else if (light[2].type == Light::LIGHT_SPOT)
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[2].position;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
+			&lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() *
+			light[2].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT2_SPOTDIRECTION], 1,
+			&spotDirection_cameraspace.x);
+	}
+	else
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[2].position;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
+			&lightPosition_cameraspace.x);
+	}
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 600);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_BACK, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Translate(-700, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_LEFT, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(700, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(180, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 0, 1, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_RIGHT, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Translate(200, 700, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(90,1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(1000, 1000, 1000);
-
-	RenderMesh(GEO_TOP, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-200, -700, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(90, -1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(2000, 2000, 2000);
-
-	RenderMesh(GEO_BOTTOM, false);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-
-	*/
-
-
-	//Render Floor
-	/*
-	modelStack.PushMatrix();
-	modelStack.Translate(0, -1, 0);
-	modelStack.PushMatrix();
-	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.PushMatrix();
-	modelStack.Scale(50, 50, 50);
-		
-	RenderMesh(GEO_QUAD, true);
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	modelStack.PopMatrix();
-	*/
-
-	
 
 
 	for (int i = 0; i < (int)meshList.size(); i++) {
-		
-		
-			for (int j = 0; j < 8; j++) {
 
-				
-				modelStack.PushMatrix();
-				modelStack.Translate(meshList[i]->allBounds[j].x, meshList[i]->allBounds[j].y, meshList[i]->allBounds[j].z);
+		for (int j = 0; j < 8; j++) {
 
-				modelStack.PushMatrix();
-				modelStack.Scale(0.1f, 0.1f, 0.1f);
-				RenderMesh(curCube, false);
-				modelStack.PopMatrix();
-				modelStack.PopMatrix();
-			}
-	
-		
-		
+
+			modelStack.PushMatrix();
+			modelStack.Translate(meshList[i]->GetPosition().x + meshList[i]->allBounds[j].x, meshList[i]->GetPosition().y + meshList[i]->allBounds[j].y, meshList[i]->GetPosition().z + meshList[i]->allBounds[j].z);
+
+			modelStack.PushMatrix();
+			modelStack.Scale(0.1f, 0.1f, 0.1f);
+			RenderMesh(curCube, false);
+			modelStack.PopMatrix();
+			modelStack.PopMatrix();
+		}
 
 		modelStack.PushMatrix();
-		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);		
+		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);
 
 		modelStack.PushMatrix();
-		modelStack.Rotate(meshList[i]->GetAmt(),meshList[i]->GetRotation().x / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().y / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().z / meshList[i]->GetRotation().Length());
-		
+		modelStack.Rotate(meshList[i]->GetAmt(), meshList[i]->GetRotation().x / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().y / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().z / meshList[i]->GetRotation().Length());
+
 
 		modelStack.PushMatrix();
 		modelStack.Scale(meshList[i]->GetScale().x, meshList[i]->GetScale().y, meshList[i]->GetScale().z);
 
 		RenderMesh(meshList[i], true);
-		
+
 		modelStack.PopMatrix();
 		modelStack.PopMatrix();
 		modelStack.PopMatrix();
 	}
 
-	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
-
+	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS), Color(0, 1, 0), 30, 0, 28);
 	RenderTextOnScreen(gameText, "Collisions : " + std::to_string(meshList[0]->collidedList.size()), Color(0, 1, 0), 30, 0, 10);
 
-	//modelStack.PushMatrix();
-	//modelStack.Translate(0, 5, 0);
-	//meshList[GEO_PIKACHUEARS]->Render();
+
+	glDisable(GL_SCISSOR_TEST);
 
 
-	//modelStack.PopMatrix();
+	glEnable(GL_SCISSOR_TEST);
 
+	glViewport(1920 / 2, 0, 1920 / 2, 1440);
+	glScissor(1920 / 2, 0, 1920 / 2, 1440);
+
+	if (light[0].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[0].position.x, light[0].position.y, light[0].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
+			&lightDirection_cameraspace.x);
+	}
+	else if (light[0].type == Light::LIGHT_SPOT)
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
+			&lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() *
+			light[0].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT0_SPOTDIRECTION], 1,
+			&spotDirection_cameraspace.x);
+	}
+	else
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
+		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1,
+			&lightPosition_cameraspace.x);
+	}
+
+	if (light[1].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[1].position.x, light[1].position.y, light[1].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
+			&lightDirection_cameraspace.x);
+	}
+	else if (light[1].type == Light::LIGHT_SPOT)
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
+		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
+			&lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() *
+			light[1].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT1_SPOTDIRECTION], 1,
+			&spotDirection_cameraspace.x);
+	}
+	else
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
+		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1,
+			&lightPosition_cameraspace.x);
+	}
+
+	if (light[2].type == Light::LIGHT_DIRECTIONAL)
+	{
+		Vector3 lightDir(light[2].position.x, light[2].position.y, light[2].position.z);
+		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
+			&lightDirection_cameraspace.x);
+	}
+	else if (light[2].type == Light::LIGHT_SPOT)
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[2].position;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
+			&lightPosition_cameraspace.x);
+		Vector3 spotDirection_cameraspace = viewStack.Top() *
+			light[2].spotDirection;
+		glUniform3fv(m_parameters[U_LIGHT2_SPOTDIRECTION], 1,
+			&spotDirection_cameraspace.x);
+	}
+	else
+	{
+		Position lightPosition_cameraspace = viewStack.Top() * light[2].position;
+		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
+			&lightPosition_cameraspace.x);
+	}
+
+
+	for (int i = 0; i < (int)meshList.size(); i++) {
+
+		modelStack.PushMatrix();
+		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);
+
+		modelStack.PushMatrix();
+		modelStack.Rotate(meshList[i]->GetAmt(), meshList[i]->GetRotation().x / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().y / meshList[i]->GetRotation().Length(), meshList[i]->GetRotation().z / meshList[i]->GetRotation().Length());
+
+
+		modelStack.PushMatrix();
+		modelStack.Scale(meshList[i]->GetScale().x, meshList[i]->GetScale().y, meshList[i]->GetScale().z);
+
+		RenderMesh(meshList[i], true);
+
+		modelStack.PopMatrix();
+		modelStack.PopMatrix();
+		modelStack.PopMatrix();
+	}
+
+	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS), Color(0, 1, 0), 30, 0, 28);
+
+	glDisable(GL_SCISSOR_TEST);
 
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
