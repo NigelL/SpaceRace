@@ -78,6 +78,24 @@
     <ClCompile Include="Camera3.cpp">
       <Filter>Source Files\src\camera</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Source Files\src\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthConsumable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CShipStats.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeedConsumable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Consumable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vertex.h">
@@ -130,6 +148,24 @@
     </ClInclude>
     <ClInclude Include="Camera3.h">
       <Filter>Source Files\src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Source Files\src\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectFactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CShipStats.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeedConsumable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthConsumable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Consumable.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

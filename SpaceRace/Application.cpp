@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "Scene.h";
 #include "GameScene.h"
+#include "MainMenuScene.h"
 #include "GameSound.h"
 
 
@@ -133,11 +134,27 @@ void Application::GetMousePos(double& x, double& y) {
 
 void Application::Run()
 {
+	//MainMenuScene MainMenu;
+	//Scene* scene = new MainMenuScene();
+	//scene->Init();
+	//if (MainMenuScene::getPlay())
+	//{
+	//	if (MainMenu.singleplayer)
+	//	{
+	//		Scene* scene = new GameScene();
+	//		scene->Init();
+	//	}
+	//	if (MainMenu.multiplayer)
+	//	{
+	//		Scene* scene2 = scene;
+	//		scene2->Init2();			
+	//	}
+	//}
+
 	Scene* scene = new GameScene();
 	scene->Init();
 	Scene* scene2 = scene;
 	scene2->Init2();
-
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 
 
