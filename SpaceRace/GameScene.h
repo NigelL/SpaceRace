@@ -121,6 +121,8 @@ private:
 
 
 	void RenderMesh(GameObject* curMesh, bool enableLight);
+	void RenderMesh(Mesh* curMesh, bool enableLight);
+
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
 
 	void RenderUI(Mesh* mesh, float size, float x, float y);

@@ -8,10 +8,6 @@ Water::Water()
 }
 
 
-float Deg2Rad(float curDeg) {
-	return (3.1415f / 180.0f) * curDeg;
-}
-
 
 void Water::UpdateWater(int lengthX,float dt) {
 	if (slowDelay <= 0) {

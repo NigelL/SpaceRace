@@ -1,18 +1,45 @@
-﻿  GameScene.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(36): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(45): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(54): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(63): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(72): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(121): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(126): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(89): warning C4101: 'islandz': unreferenced local variable
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(89): warning C4101: 'islandx': unreferenced local variable
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(454): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(618): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(655): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(681): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(695): warning C4305: 'argument': truncation from 'double' to 'float'
-  SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.exe
-  SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)
+﻿  Water.cpp
+d:\users\l533\desktop\cgp\spacerace\spacerace\water.cpp(14): warning C4018: '<': signed/unsigned mismatch
+  Utility.cpp
+  shader.cpp
+  MeshBuilder.cpp
+d:\users\l533\desktop\cgp\spacerace\spacerace\meshbuilder.cpp(253): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\meshbuilder.cpp(254): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\meshbuilder.cpp(255): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\meshbuilder.cpp(257): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\meshbuilder.cpp(258): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\meshbuilder.cpp(259): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  Mesh.cpp
+  main.cpp
+  LoadTGA.cpp
+  LoadOBJ.cpp
+  GameSound.cpp
+  GameScene.cpp
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(31): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(57): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(66): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(75): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(84): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(93): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(103): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(146): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(152): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(154): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(113): warning C4101: 'islandz': unreferenced local variable
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(113): warning C4101: 'islandx': unreferenced local variable
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(482): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(485): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(486): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(655): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(692): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(718): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\cgp\spacerace\spacerace\gamescene.cpp(732): warning C4305: 'argument': truncation from 'double' to 'float'
+  GameObject.cpp
+  Camera3.cpp
+  Camera2.cpp
+  Camera.cpp
+  Application.cpp
+d:\users\l533\desktop\cgp\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+D:\Users\l533\Desktop\CGP\SpaceRace\SpaceRace\Application.cpp : fatal error C1083: Cannot open compiler generated file: 'D:\Users\l533\Desktop\CGP\SpaceRace\SpaceRace\Debug\Application.obj': Invalid argument

@@ -1,5 +1,7 @@
 #include "GameScene.h"
 
+#define SIZE 5
+
 Water* curWater = new Water();
 GameObject* ship_01;
 GameObject* ship_02;
@@ -11,9 +13,26 @@ GameObject* cannon_02;
 bool cannonOut_01 = false;
 bool cannonOut_02 = false;
 
+GameObject* speedUp;
+Mesh* curCube;
+
 GameScene::GameScene()
 {
 	srand(time(0));
+
+
+	curCube = MeshBuilder::GenerateCube("Cube", Color(1, 1, 1), 1, 1, 1);
+	Mesh* Ship_01 = MeshBuilder::GenerateOBJ("ship 01", "OBJ//ship.obj");
+	Ship_01->textureID = LoadTGA("Image//ship.tga");
+	Ship_01->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+	Ship_01->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Ship_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+	Ship_01->material.kShininess = 1.0f;
+	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	ship_01->SetBounds(Vector3(0.5f, 0.5f, 2.0f));
+
+	meshList.push_back(ship_01);
+
 
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
@@ -27,14 +46,7 @@ GameScene::GameScene()
 	curWater->waterMesh = curMesh;
 	meshList.push_back(new GameObject(curMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
 	
-	Mesh* Ship_01 = MeshBuilder::GenerateOBJ("ship 01", "OBJ//ship.obj");
-	Ship_01->textureID = LoadTGA("Image//ship.tga");
-	Ship_01->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-	Ship_01->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-	Ship_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-	Ship_01->material.kShininess = 1.0f;
-	ship_01 = new GameObject(Ship_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(ship_01);
+
 
 	Mesh* Ship_02 = MeshBuilder::GenerateOBJ("ship 02", "OBJ//ship2.obj");
 	Ship_02->textureID = LoadTGA("Image//ship2.tga");
@@ -78,6 +90,8 @@ GameScene::GameScene()
 	Islands->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	Islands->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	Islands->material.kShininess = 1.0f;
+	islands = new GameObject(Islands, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	islands->SetBounds(Vector3(0.5f, 0.5f, 0.5f));
 
 	Mesh* Parts = MeshBuilder::GenerateOBJ("Parts", "OBJ//Parts.obj");
 	Parts->textureID = LoadTGA("Image//PartsTexture.tga");
@@ -85,6 +99,16 @@ GameScene::GameScene()
 	Parts->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	Parts->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	Parts->material.kShininess = 1.0f;
+
+	parts = new GameObject(Parts, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
+	meshList.push_back(parts);
+
+	Mesh* SpeedUp = MeshBuilder::GenerateOBJ("Speed Up", "OBJ//SpeedUp.obj");
+	SpeedUp->textureID = LoadTGA("Image//SpeedUpTexture.tga");
+	SpeedUp->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
+	SpeedUp->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
+	SpeedUp->material.kShininess = 1.0f;
 
 	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
 
@@ -113,18 +137,22 @@ GameScene::GameScene()
 			}
 		}
 
-		// If it doesn't overlap, overlaps is still fase, and will print out an island
+
+		// If it doesn't overlap, overlaps is still false, and will print out an island
 		if (overlaps == false)
 		{
 			if (numberofislands <= 8)
 			{
-				islands = new GameObject(Islands, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				islands = new GameObject(Islands, Vector3(islandposx, -2, islandposz), 0, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				islands->SetBounds(Vector3(2.5f, 2.5f, 2.5f));
 				meshList.push_back(islands);
 			}
 			else
 			{
 				parts = new GameObject(Parts, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
 				meshList.push_back(parts);
+				speedUp = new GameObject(SpeedUp, Vector3(islandposx, 0, islandposz), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+				meshList.push_back(speedUp);
 			}
 
 			std::cout << "Island Overlapped, making a new one..." << std::endl;
@@ -453,14 +481,23 @@ void GameScene::Update(double dt)
 {
 	curWater->UpdateWater(10, dt);
 
+
+	for (int j = 0; j < meshList.size(); j++) {
+		for (int i = 0; i < meshList.size(); i++) {
+			if (i == j) { continue; }
+			meshList[i]->CheckCollision(*meshList[j]);
+		}
+	}
+
 	short int multipler = 1;
+
 	//Camera Logic
 	camera.Update((float)dt);
 	float yaw = DegreeToRadian(ship_01->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = ship_01->GetPosition() - direction * 3;
-	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y, ship_01->GetPosition().z);
-	camera.SetPosition(position.x, position.y + 1, position.z);
+//	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
+	//camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
 	sceneFPS = 1.0f / (float)dt;
@@ -794,6 +831,52 @@ void GameScene::RenderMesh(GameObject* curType, bool enableLight)
 	}
 }
 
+void GameScene::RenderMesh(Mesh* curMesh, bool enableLight) {
+	Mtx44 modelView, modelView_inverse_transpose;
+	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
+	Mtx44 posPM = projectionStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
+	modelView = viewStack.Top() * modelStack.Top();
+
+	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
+	if (enableLight)
+	{
+		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
+		glUniform1i(m_parameters[U_LIGHT1ENABLED], 1);
+		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
+		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE,
+			&modelView_inverse_transpose.a[0]);
+		//load material
+		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &curMesh->material.kAmbient.r);
+		glUniform3fv(m_parameters[U_MATERIAL_DIFFUSE], 1, &curMesh->material.kDiffuse.r);
+		glUniform3fv(m_parameters[U_MATERIAL_SPECULAR], 1, &curMesh->material.kSpecular.r);
+		glUniform1f(m_parameters[U_MATERIAL_SHININESS], curMesh->material.kShininess);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
+		glUniform1i(m_parameters[U_LIGHT1ENABLED], 0);
+	}
+	if (curMesh->textureID > 0)
+	{
+		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, curMesh->textureID);
+		glUniform1i(m_parameters[U_COLOR_TEXTURE], 0);
+	}
+	else
+	{
+		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 0);
+	}
+
+	curMesh->Render();
+
+	if (curMesh->textureID > 0)
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+}
+
 void GameScene::RenderMesh(GEOMETRY_TYPE curType, bool enableLight)
 {	
 	Mtx44 modelView, modelView_inverse_transpose;
@@ -1034,8 +1117,28 @@ void GameScene::Render()
 	modelStack.PopMatrix();
 	*/
 
+	
+
+
 	for (int i = 0; i < (int)meshList.size(); i++) {
 		
+		
+			for (int j = 0; j < 8; j++) {
+
+				
+				modelStack.PushMatrix();
+				modelStack.Translate(meshList[i]->allBounds[j].x, meshList[i]->allBounds[j].y, meshList[i]->allBounds[j].z);
+
+				modelStack.PushMatrix();
+				modelStack.Scale(0.1f, 0.1f, 0.1f);
+				RenderMesh(curCube, false);
+				modelStack.PopMatrix();
+				modelStack.PopMatrix();
+			}
+	
+		
+		
+
 		modelStack.PushMatrix();
 		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);		
 
@@ -1055,6 +1158,7 @@ void GameScene::Render()
 
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS)  , Color(0, 1, 0), 30, 0, 28);
 
+	RenderTextOnScreen(gameText, "Collisions : " + std::to_string(meshList[0]->collidedList.size()), Color(0, 1, 0), 30, 0, 10);
 
 	//modelStack.PushMatrix();
 	//modelStack.Translate(0, 5, 0);
