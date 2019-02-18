@@ -15,7 +15,7 @@ void Camera2::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->position = defaultPosition = pos;
 	this->target = defaultTarget = target;
 	Vector3 view = (target - position).Normalized();
-	position = -view * 25.0f;
+	position = -view * 2.0f;
 	Vector3 right = view.Cross(up);
 	right.y = 0;
 	right.Normalize();
@@ -24,30 +24,36 @@ void Camera2::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 
 void Camera2::Update(double dt)
 {
-	static const float CAMERA_SPEED = 50.f;
+	static const float CAMERA_SPEED = 2.5f;
 
 	view = target - position;
 	right = view.Cross(up);
 	
 	
 	
-		if (Application::IsKeyPressed('A') && position.z <= 100.0f) {
+		if (Application::IsKeyPressed('A')) {
+			Mtx44 rot;
+			rot.SetToRotation(1.0f * CAMERA_SPEED, up.x, up.y, up.z);
+			position = rot * position;
+			//target = position + view;
+		}
+		if (Application::IsKeyPressed('D')) {
+			Mtx44 rot;
+			rot.SetToRotation(-1.0f * CAMERA_SPEED, up.x, up.y, up.z);
+			position = rot * position;
+			//target = position + view;
 			
-			position = position - right * (float)dt;
-			target = position + view;
 		}
-		if (Application::IsKeyPressed('D') && position.z >= -100.0f) {
-			position = position + right * (float)dt;
-			target = position + view;
-			
+		if (Application::IsKeyPressed('W')) {
+			Mtx44 rot;
+			rot.SetToRotation(1.0f * CAMERA_SPEED, right.x, right.y, right.z);
+			position = rot * position;
+			//target = position + view;
 		}
-		if (Application::IsKeyPressed('W') && position.x >= -100.0f) {
-			position = position - Vector3(20.0f, 0, 0) * (float)dt;
-			target = position + view;
-		}
-		if (Application::IsKeyPressed('S') && position.x <= 100.0f) {
-			position = position + Vector3(20.0f, 0, 0) * (float)dt;
-			target = position + view;			
+		if (Application::IsKeyPressed('S')) {
+			Mtx44 rot;
+			rot.SetToRotation(-1.0f * CAMERA_SPEED, right.x, right.y, right.z);
+			position = rot * position;
 		}
 
 	

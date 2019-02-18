@@ -5,9 +5,12 @@
 #include <stdlib.h>
 
 #include "Application.h"
-#include "Scene.h";
+#include "Scene.h"
+#include "ReadMesh.h"
 #include "GameScene.h"
 #include "GameSound.h"
+#include "SplashScene.h"
+#include "BuildScene.h"
 
 
 GLFWwindow* m_window;
@@ -133,10 +136,14 @@ void Application::GetMousePos(double& x, double& y) {
 
 void Application::Run()
 {
-	Scene* scene = new GameScene();
+	Scene* scene = new BuildScene();
 	scene->Init();
 	Scene* scene2 = scene;
 	scene2->Init2();
+
+
+	ReadFromMesh("text.txt");
+
 
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 

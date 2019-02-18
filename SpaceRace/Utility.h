@@ -2,7 +2,7 @@
 #define UTILITY
 #include "MatrixStack.h"
 #include "Vertex.h"
-
+#include <fstream>
 class Vector4 {
 public:
 	int x, y, z, w;

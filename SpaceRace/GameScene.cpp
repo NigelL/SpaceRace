@@ -20,6 +20,9 @@ GameScene::GameScene()
 {
 	srand(time(0));
 
+	//Factory f;
+	//f.CreateGameObject(Name Of Obj ,Material ,Bounds)
+	//ship pos amt rot scale
 
 	Mesh* Ship_01 = MeshBuilder::GenerateOBJ("ship 01", "OBJ//ship.obj");
 	Ship_01->textureID = LoadTGA("Image//ship.tga");
@@ -43,7 +46,8 @@ GameScene::GameScene()
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	curWater->waterMesh = curMesh;
-	meshList.push_back(new GameObject(curMesh, Vector3(-50, -2.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
+
+	meshList.push_back(new GameObject(curMesh, Vector3(-500, -2.5f, 500), 180, Vector3(1, 0, 0), Vector3(1000, 1, 1000)));
 	
 
 
@@ -89,8 +93,7 @@ GameScene::GameScene()
 	Islands->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	Islands->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
 	Islands->material.kShininess = 1.0f;
-	islands = new GameObject(Islands, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	islands->SetBounds(Vector3(0.5f, 0.5f, 0.5f));
+
 
 	Mesh* Parts = MeshBuilder::GenerateOBJ("Parts", "OBJ//Parts.obj");
 	Parts->textureID = LoadTGA("Image//PartsTexture.tga");
