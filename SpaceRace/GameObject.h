@@ -16,9 +16,10 @@ private:
 	Mesh* curObject;
 public:
 	std::vector<GameObject*> collidedList;
+	std::vector<GameObject*> collideCannon;
 	Vector3 allBounds[8];
 
-
+	GameObject();
 	inline Mesh* GetMesh() const {
 		return curObject;
 	}
@@ -50,14 +51,14 @@ public:
 	inline Vector3 GetBounds() const {
 		return boxHalf;
 	}
+	GameObject(Mesh* _curObject);
+	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
+	~GameObject();
 
-	void CheckCollision(GameObject& other);
-
+	// void CheckCollision(GameObject& other);
+	void CheckCollision(GameObject& other, std::vector<GameObject*>& list);
 	void GenerateBounds();
-
 	void SetBounds(Vector3 _half);
-		
-
 
 	float translateX = 0;
 	float translateY = 0;
@@ -65,14 +66,10 @@ public:
 	float scaleObject = 0;
 	float rotate = 90;
 
-
-	GameObject();
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
-	GameObject(Mesh* _curObject);
-	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
-	~GameObject();
+	int health = 0;
 };
 #endif;
