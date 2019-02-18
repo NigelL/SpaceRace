@@ -52,6 +52,8 @@ public:
 	}
 
 	void CheckCollision(GameObject& other);
+	void CheckCollision(Vector3 origin , Vector3 other,float t);
+
 
 	void GenerateBounds();
 

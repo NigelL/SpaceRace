@@ -31,6 +31,87 @@ GameObject::GameObject(Mesh* _curObject, Vector3 _position,float deg, Vector3 _r
 	}
 }
 
+void GameObject::CheckCollision(Vector3 origin,Vector3 dir,float t) {
+	GenerateBounds();
+	std::cout << "origin : " << origin << std::endl;
+	std::cout << "Dir :" << dir << std::endl;
+	
+	//Top Face
+	Vector3 topFaceR = Vector3(maxX,maxY,minZ) - Vector3(minX, maxY, minZ);
+	Vector3 topFaceRU = Vector3(minX, maxY, maxZ) - Vector3(minX, maxY, minZ);
+	Vector3 topFaceNormal = (topFaceR.Cross(topFaceRU)).Normalized();
+
+	Vector3 botFaceNormal = -topFaceNormal;
+
+	Vector3 leftFaceR = Vector3(minX, minY, maxZ) - Vector3(minX, minY, minZ);
+	Vector3 leftFaceRU = Vector3(minX, maxY, minZ) - Vector3(minX, minY, minZ);
+	Vector3 leftFaceNormal = (leftFaceR.Cross(leftFaceRU)).Normalized();
+
+	Vector3 rightFaceNormal = -leftFaceNormal;
+
+	Vector3 frontFaceR = Vector3(maxX, minY, minZ) - Vector3(minX, minY, minZ);
+	Vector3 frontFaceRU = Vector3(minX, maxY, minZ) - Vector3(minX, minY, minZ);
+	Vector3 frontFaceNormal = (frontFaceR.Cross(frontFaceRU)).Normalized();
+
+	Vector3 backFaceNormal = -frontFaceNormal;
+
+	int tIndex = 0;
+	float minT = 1e9;
+	float testT = (-origin.Dot(topFaceNormal))/ (dir.Dot(topFaceNormal));
+	std::cout << testT << std::endl;
+
+	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 0; } }
+
+	testT = -testT;
+	std::cout << testT << std::endl;
+
+	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 1; }}
+
+
+
+	testT = (-origin.Dot(leftFaceNormal) + origin.x ) / (dir.Dot(leftFaceNormal));
+	std::cout << testT << std::endl;
+	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 2; 
+	}}
+
+	testT = -testT + origin.x;
+	std::cout << testT << std::endl;
+	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 3; }   }
+
+	testT = (-origin.Dot(frontFaceNormal)) / (dir.Dot(frontFaceNormal));
+	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 4; }}
+
+	testT = -testT;
+	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 5; }}
+
+	switch (tIndex) {
+	case 0:
+		std::cout << "Top face" << std::endl;
+		break;
+	case 1:
+		std::cout << "Bot face" << std::endl;
+		break;
+	case 2:
+		std::cout << "Left face" << std::endl;
+		break;
+	case 3:
+		std::cout << "Right face" << std::endl;
+		break;
+	case 4:
+		std::cout << "Front face" << std::endl;
+		break;
+	case 5:
+		std::cout << "Back face" << std::endl;
+		break;
+	}
+
+	system("cls");
+
+
+
+
+}
+
 void GameObject::CheckCollision( GameObject& other) {
 	GenerateBounds();
 	other.GenerateBounds();
@@ -42,7 +123,6 @@ void GameObject::CheckCollision( GameObject& other) {
 	Vector3 Bx = (Vector3(other.maxX, other.minY, other.minZ) - Vector3(other.minX, other.minY, other.minZ)).Normalize();
 	Vector3 By = (Vector3(other.minX, other.maxY, other.minZ) - Vector3(other.minX, other.minY, other.minZ)).Normalize();
 	Vector3 Bz = (Vector3(other.minX, other.minY, other.maxZ) - Vector3(other.minX, other.minY, other.minZ)).Normalize();
-
 
 
 

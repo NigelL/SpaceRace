@@ -53,7 +53,8 @@ GameScene::GameScene()
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	curWater->waterMesh = curMesh;
-	meshList.push_back(new GameObject(curMesh, Vector3(-50, -2.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
+
+	meshList.push_back(new GameObject(curMesh, Vector3(-500, -2.5f, 500), 180, Vector3(1, 0, 0), Vector3(1000, 1, 1000)));
 	
 
 
