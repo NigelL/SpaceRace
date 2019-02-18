@@ -16,13 +16,17 @@ void Water::UpdateWater(int lengthX,float dt) {
 			if (curDeg >= 720.0f) { curDeg = 0.0f; }
 			waterMesh->allVertices[i].pos.Set(waterMesh->allVertices[i].pos.x, abs(sin(Deg2Rad(curDeg))), waterMesh->allVertices[i].pos.z);
 		}
-		
 		waterMesh->UpdateVertices();
 		slowDelay = 0.25f;
 	}
 	else {
 		slowDelay -= 5.0f * dt;		
 	}
+}
+
+float Water::getWater()
+{
+	return abs(sin(Deg2Rad(curDeg)));
 }
 
 

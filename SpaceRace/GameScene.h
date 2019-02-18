@@ -3,7 +3,6 @@
 
 #define MAX_GEOMETRY 1000
 
-
 #include "Scene.h"
 #include "Camera3.h"
 //#include "GameObject.h"
@@ -17,17 +16,11 @@
 #include "shader.hpp"
 #include "Utility.h"
 #include "Mtx44.h"
-
 #include "Water.h"
-
 #include "GameSound.h"
-
-
 #include "LoadTGA.h"
 #include "Application.h"
-
 #include <iostream>
-
 
 class GameScene : public Scene
 {
@@ -35,8 +28,6 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	float sceneFPS;
-
-
 public:
 	GameScene();
 	~GameScene();
@@ -44,9 +35,7 @@ public:
 	static GameScene* instance;
 	std::vector<GameObject*> meshList;
 
-
 	Mtx44 MVP;
-
 
 	enum GEOMETRY_TYPE
 	{
@@ -122,17 +111,12 @@ private:
 	void SpawnPowerUp();
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
-
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
-
 	void RenderUI(Mesh* mesh, float size, float x, float y);
-
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float
 		x, float y);
-	
-
-
+	void renderSkybox();
 public:
 	virtual void Init();
 	virtual void Init2();
