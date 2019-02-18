@@ -1,8 +1,13 @@
 #include "CShipStats.h"
+#include <string>
 
+using namespace std;
 
+CShipStats::CShipStats() {
 
-CShipStats::CShipStats() : GameObject()
+}
+
+CShipStats::CShipStats(Mesh* _curMesh,Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca) : GameObject(_curMesh, _pos, amt, _rot, _sca)
 {
 }
 
@@ -46,3 +51,4 @@ void CShipStats::SetHealth(int _health) {
 void CShipStats::SetSpeed(int _speed) {
 	speed = _speed;
 }
+

@@ -11,6 +11,7 @@ private:
 	int fireRate;
 public:
 	CShipStats();
+	CShipStats(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
 	~CShipStats();
 	int getSpeed();
 	int getHealth();

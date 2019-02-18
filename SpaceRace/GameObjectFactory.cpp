@@ -2,7 +2,7 @@
 #include <string>
 #include "Material.h"
 #include "Vector3.h"
-
+#include "GameScene.h"
 GameObjectFactory::GameObjectFactory()
 {
 	
@@ -13,49 +13,101 @@ GameObjectFactory::~GameObjectFactory()
 {
 }
 
-GameObject* GameObjectFactory::SpawnGameObject(OBJECT_TYPE type, string name, Material _material, Vector3 bounds)
+GameObject* GameObjectFactory::SpawnGameObject(OBJECT_TYPE type, std::string _name, Material *material, Vector3 _bounds)
 {
 	if (type == SHIP)
 	{
-		objectList[type] = new SpawnShip(name, bounds);
+		CShipStats* cShip = SpawnShip(_name, material, _bounds);
+		return cShip;
 	}
-	if (type == CONSUMABLES)
+	if (type == SPDCONSUMABLE)
 	{
-
+		SpeedConsumable* cSPD = SpawnSpeedConsumable(_name, material, _bounds);
+		return cSPD;
 	}
-	if (type == ENVIRONMENT)
+	if (type == HPCONSUMABLE)
 	{
-
+		HealthConsumable* cHP = SpawnHealthConsumable(_name, material, _bounds);
+		return cHP;
 	}
-	GameObject* type1;
-	string obj = "OBJ//" + name + ".obj";
-	string tga = "Image//" + name + ".tga";
-	
+	if (type == PARTSCONSUMABLE)
+	{
+		PartConsumable* cPart = SpawnPartConsumable(_name, material, _bounds);
+		return cPart;
+	}
+}
+
+CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, Vector3 bounds)
+{
+	std::string obj = "OBJ//" + name + ".obj";
+	std::string tga = "Image//" + name + ".tga";
 	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
 	name1->textureID = LoadTGA(tga.c_str());
-	name1->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-	name1->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-	name1->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-	name1->material.kShininess = 1.0f;
-	type1 = (new GameObject(name1, Vector3(-50, -2.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
-	type1->SetBounds(bounds);
-	//Get the .obj file 
-	//
+	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+	name1->material.kShininess = material->kShininess;
+	CShipStats* retThis = new CShipStats(name1, Vector3 (0, 0, 0), 90, Vector3 (0, 1, 0), Vector3 (0.1, 0.1, 0.1));
+	retThis->SetBounds(bounds);
+	return retThis;
 }
 
-void GameObjectFactory::SpawnShip(string name, Vector3 bounds)
+HealthConsumable* GameObjectFactory::SpawnHealthConsumable(std::string name, Material *material, Vector3 bounds)
 {
-	GameObject* name;
-	string obj = "OBJ//" + name + ".obj";
-	string tga = "Image//" + name + ".tga";
+	std::string obj = "OBJ//" + name + ".obj";
+	std::string tga = "Image//" + name + ".tga";
+	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
+	name1->textureID = LoadTGA(tga.c_str());
+	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+	name1->material.kShininess = material->kShininess;
+	HealthConsumable* retThis = new HealthConsumable(name1, Vector3 (0, 0, 0), 0, Vector3 (0, 1, 0), Vector3 (0.5, 0.5, 0.5));
+	retThis->SetBounds(bounds);
+	return retThis;
 }
 
-void GameObjectFactory::SpawnConsumable()
+SpeedConsumable* GameObjectFactory::SpawnSpeedConsumable(std::string name, Material *material, Vector3 bounds)
 {
-
+	std::string obj = "OBJ//" + name + ".obj";
+	std::string tga = "Image//" + name + ".tga";
+	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
+	name1->textureID = LoadTGA(tga.c_str());
+	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+	name1->material.kShininess = material->kShininess;
+	SpeedConsumable* retThis = new SpeedConsumable(name1, Vector3 (5, 0, 10), 90, Vector3 (0, 1, 0), Vector3 (0.5, 0.5, 0.5));
+	retThis->SetBounds(bounds);
+	return retThis;
 }
 
-void GameObjectFactory::SpawnEnvironment()
+PartConsumable* GameObjectFactory::SpawnPartConsumable(std::string name, Material *material, Vector3 bounds)
 {
-
+	std::string obj = "OBJ//" + name + ".obj";
+	std::string tga = "Image//" + name + ".tga";
+	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
+	name1->textureID = LoadTGA(tga.c_str());
+	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+	name1->material.kShininess = material->kShininess;
+	PartConsumable* retThis = new PartConsumable(name1, Vector3(5, 0, 10), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
+	retThis->SetBounds(bounds);
+	return retThis;
 }
+
+//void GameObjectFactory::SpawnEnvironment(string name, Material *material, Vector3 bounds)
+//{
+//	std::string obj = "OBJ//" + name + ".obj";
+//	std::string tga = "Image//" + name + ".tga";
+//	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
+//	name1->textureID = LoadTGA(tga.c_str());
+//	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+//	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+//	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+//	name1->material.kShininess = material->kShininess;
+//	SpeedConsumable* retThis = new SpeedConsumable(name1, Vector3(5, 0, 10), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
+//	retThis->SetBounds(bounds);
+//	return retThis;
+//}

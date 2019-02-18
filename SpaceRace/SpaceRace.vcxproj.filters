@@ -31,15 +31,15 @@
     <Filter Include="Source Files\src\scenes">
       <UniqueIdentifier>{d4d284e7-2e77-4239-9901-7e784a6b6b00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\src\gameobjects">
+      <UniqueIdentifier>{574b41f3-e400-4e76-b926-21dbaa085055}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utility.cpp">
@@ -84,17 +84,29 @@
     <ClCompile Include="GameObjectFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HealthConsumable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CShipStats.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpeedConsumable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Consumable.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CamMenu.cpp">
+      <Filter>Source Files\src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PartConsumable.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeedConsumable.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthConsumable.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="IslandEnvironment.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CShipStats.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +115,6 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>Source Files</Filter>
@@ -155,17 +164,29 @@
     <ClInclude Include="GameObjectFactory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="CShipStats.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpeedConsumable.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthConsumable.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Consumable.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CamMenu.h">
+      <Filter>Source Files\src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="PartConsumable.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeedConsumable.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthConsumable.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="IslandEnvironment.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CShipStats.h">
+      <Filter>Source Files\src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

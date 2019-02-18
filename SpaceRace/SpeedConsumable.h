@@ -1,7 +1,5 @@
 #ifndef SPEEDCONSUMABLE
 #define SPEEDCONSUMABLE
-
-#include "CShipStats.h"
 #include "Consumable.h"
 class SpeedConsumable : public Consumable
 {
@@ -11,8 +9,9 @@ public:
 	void SetSpeed(float _speed);
 	float GetSpeed() const;
 
-	virtual void OnCollide(const GameObject& other);
+	virtual void OnCollide(GameObject& other);
 	SpeedConsumable();
+	SpeedConsumable(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
 	~SpeedConsumable();
 };
 #endif

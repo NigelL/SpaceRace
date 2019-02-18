@@ -121,6 +121,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Camera2.cpp" />
     <ClCompile Include="Camera3.cpp" />
+    <ClCompile Include="CamMenu.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="CShipStats.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -128,12 +129,14 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="HealthConsumable.cpp" />
+    <ClCompile Include="IslandEnvironment.cpp" />
     <ClCompile Include="LoadOBJ.cpp" />
     <ClCompile Include="LoadTGA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshBuilder.cpp" />
+    <ClCompile Include="PartConsumable.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="SpeedConsumable.cpp" />
     <ClCompile Include="Utility.cpp" />
@@ -144,6 +147,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Camera2.h" />
     <ClInclude Include="Camera3.h" />
+    <ClInclude Include="CamMenu.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="CShipStats.h" />
     <ClInclude Include="GameObject.h" />
@@ -151,12 +155,14 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSound.h" />
     <ClInclude Include="HealthConsumable.h" />
+    <ClInclude Include="IslandEnvironment.h" />
     <ClInclude Include="LoadOBJ.h" />
     <ClInclude Include="LoadTGA.h" />
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshBuilder.h" />
+    <ClInclude Include="PartConsumable.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="SpeedConsumable.h" />

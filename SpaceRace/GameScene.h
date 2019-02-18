@@ -6,7 +6,8 @@
 
 #include "Scene.h"
 #include "Camera3.h"
-#include "GameObject.h"
+//#include "GameObject.h"
+#include "GameObjectFactory.h"
 #include "Light.h"
 #include "MatrixStack.h"
 #include "MeshBuilder.h"
@@ -27,8 +28,6 @@
 
 #include <iostream>
 
-using namespace std;
-
 
 class GameScene : public Scene
 {
@@ -42,6 +41,8 @@ public:
 	GameScene();
 	~GameScene();
 	inline void SetGameText(Mesh* curText);
+	static GameScene* instance;
+	std::vector<GameObject*> meshList;
 
 
 	Mtx44 MVP;
@@ -114,7 +115,6 @@ private:
 	unsigned m_parameters[U_TOTAL];
 	unsigned int m_indexBuffer;
 	unsigned m_programID;
-	std::vector<GameObject*> meshList;
 
 	Light light[3];
 	Camera3 camera;

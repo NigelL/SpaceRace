@@ -14,7 +14,7 @@ void Water::UpdateWater(int lengthX,float dt) {
 		for (int i = 0; i < waterMesh->allVertices.size(); i++) {
 			curDeg += (2.5f * dt);
 			if (curDeg >= 720.0f) { curDeg = 0.0f; }
-			waterMesh->allVertices[i].pos.Set(waterMesh->allVertices[i].pos.x, sin(Deg2Rad(curDeg)), waterMesh->allVertices[i].pos.z);
+			waterMesh->allVertices[i].pos.Set(waterMesh->allVertices[i].pos.x, abs(sin(Deg2Rad(curDeg))), waterMesh->allVertices[i].pos.z);
 		}
 		
 		waterMesh->UpdateVertices();

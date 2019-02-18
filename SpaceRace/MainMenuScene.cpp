@@ -18,6 +18,7 @@ void MainMenuScene::RenderMainMenu()
 {
 	Mesh* MainMenu = MeshBuilder::GenerateQuad("Main Menu", Color(0, 1, 0), 10, 10);
 
+
 }
 
 bool MainMenuScene::getPlay()

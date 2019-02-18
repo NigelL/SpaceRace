@@ -1,8 +1,7 @@
 #ifndef HEALTHCONSUMABLE
 #define HEALTHCONSUMABLE
-
-#include "CShipStats.h"
 #include "Consumable.h"
+
 
 
 class HealthConsumable : public Consumable
@@ -10,11 +9,11 @@ class HealthConsumable : public Consumable
 private:
 	int healthConsumed;
 public:
-	virtual void OnCollide(const GameObject& other);
+	virtual void OnCollide(GameObject& other);
 	void SetHealth(int _health);
 	int GetHealth() const;
 	HealthConsumable();
-
+	HealthConsumable(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
 	~HealthConsumable();
 };
 #endif
