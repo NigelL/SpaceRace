@@ -4,6 +4,7 @@
 #include "SpeedConsumable.h"
 #include "CShipStats.h"
 #include "PartConsumable.h"
+#include "IslandEnvironment.h"
 #include <string>
 
 class GameObjectFactory
@@ -18,7 +19,7 @@ public:
 		SPDCONSUMABLE,
 		HPCONSUMABLE,
 		PARTSCONSUMABLE,
-		ENVIRONMENT,
+		ISLAND,
 		OBJECT_TOTAL
 	};
 
@@ -30,6 +31,7 @@ public:
 	static HealthConsumable* SpawnHealthConsumable(std::string name, Material *material, Vector3 bounds);
 	static SpeedConsumable* SpawnSpeedConsumable(std::string name, Material *material, Vector3 bounds);
 	static PartConsumable* SpawnPartConsumable(std::string name, Material *material, Vector3 bounds);
+	static IslandEnvironment* SpawnIsland(std::string name, Material *material, Vector3 bounds);
 	//void SpawnEnvironment();
 };
 

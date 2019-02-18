@@ -5,9 +5,10 @@
 Water* curWater = new Water();
 GameObject* ship_01;
 GameObject* ship_02;
-GameObject* pirateShip;
 GameObject* islands;
 GameObject* parts;
+
+GameObject* pirateShip;
 GameObject* cannon_01;
 GameObject* cannon_02;
 
@@ -84,15 +85,6 @@ GameScene::GameScene()
 	PirateShip->material.kShininess = 1.0f;
 	pirateShip = new GameObject(PirateShip, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
 	meshList.push_back(pirateShip);
-
-	Mesh* Islands = MeshBuilder::GenerateOBJ("Islands", "OBJ//Island.obj");
-	Islands->textureID = LoadTGA("Image//IslandTextures.tga");
-	Islands->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
-	Islands->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
-	Islands->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
-	Islands->material.kShininess = 1.0f;
-	islands = new GameObject(Islands, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	islands->SetBounds(Vector3(0.5f, 0.5f, 0.5f));
 */
 
 	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
@@ -128,15 +120,14 @@ GameScene::GameScene()
 		{
 			if (numberofislands <= 8)
 			{
-				//islands = new GameObject(Islands, Vector3(islandposx, -2, islandposz), 0, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
-				//islands->SetBounds(Vector3(2.5f,2.5f, 2.5f));
-				//meshList.push_back(islands);
+				islands = GameObjectFactory::SpawnGameObject(GameObjectFactory::ISLAND, "island", mat, Vector3(4, 4, 4));
+				islands->SetPosition(Vector3(islandposx, -2, islandposz));
+				meshList.push_back(islands);
 			}
 			else
 			{
 				parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "parts", mat, Vector3(2, 2, 2));
 				parts->SetPosition(Vector3(islandposx, 0, islandposz));
-				parts->SetBounds( Vector3(0.5f, 0.5f, 0.5f));
 				meshList.push_back(parts);
 			}
 
@@ -499,16 +490,6 @@ void GameScene::SpawnPowerUp()
 			powerUp[numberOfPowerUps] = new GameObject(RestoreHP, Vector3(powerUpX, 0, powerUpZ), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
 			meshList.push_back(powerUp[numberOfPowerUps]);
 		}
-		
-		
-		//if (powerUpSpawn == 2)
-		//{
-
-		//}
-		//if (powerUpSpawn == 3)
-		//{
-
-		//}
 	}
 }
 
