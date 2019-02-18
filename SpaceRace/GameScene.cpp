@@ -36,12 +36,6 @@ GameScene::GameScene()
 	meshList.push_back(ship_01);
 	ship_02 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship_02", mat, Vector3(5, 5, 5));
 	meshList.push_back(ship_02);
-	speedconsumable = GameObjectFactory::SpawnGameObject(GameObjectFactory::SPDCONSUMABLE, "speedup", mat, Vector3(5, 5, 5));
-	meshList.push_back(speedconsumable);
-	hpconsumable = GameObjectFactory::SpawnGameObject(GameObjectFactory::HPCONSUMABLE, "restorehp", mat, Vector3(5, 5, 5));
-	meshList.push_back(hpconsumable);
-	parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "parts", mat, Vector3(2, 2, 2));
-	meshList.push_back(parts);
 
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
@@ -53,7 +47,7 @@ GameScene::GameScene()
 	curMesh->material.kShininess = 1.0f;
 	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
 	curWater->waterMesh = curMesh;
-	meshList.push_back(new GameObject(curMesh, Vector3(-50, -2.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
+	meshList.push_back(new GameObject(curMesh, Vector3(-50, -1.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
 	
 
 
@@ -126,8 +120,8 @@ GameScene::GameScene()
 			}
 			else
 			{
-				parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "parts", mat, Vector3(2, 2, 2));
-				parts->SetPosition(Vector3(islandposx, 0, islandposz));
+				parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "parts", mat, Vector3(1, 0.5, 1));
+				parts->SetPosition(Vector3(islandposx, -1.5, islandposz));
 				meshList.push_back(parts);
 			}
 
@@ -440,6 +434,7 @@ void GameScene::Init()
 		"textColor");
 
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
+	SpawnPowerUp();
 }
 
 static double LSPEED = 10.0;
@@ -460,36 +455,29 @@ void GameScene::SpawnPowerUp()
 	int powerUpSpawn;
 	float powerUpX, powerUpZ;
 
-	Mesh* SpeedUp = MeshBuilder::GenerateOBJ("Speed Up", "OBJ//SpeedUp.obj");
-	SpeedUp->textureID = LoadTGA("Image//SpeedUpTexture.tga");
-	SpeedUp->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
-	SpeedUp->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
-	SpeedUp->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
-	SpeedUp->material.kShininess = 1.0f;
-
-	Mesh* RestoreHP = MeshBuilder::GenerateOBJ("HP Restore", "OBJ//RestoreHP.obj");
-	RestoreHP->textureID = LoadTGA("Image//RestoreHPTexture.tga");
-	RestoreHP->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
-	RestoreHP->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
-	RestoreHP->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
-	RestoreHP->material.kShininess = 1.0f;
+	Material *mat = new Material;
+	mat->kAmbient.Set(0.4f, 0.4f, 0.4f);
+	mat->kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	mat->kSpecular.Set(0.2f, 0.2f, 0.2f);
+	mat->kShininess = 1.0f;
 
 	for (int numberOfPowerUps = 0; numberOfPowerUps <= 15; numberOfPowerUps++)
 	{
 		powerUpX = rand() % 100 + (-50);
 		powerUpZ = rand() % 100 + (-50);
-		powerUpSpawn = rand() % 2;
+		powerUpSpawn = rand() % 1;
 		
 		if (powerUpSpawn == 0)
 		{
-			powerUp[numberOfPowerUps] = new GameObject(SpeedUp, Vector3(powerUpX, 0, powerUpZ), 90, Vector3(0, 1, 0), Vector3(0.25, 0.25, 0.25));
+			powerUp[numberOfPowerUps] = GameObjectFactory::SpawnGameObject(GameObjectFactory::SPDCONSUMABLE, "speedup", mat, Vector3(powerUpX, 5, powerUpZ));
 			meshList.push_back(powerUp[numberOfPowerUps]);
 		}
 		if (powerUpSpawn == 1)
 		{
-			powerUp[numberOfPowerUps] = new GameObject(RestoreHP, Vector3(powerUpX, 0, powerUpZ), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
+			powerUp[numberOfPowerUps] = GameObjectFactory::SpawnGameObject(GameObjectFactory::HPCONSUMABLE, "restorehp", mat, Vector3(powerUpX, 5, powerUpZ));
 			meshList.push_back(powerUp[numberOfPowerUps]);
 		}
+		std::cout << numberOfPowerUps;
 	}
 }
 
