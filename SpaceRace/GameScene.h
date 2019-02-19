@@ -50,6 +50,8 @@ public:
 
 	enum GEOMETRY_TYPE
 	{
+		init,
+		partui,
 		NUM_GEOMETRY
 	};
 	enum UNIFORM_TYPE

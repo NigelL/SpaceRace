@@ -1,46 +1,6 @@
-﻿  cannonball.cpp
-  Water.cpp
-d:\users\l533\desktop\spacerace\spacerace\water.cpp(14): warning C4018: '<': signed/unsigned mismatch
-  SpeedConsumable.cpp
-d:\users\l533\desktop\spacerace\spacerace\speedconsumable.cpp(15): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  PartConsumable.cpp
-  MeshBuilder.cpp
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(253): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(254): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(255): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(257): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(258): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(259): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-  MainMenuScene.cpp
-  IslandEnvironment.cpp
-  HealthConsumable.cpp
-  GameScene.cpp
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(26): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(102): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(108): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(68): warning C4101: 'islandz': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(68): warning C4101: 'islandx': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(438): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(451): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(452): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(648): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(666): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(800): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(803): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(925): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(962): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(988): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1002): warning C4305: 'argument': truncation from 'double' to 'float'
-  GameObjectFactory.cpp
-d:\users\l533\desktop\spacerace\spacerace\gameobjectfactory.cpp(60): warning C4305: 'argument': truncation from 'double' to 'float'
-  GameObject.cpp
-  Consumable.cpp
-  CShipStats.cpp
+﻿  Camera2.cpp
   Application.cpp
 d:\users\l533\desktop\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   Generating Code...
-d:\users\l533\desktop\spacerace\spacerace\gameobjectfactory.cpp(48): warning C4715: 'GameObjectFactory::SpawnGameObject': not all control paths return a value
-  LINK : D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe not found or not built by the last incremental link; performing full link
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)

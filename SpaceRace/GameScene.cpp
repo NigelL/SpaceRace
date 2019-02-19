@@ -26,6 +26,7 @@ GameScene::GameScene()
 	srand(time(0));
 	instance = this;
 
+
 	Material *mat = new Material;
 	mat->kAmbient.Set(0.4f, 0.4f, 0.4f);
 	mat->kDiffuse.Set(0.1f, 0.1f, 0.1f);
@@ -416,6 +417,12 @@ void GameScene::Init()
 		"textEnabled");
 	m_parameters[U_TEXT_COLOR] = glGetUniformLocation(m_programID,
 		"textColor");
+
+
+
+	//Mesh* meshList[partui] = MeshBuilder::GenerateQuad("Part UI", Color(1, 0, 0), 1, 1);
+	//meshList[partui]->textureID = LoadTGA("Image//partui.tga");
+
 
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
 	SpawnPowerUp();
@@ -1288,6 +1295,8 @@ void GameScene::Render()
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS), Color(0, 1, 0), 30, 0, 28);
 	RenderTextOnScreen(gameText, "Collision : " + std::to_string(meshList[0]->collidedList.size()), Color(0, 1, 0), 30, 0, 10);
 
+
+	//RenderUI(meshList[partui], 2, 2, 2);
 
 	glDisable(GL_SCISSOR_TEST);
 }

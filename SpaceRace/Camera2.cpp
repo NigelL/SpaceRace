@@ -38,11 +38,11 @@ void Camera2::Update(double dt)
 		position = position + 2 * up;
 		target = position + view;
 	}
-	if (Application::IsKeyPressed('E'))
-	{
-		position = position - 2 * up;
-		target = position + view;
-	}
+	//if (Application::IsKeyPressed('E'))
+	//{
+	//	position = position - 2 * up;
+	//	target = position + view;
+	//}
 	if (Application::IsKeyPressed('W'))
 	{
 		position = position + view;
