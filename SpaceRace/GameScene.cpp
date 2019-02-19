@@ -419,6 +419,7 @@ void GameScene::Init()
 
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
 	SpawnPowerUp();
+	renderSkybox();
 }
 
 static double LSPEED = 10.0;
@@ -463,6 +464,51 @@ void GameScene::SpawnPowerUp()
 		}
 		std::cout << numberOfPowerUps;
 	}
+}
+
+void GameScene::renderSkybox()
+{
+	GameObject* box;
+
+	// no top and bottom
+#pragma region skybox
+	Mesh* Left = MeshBuilder::GenerateOBJ("left", "OBJ//side.obj");
+	Left->material.kAmbient.Set(0.2f, 0.2f, 0.2f);
+	Left->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Left->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Left->material.kShininess = 1.0f;
+
+	Mesh* Right = MeshBuilder::GenerateOBJ("right", "OBJ//side.obj");
+	Right->material.kAmbient.Set(0.2f, 0.2f, 0.2f);
+	Right->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Right->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Right->material.kShininess = 1.0f;
+
+	Mesh* Back = MeshBuilder::GenerateOBJ("back", "OBJ//side.obj");
+	Back->material.kAmbient.Set(0.2f, 0.2f, 0.2f);
+	Back->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Back->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Back->material.kShininess = 1.0f;
+
+	Mesh* Front = MeshBuilder::GenerateOBJ("front", "OBJ//side.obj");
+	Front->material.kAmbient.Set(0.2f, 0.2f, 0.2f);
+	Front->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	Front->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
+	Front->material.kShininess = 1.0f;
+
+	Left->textureID = LoadTGA("Image//left.tga");
+	box = new GameObject(Left, Vector3(0, 0, -50), 90, Vector3(1, 0, 0), Vector3(100, 100, 100));
+	meshList.push_back(box);
+	Right->textureID = LoadTGA("Image//right.tga");
+	box = new GameObject(Right, Vector3(0, 0, 50), -90, Vector3(1, 0, 0), Vector3(100, 100, 100));
+	meshList.push_back(box);
+	Back->textureID = LoadTGA("Image//back.tga");
+	box = new GameObject(Back, Vector3(-50, 0, 0), -90, Vector3(0, 0, 1), Vector3(100, 100, 100));
+	meshList.push_back(box);
+	Front->textureID = LoadTGA("Image//front.tga");
+	box = new GameObject(Front, Vector3(50, 0, 0), 90, Vector3(0, 0, 1), Vector3(100, 100, 100));
+	meshList.push_back(box);
+#pragma endregion
 }
 
 void GameScene::Init2() {

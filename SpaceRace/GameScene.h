@@ -127,9 +127,9 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float
 		x, float y);
+
+	void renderSkybox();
 	
-
-
 public:
 	virtual void Init();
 	virtual void Init2();
