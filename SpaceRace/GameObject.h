@@ -9,10 +9,10 @@ class GameObject
 {
 private:
 	float amt;
-	Vector3 position,rotation,scale;
-	Vector3 boxHalf;
+	float translateX, translateY, translateZ;
 	float minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, minZ = 1e9, maxZ = -1e9;
-
+	Vector3 position, rotation, scale;
+	Vector3 boxHalf;
 	Mesh* curObject;
 public:
 	std::vector<GameObject*> collidedList;
@@ -48,6 +48,18 @@ public:
 	inline void SetAmt(float _amt) {
 		amt = _amt;
 	}
+	inline float GetTranslateX() const {
+		return translateX;
+	}
+	void SetTranslateX(float _translateX) {
+		translateX = _translateX;
+	}
+	inline float GetTranslateZ() const {
+		return translateZ;
+	}
+	void SetTranslateZ(float _translateZ) {
+		translateZ = _translateZ;
+	}
 	inline Vector3 GetBounds() const {
 		return boxHalf;
 	}
@@ -55,20 +67,15 @@ public:
 	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
 	~GameObject();
 
-	// void CheckCollision(GameObject& other);
+	//void CheckCollision(GameObject& other);
 	void CheckCollision(GameObject& other, std::vector<GameObject*>& list);
 	void GenerateBounds();
 	void SetBounds(Vector3 _half);
 
-	float translateX = 0;
-	float translateY = 0;
-	float translateZ = 0;
-	float scaleObject = 0;
-	float rotate = 90;
-
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	void translateObj(int speed, double dt);
+	void translateWater(float water);
+	void translateCannon(int speed, double dt);
+	void rotateObj(int speed);
 
 	int health = 0;
 };

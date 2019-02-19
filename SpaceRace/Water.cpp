@@ -7,8 +7,6 @@ Water::Water()
 {
 }
 
-
-
 void Water::UpdateWater(int lengthX,float dt) {
 	if (slowDelay <= 0) {
 		for (int i = 0; i < waterMesh->allVertices.size(); i++) {

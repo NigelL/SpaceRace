@@ -118,15 +118,83 @@ void GameObject::CheckCollision(GameObject& other, std::vector<GameObject*>& lis
 	}
 }
 
-
-
 void GameObject::SetBounds(Vector3 _half) {
 	boxHalf = _half;
 }
 
+void GameObject::translateObj(int speed, double dt)
+{
+	float direction = amt * 3.142f / 180.0f;
+
+	SetPosition(Vector3(GetPosition().x + (sin(direction) * ((float)(speed * dt))), GetPosition().y, GetPosition().z + (cos(direction) * ((float)(speed * dt)))));
+}
+
+void GameObject::translateWater(float water)
+{
+	if (water > 0.6 && translateY < 0.25)
+	{
+		/*if (translateY > 0)
+		{
+			translateY += water / 50;
+		}
+		else
+		{
+			translateY += water / 100;
+		}*/
+
+		translateY +=  0.005;
+	}
+	else if (water < 0.6  && translateY > -0.25)
+	{
+		/*if (translateY < 0)
+		{
+			translateY += water / 50;
+		}
+		else
+		{
+			translateY += water / 100;
+		}*/
+
+		translateY -= 0.005;
+	}
+
+	std::cout << " water : " << water << std::endl;
+
+	std::cout << " Y : " << translateY << std::endl;
+
+	if (water > 0.5)
+	{
+		SetPosition(Vector3(GetPosition().x, -(water / 20), GetPosition().z));
+	}
+	else if (water < 0.5)
+	{
+		SetPosition(Vector3(GetPosition().x, water / 20, GetPosition().z));
+	}
+}
+
+void GameObject::translateCannon(int speed, double dt)
+{
+	translateX += (float)(speed * dt);
+	translateZ += (float)(speed * dt);
+}
+
+void GameObject::rotateObj(int speed)
+{
+	amt += (int)(speed); // int because rotation need exact integer number
+
+	if (amt >= 360)
+	{
+		amt = 0;
+	}
+	else if (amt <= 0)
+	{
+		amt = 360;
+	}
+
+	SetRotation(Vector3(0, 1, 0), amt);
+}
+
 void GameObject::GenerateBounds() {
-
-
 
 	allBounds[0] = Vector3(- boxHalf.x ,  + boxHalf.y, + boxHalf.z ); //Top Left
 	allBounds[1] = Vector3(+ boxHalf.x ,  + boxHalf.y,  + boxHalf.z ); // TR
@@ -159,10 +227,7 @@ void GameObject::GenerateBounds() {
 		curMat = curMat * nxtMarix;
 		
 		allBounds[i] = curMat * allBounds[i];
-		
 	}
-	
-
 	
 	for (int i = 0; i < 8; i++) {
 		if (allBounds[i].x < minX) { minX = allBounds[i].x; }
