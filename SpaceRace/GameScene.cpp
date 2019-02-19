@@ -40,7 +40,7 @@ GameScene::GameScene()
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
 
-	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100);
+	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
 	curMesh->textureID = LoadTGA("Image//Water.tga");
 	curMesh->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
 	curMesh->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
