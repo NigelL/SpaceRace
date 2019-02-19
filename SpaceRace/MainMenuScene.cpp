@@ -1,8 +1,13 @@
 #include "MainMenuScene.h"
 
+
+bool MainMenuScene::play = false;
+int MainMenuScene::mode = 1;
+
 MainMenuScene::MainMenuScene()
 {
-	play = singleplayer = multiplayer = false;
+	//play = false;
+	//mode = true;
 }
 
 MainMenuScene::~MainMenuScene()
@@ -65,6 +70,7 @@ void MainMenuScene::Init()
 	}
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("Reference", 500, 500, 500);
 	meshList[MainMenu] = MeshBuilder::GenerateMenu("Main Menu", Color(0, 1, 0), 10);
+	meshList[MainMenu]->textureID = LoadTGA("Image//start.tga");
 
 	//Set projection to Perspective and load projection matrix
 	Mtx44 projection;
@@ -74,12 +80,11 @@ void MainMenuScene::Init()
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
 }
 
+
 void MainMenuScene::RenderMainMenu()
 {
-	//modelStack.LoadIdentity();
 	RenderMesh(meshList[GEO_AXES], false);
-	//modelStack.Rotate(90, 0, 0, 1);
-	modelStack.Scale(2, 1, 0);
+	modelStack.Scale(1.6, 1.3, 0);
 	RenderMesh(meshList[MainMenu], false);
 }
 
@@ -129,6 +134,27 @@ void MainMenuScene::RenderMesh(Mesh *mesh, bool enableLight)
 	}
 }
 
+void MainMenuScene::setPlay(bool _play)
+{
+	play = _play;
+}
+
+void MainMenuScene::setMode(int _mode)
+{
+	mode = _mode;
+}
+
+
+bool MainMenuScene::getPlay()
+{
+	return play;
+}
+
+int MainMenuScene::getMode()
+{
+	return mode;
+}
+
 void MainMenuScene::Update(double dt)
 {
 	camera.Update((float)dt);
@@ -149,13 +175,16 @@ void MainMenuScene::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
-	if (Application::IsKeyPressed('E'))
+	if (MainMenuScene::play)
 	{
-		play = true;
-	}
-	if (Application::IsKeyPressed('M'))
-	{
-		multiplayer = true;
+		if (MainMenuScene::mode == 1)
+		{
+			meshList[MainMenu]->textureID = LoadTGA("Image//singleplayer.tga");
+		}
+		if (!MainMenuScene::mode == 2)
+		{
+			meshList[MainMenu]->textureID = LoadTGA("Image//multiplayer.tga");
+		}
 	}
 }
 

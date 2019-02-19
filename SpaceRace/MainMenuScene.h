@@ -28,12 +28,17 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	float sceneFPS;
+	static bool play;
+	static int mode;
 
 public:
 	MainMenuScene();
 	~MainMenuScene();
+	void setPlay(bool _play);
+	void setMode(int _mode);
+	bool getPlay();
+	int getMode();
 
-	bool play, singleplayer, multiplayer;
 
 	Mtx44 MVP;
 

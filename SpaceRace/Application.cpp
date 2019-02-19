@@ -154,28 +154,32 @@ void Application::Run()
 		glfwPollEvents();
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
-
-
-		if (Application::IsKeyPressed('E'))
+		if (Application::IsKeyPressed(VK_SPACE))
 		{
-			//MainMenu.play = true;
-			//if (MainMenu.singleplayer)
-			//{
-			//	scene = new GameScene();
-			//	scene->Init();
-			//}
-			//if (Application::IsKeyPressed('M') && MainMenu.play)
-			//{
-			MainMenu.multiplayer = true;
-			scene = new GameScene();
-			scene->Init();
-			scene2 = scene;
-			scene2->Init2();
-
-			//}
+			MainMenu.setPlay(true);
+			if (Application::IsKeyPressed('W'))
+			{
+				MainMenu.setMode(1);
+				if (Application::IsKeyPressed(VK_SPACE))
+				{
+					scene = new GameScene();
+					scene->Init();
+				}
+			}
+			if (Application::IsKeyPressed('S'))
+			{
+				MainMenu.setMode(2);
+				if (Application::IsKeyPressed(VK_SPACE))
+				{
+					scene = new GameScene();
+					scene->Init();
+					scene2 = scene;
+					scene2->Init2();
+				}
+			}
 		}
 
-		if (MainMenu.multiplayer)
+		if (!MainMenu.getMode())
 		{
 			scene2->Update2(m_timer.getElapsedTime());
 			scene2->Render2();
