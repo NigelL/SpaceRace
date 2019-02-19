@@ -9,8 +9,8 @@ GameObject* islands;
 GameObject* parts;
 
 GameObject* pirateShip;
-GameObject* cannon_01;
-GameObject* cannon_02;
+GameObject* cannonball_01;
+GameObject* cannonball_02;
 
 GameObject* hpconsumable;
 GameObject* speedconsumable;
@@ -40,7 +40,7 @@ GameScene::GameScene()
 	gameText = MeshBuilder::GenerateText("text", 16, 16);
 	gameText->textureID = LoadTGA("Image//calibri.tga");
 
-	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
+	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100);
 	curMesh->textureID = LoadTGA("Image//Water.tga");
 	curMesh->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
 	curMesh->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
@@ -49,28 +49,12 @@ GameScene::GameScene()
 	curWater->waterMesh = curMesh;
 	meshList.push_back(new GameObject(curMesh, Vector3(-50, -1.5f, 50), 180, Vector3(1, 0, 0), Vector3(100, 1, 100)));
 	
+	cannonball_01 = GameObjectFactory::SpawnGameObject(GameObjectFactory::CANNONBALL, "cannonball", mat, Vector3(3, 3, 3));
+	meshList.push_back(cannonball_01);
+	cannonball_02 = GameObjectFactory::SpawnGameObject(GameObjectFactory::CANNONBALL, "cannonball", mat, Vector3(3, 3, 3));
+	meshList.push_back(cannonball_02);
 
-
-	/*
-
-	Mesh* Cannon_01 = MeshBuilder::GenerateOBJ("cannonball", "OBJ//cannon.obj");
-	Cannon_01->textureID = LoadTGA("Image//cannon.tga");
-	Cannon_01->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-	Cannon_01->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-	Cannon_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-	Cannon_01->material.kShininess = 1.0f;
-	cannon_01 = new GameObject(Cannon_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(cannon_01);
-
-	Mesh* Cannon_02 = MeshBuilder::GenerateOBJ("cannonball", "OBJ//cannon.obj");
-	Cannon_02->textureID = LoadTGA("Image//ship2.tga");
-	Cannon_02->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-	Cannon_02->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-	Cannon_02->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-	Cannon_02->material.kShininess = 1.0f;
-	cannon_02 = new GameObject(Cannon_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(cannon_02);
-
+/*
 	Mesh* PirateShip = MeshBuilder::GenerateOBJ("PShip", "OBJ//PirateShip.obj");
 	PirateShip->textureID = LoadTGA("Image//PirateShipTexture.tga");
 	PirateShip->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
@@ -524,47 +508,6 @@ void GameScene::Update2(double dt)
 
 	// control the ship_02
 
-	position = ship_02->GetPosition() - direction * 3;
-	camera.SetTarget(ship_02->GetPosition().x, ship_02->GetPosition().y + 1, ship_02->GetPosition().z);
-	camera.SetPosition(position.x, position.y + 1, position.z);
-
-	//if (Application::IsKeyPressed(VK_NUMPAD5)) // 270
-	//{
-	//	if (!(ship_02->GetPosition().x < -45) && !(ship_02->GetPosition().x > 45) && !(ship_02->GetPosition().z < -45) && !(ship_02->GetPosition().z > 45))
-	//	{
-
-	//	}
-
-	//	float direction = DegreeToRadian(ship_02->rotate);
-	//	pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
-	//	ship_02->SetPosition(pos);
-
-	//	if (Application::IsKeyPressed(VK_NUMPAD1)) // 0
-	//	{
-	//		ship_02->rotate += (int)(5);
-
-	//		if (ship_02->rotate >= 360)
-	//		{
-	//			ship_02->rotate = 0;
-	//		}
-
-	//		rot.Set(0, 1, 0);
-	//		ship_02->SetRotation(rot, ship_02->rotate);
-	//	}
-	//	if (Application::IsKeyPressed(VK_NUMPAD3)) // 180
-	//	{
-	//		ship_02->rotate -= (int)(5);
-
-	//		if (ship_02->rotate <= 0)
-	//		{
-	//			ship_02->rotate = 360;
-	//		}
-
-	//		rot.Set(0, 1, 0);
-	//		ship_02->SetRotation(rot, ship_02->rotate);
-	//	}
-	//}
-
 	if (Application::IsKeyPressed('W')) // 270
 	{
 		if (!(ship_02->GetPosition().x - 1 < -45) && !(ship_02->GetPosition().x + 1 > 45) && !(ship_02->GetPosition().z - 1 < -45) && !(ship_02->GetPosition().z + 1 > 45))
@@ -607,11 +550,11 @@ void GameScene::Update2(double dt)
 	{
 		if (Application::IsKeyPressed('S') && !cannonOut_02) // shoot cannonball
 		{
-			//cannonOut_02 = true;
-			//cannon_02->rotate = ship_02->rotate;
-			//ship_02->x = ship_02->GetPosition().x; // get position of ship
-			//ship_02->z = ship_02->GetPosition().z;
-			//bounceTime = 0.5;
+			cannonOut_02 = true;
+			cannonball_02->rotate = ship_02->rotate;
+			ship_02->x = ship_02->GetPosition().x; // get position of ship
+			ship_02->z = ship_02->GetPosition().z;
+			bounceTime = 0.5;
 		}
 	}
 	else
@@ -619,46 +562,46 @@ void GameScene::Update2(double dt)
 		bounceTime -= dt;
 	}
 
-	//if (cannonOut_02)
-	//{
-	//	if (cannon_02->translateX == 0 && cannon_02->translateZ == 0) // && cannon_02->translateY == 0
-	//	{
-	//		GameSound::instance()->PaintSplat->setDefaultVolume(1.f);
-	//		GameSound::instance()->engine->play2D(GameSound::instance()->PaintSplat, false);
-	//	}
-	//	else
-	//	{
-	//		bounceTime -= dt;
-	//	}
+	if (cannonOut_02)
+	{
+		if (cannonball_02->translateX == 0 && cannonball_02->translateZ == 0) // && cannon_02->translateY == 0
+		{
+			GameSound::instance()->PaintSplat->setDefaultVolume(1.f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->PaintSplat, false);
+		}
+		else
+		{
+			bounceTime -= dt;
+		}
 
-	//	cannon_02->translateX += (float)(15 * dt);
-	//	/*
-	//	if (cannon_02->translateY > -0.25)
-	//	{
-	//		cannon_02->translateY -= (float)(0.5 * dt);
-	//	}
-	//	*/
-	//	cannon_02->translateZ += (float)(15 * dt);
+		cannonball_02->translateX += (float)(15 * dt);
+		
+		if (cannonball_02->translateY > -0.25)
+		{
+			cannonball_02->translateY -= (float)(0.5 * dt);
+		}
+		
+		cannonball_02->translateZ += (float)(15 * dt);
 
-	//	if (cannon_02->translateX > 5 && cannon_02->translateZ > 5)
-	//	{
-	//		std::cout << " X : " << cannon_02->translateX << std::endl;
-	//		std::cout << " Z : " << cannon_02->translateZ << std::endl;
-	//		cannonOut_02 = false;
-	//	}
+		if (cannonball_02->translateX > 5 && cannonball_02->translateZ > 5)
+		{
+			std::cout << " X : " << cannonball_02->translateX << std::endl;
+			std::cout << " Z : " << cannonball_02->translateZ << std::endl;
+			cannonOut_02 = false;
+		}
 
-	//	float direction = DegreeToRadian(cannon_02->rotate);
+		float direction = DegreeToRadian(cannonball_02->rotate);
 
-	//	pos.Set(ship_02->x + (sin(direction) * cannon_02->translateX), cannon_02->translateY, ship_02->z + (cos(direction) * cannon_02->translateZ));
-	//	cannon_02->SetPosition(pos);
-	//}
-	//else
-	//{
-	//	cannon_02->translateX = 0;
-	//	cannon_02->translateZ = 0;
-	//	pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y + 0.25, ship_02->GetPosition().z);
-	//	cannon_02->SetPosition(pos);
-	//}
+		pos.Set(ship_02->x + (sin(direction) * cannonball_02->translateX), cannonball_02->translateY, ship_02->z + (cos(direction) * cannonball_02->translateZ));
+		cannonball_02->SetPosition(pos);
+	}
+	else
+	{
+		cannonball_02->translateX = 0;
+		cannonball_02->translateZ = 0;
+		pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y + 0.25, ship_02->GetPosition().z);
+		cannonball_02->SetPosition(pos);
+	}
 
 	if (Application::IsKeyPressed('R'))
 	{
@@ -890,63 +833,10 @@ void GameScene::Update(double dt)
 	{
 		if (Application::IsKeyPressed(VK_DOWN) && !cannonOut_01) // shoot cannonball
 		{
-			//cannonOut_01 = true;
-			//cannon_01->rotate = ship_01->rotate;
-			//ship_01->x = ship_01->GetPosition().x; // get position of ship
-			//ship_01->z = ship_01->GetPosition().z;
-			//bounceTime = 0.5;
-		}
-	}
-	else
-	{
-		bounceTime -= dt;
-	}
-
-	// control the ship_02
-	if (Application::IsKeyPressed(VK_NUMPAD5)) // 270
-	{
-		if (!(ship_02->GetPosition().x < -45) && !(ship_02->GetPosition().x > 45) && !(ship_02->GetPosition().z < -45) && !(ship_02->GetPosition().z > 45))
-		{
-			
-		}
-
-		float direction = DegreeToRadian(ship_02->rotate);
-		pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
-		ship_02->SetPosition(pos);
-
-		if (Application::IsKeyPressed(VK_NUMPAD1)) // 0
-		{
-			ship_02->rotate += (int)(5);
-
-			if (ship_02->rotate >= 360)
-			{
-				ship_02->rotate = 0;
-			}
-
-			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
-		}
-		if (Application::IsKeyPressed(VK_NUMPAD3)) // 180
-		{
-			ship_02->rotate -= (int)(5);
-
-			if (ship_02->rotate <= 0)
-			{
-				ship_02->rotate = 360;
-			}
-
-			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
-		}
-	}
-	if (bounceTime <= 0)
-	{
-		if (Application::IsKeyPressed(VK_NUMPAD2) && !cannonOut_02) // shoot cannonball
-		{
-			cannonOut_02 = true;
-			cannon_02->rotate = ship_02->rotate;
-			ship_02->x = ship_02->GetPosition().x; // get position of ship
-			ship_02->z = ship_02->GetPosition().z;
+			cannonOut_01 = true;
+			cannonball_01->rotate = ship_01->rotate;
+			ship_01->x = ship_01->GetPosition().x; // get position of ship
+			ship_01->z = ship_01->GetPosition().z;
 			bounceTime = 0.5;
 		}
 	}
@@ -955,117 +845,117 @@ void GameScene::Update(double dt)
 		bounceTime -= dt;
 	}
 
-	//if (cannonOut_01)
-	//{
-	//	if (cannon_01->translateX == 0  && cannon_01->translateZ == 0) // && cannon_01->translateY == 0
-	//	{
-	//		GameSound::instance()->CannonFire->setDefaultVolume(1.f);
-	//		GameSound::instance()->engine->play2D(GameSound::instance()->CannonFire, false);
-	//	}
+	if (cannonOut_01)
+	{
+		if (cannonball_01->translateX == 0  && cannonball_01->translateZ == 0) // && cannon_01->translateY == 0
+		{
+			GameSound::instance()->CannonFire->setDefaultVolume(1.f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->CannonFire, false);
+		}
 
-	//	cannon_01->translateX += (float)(10 * dt);
-	//	/*
-	//	if (cannon_01->translateY > -0.25)
-	//	{
-	//		cannon_01->translateY -= (float)(0.5 * dt);
-	//	}
-	//	*/
-	//	cannon_01->translateZ += (float)(10 * dt);
+		cannonball_01->translateX += (float)(10 * dt);
+		
+		if (cannonball_01->translateY > -0.25)
+		{
+			cannonball_01->translateY -= (float)(0.5 * dt);
+		}
+		
+		cannonball_01->translateZ += (float)(10 * dt);
 
-	//	if (cannon_01->translateX > 5 && cannon_01->translateZ > 5)
-	//	{
-	//		cannonOut_01 = false;
-	//	}
+		if (cannonball_01->translateX > 5 && cannonball_01->translateZ > 5)
+		{
+			cannonOut_01 = false;
+		}
 
-	//	float direction = DegreeToRadian(cannon_01->rotate);
+		float direction = DegreeToRadian(cannonball_01->rotate);
 
-	//	pos.Set(ship_01->x + (sin(direction) * cannon_01->translateX), cannon_01->translateY, ship_01->z + (cos(direction) * cannon_01->translateZ));
-	//	cannon_01->SetPosition(pos);
-	//}
-	//else
-	//{
-	//	cannon_01->translateX = 0;
-	//	cannon_01->translateZ = 0;
-	//	pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y + 0.25, ship_01->GetPosition().z);
-	//	cannon_01->SetPosition(pos);
-	//}
+		pos.Set(ship_01->x + (sin(direction) * cannonball_01->translateX), cannonball_01->translateY, ship_01->z + (cos(direction) * cannonball_01->translateZ));
+		cannonball_01->SetPosition(pos);
+	}
+	else
+	{
+		cannonball_01->translateX = 0;
+		cannonball_01->translateZ = 0;
+		pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y + 0.25, ship_01->GetPosition().z);
+		cannonball_01->SetPosition(pos);
+	}
 
-	//if (cannonOut_02)
-	//{
-	//	if (cannon_02->translateX == 0 && cannon_02->translateZ == 0) // && cannon_02->translateY == 0
-	//	{
-	//		GameSound::instance()->PaintSplat->setDefaultVolume(1.f);
-	//		GameSound::instance()->engine->play2D(GameSound::instance()->PaintSplat, false);
-	//	}
+	if (cannonOut_02)
+	{
+		if (cannonball_02->translateX == 0 && cannonball_02->translateZ == 0) // && cannon_02->translateY == 0
+		{
+			GameSound::instance()->PaintSplat->setDefaultVolume(1.f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->PaintSplat, false);
+		}
 
-	//	cannon_02->translateX += (float)(15 * dt);
-	//	/*
-	//	if (cannon_02->translateY > -0.25)
-	//	{
-	//		cannon_02->translateY -= (float)(0.5 * dt);
-	//	}
-	//	*/
-	//	cannon_02->translateZ += (float)(15 * dt);
+		cannonball_02->translateX += (float)(15 * dt);
+		
+		if (cannonball_02->translateY > -0.25)
+		{
+			cannonball_02->translateY -= (float)(0.5 * dt);
+		}
+		
+		cannonball_02->translateZ += (float)(15 * dt);
 
-	//	if (cannon_02->translateX > 5 && cannon_02->translateZ > 5)
-	//	{
-	//		std::cout << " X : " << cannon_02->translateX << std::endl;
-	//		std::cout << " Z : " << cannon_02->translateZ << std::endl;
-	//		cannonOut_02 = false;
-	//	}
+		if (cannonball_02->translateX > 5 && cannonball_02->translateZ > 5)
+		{
+			std::cout << " X : " << cannonball_02->translateX << std::endl;
+			std::cout << " Z : " << cannonball_02->translateZ << std::endl;
+			cannonOut_02 = false;
+		}
 
-	//	float direction = DegreeToRadian(cannon_02->rotate);
+		float direction = DegreeToRadian(cannonball_02->rotate);
 
-	//	pos.Set(ship_02->x + (sin(direction) * cannon_02->translateX),cannon_02->translateY, ship_02->z + (cos(direction) * cannon_02->translateZ));
-	//	cannon_02->SetPosition(pos);
-	//}
-	//else
-	//{
-	//	cannon_02->translateX = 0;
-	//	cannon_02->translateZ = 0;
-	//	pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y + 0.25, ship_02->GetPosition().z);
-	//	cannon_02->SetPosition(pos);
-	//}
+		pos.Set(ship_02->x + (sin(direction) * cannonball_02->translateX),cannonball_02->translateY, ship_02->z + (cos(direction) * cannonball_02->translateZ));
+		cannonball_02->SetPosition(pos);
+	}
+	else
+	{
+		cannonball_02->translateX = 0;
+		cannonball_02->translateZ = 0;
+		pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y + 0.25, ship_02->GetPosition().z);
+		cannonball_02->SetPosition(pos);
+	}
 
-	//if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
-	//{
-	//	//ship_01->scaleObject += (float)(1.5 * dt);
-	//	ship_02->scaleObject = 0.25;
-	//	scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
-	//	ship_02->SetScale(scale);
-	//}
+	if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
+	{
+		//ship_01->scaleObject += (float)(1.5 * dt);
+		ship_02->scaleObject = 0.25;
+		scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
+		ship_02->SetScale(scale);
+	}
 
-	//if (Application::IsKeyPressed('R'))
-	//{
-	//	Vector3 initial;
-	//	// ship_01
-	//	ship_01->rotate = 90;
-	//	ship_01->scaleObject = 0;
-	//	ship_01->translateX = 0;
-	//	ship_01->translateY = 0;
-	//	ship_01->translateZ = 0;
+	if (Application::IsKeyPressed('R'))
+	{
+		Vector3 initial;
+		// ship_01
+		ship_01->rotate = 90;
+		ship_01->scaleObject = 0;
+		ship_01->translateX = 0;
+		ship_01->translateY = 0;
+		ship_01->translateZ = 0;
 
-	//	initial.Set(2, 0, -2);
-	//	ship_01->SetPosition(initial);
-	//	initial.Set(0, 1, 0);
-	//	ship_01->SetRotation(initial, ship_01->rotate);
-	//	initial.Set(0.1, 0.1, 0.1);
-	//	ship_01->SetScale(initial);
+		initial.Set(2, 0, -2);
+		ship_01->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_01->SetRotation(initial, ship_01->rotate);
+		initial.Set(0.1, 0.1, 0.1);
+		ship_01->SetScale(initial);
 
-	//	// ship_02
-	//	ship_02->rotate = 90;
-	//	ship_02->scaleObject = 0;
-	//	ship_02->translateX = 0;
-	//	ship_02->translateY = 0;
-	//	ship_02->translateZ = 0;
+		// ship_02
+		ship_02->rotate = 90;
+		ship_02->scaleObject = 0;
+		ship_02->translateX = 0;
+		ship_02->translateY = 0;
+		ship_02->translateZ = 0;
 
-	//	initial.Set(-2, 0, -2);
-	//	ship_02->SetPosition(initial);
-	//	initial.Set(0, 1, 0);
-	//	ship_02->SetRotation(initial, ship_02->rotate);
-	//	initial.Set(0.1, 0.1, 0.1);
-	//	ship_02->SetScale(initial);
-	//}
+		initial.Set(-2, 0, -2);
+		ship_02->SetPosition(initial);
+		initial.Set(0, 1, 0);
+		ship_02->SetRotation(initial, ship_02->rotate);
+		initial.Set(0.1, 0.1, 0.1);
+		ship_02->SetScale(initial);
+	}
 
 
 	/*if (Application::IsKeyPressed(VK_NUMPAD1)) {
@@ -1080,41 +970,6 @@ void GameScene::Update(double dt)
 	else if (Application::IsKeyPressed(VK_NUMPAD4)) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}*/
-
-	if (Application::IsKeyPressed('I'))
-		light[0].position.z -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('K'))
-		light[0].position.z += (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('J'))
-		light[0].position.x -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('L'))
-		light[0].position.x += (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('O'))
-		light[0].position.y -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('P'))
-		light[0].position.y += (float)(LSPEED * dt);
-			
-	if (bounceTime <= 0.0) {
-		if (Application::IsKeyPressed('G')) {
-			openShop = !openShop;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('1')) {
-			shopItem = 1;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('2')) {
-			shopItem = 2;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('3')) {
-			shopItem = 3;
-			bounceTime = 0.5;
-		}
-	}
-	else {
-		bounceTime -= dt;
-	}
 }
 
 void GameScene::RenderMesh(GameObject* curType, bool enableLight)

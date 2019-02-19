@@ -13,14 +13,10 @@ class MeshBuilder
 {
 public:
 	static Mesh* GenerateAxes(const std::string &meshName, float lengthX, float lengthY, float lengthZ);
-	static Mesh* GenerateQuad(const std::string &meshName,Color color, float lengthX, float lengthY);
+	static Mesh* GenerateQuad(const std::string &meshName,Color color, float length);
 	static Mesh* GenerateCube(const std::string &meshName,Color color, float lengthX, float lengthY, float lengthZ);
 	static Mesh* GenerateOBJ(const std::string &meshName, const std::string
 		&file_path);
-	static Mesh* GeneratePikachuEars(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ);
-	static Mesh* GeneratePikachuEarsBlack(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ);
-	static Mesh* GeneratePikachuBody(const std::string &meshName, Color color, float radius);
-	static Mesh* GeneratePikachuHand(const std::string &meshName, Color color, float radius);
 	static Mesh* MeshBuilder::GenerateCircle(const std::string &meshName,Color color, float
 		lengthX, float lengthY, float lengthZ);
 	static Mesh* MeshBuilder::GenerateSphere(const std::string &meshName, Color color, float

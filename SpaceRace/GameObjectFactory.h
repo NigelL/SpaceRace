@@ -19,6 +19,7 @@ public:
 		SPDCONSUMABLE,
 		HPCONSUMABLE,
 		PARTSCONSUMABLE,
+		CANNONBALL,
 		ISLAND,
 		OBJECT_TOTAL
 	};
@@ -31,7 +32,7 @@ public:
 	static HealthConsumable* SpawnHealthConsumable(std::string name, Material *material, Vector3 bounds);
 	static SpeedConsumable* SpawnSpeedConsumable(std::string name, Material *material, Vector3 bounds);
 	static PartConsumable* SpawnPartConsumable(std::string name, Material *material, Vector3 bounds);
+	static IslandEnvironment* SpawnCannonball(std::string name, Material *material, Vector3 bounds);
 	static IslandEnvironment* SpawnIsland(std::string name, Material *material, Vector3 bounds);
-	//void SpawnEnvironment();
 };
 

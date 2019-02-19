@@ -108,6 +108,9 @@
     <ClCompile Include="CShipStats.cpp">
       <Filter>Source Files\src\gameobjects</Filter>
     </ClCompile>
+    <ClCompile Include="cannonball.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vertex.h">
@@ -186,6 +189,9 @@
       <Filter>Source Files\src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="CShipStats.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cannonball.h">
       <Filter>Source Files\src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>

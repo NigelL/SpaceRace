@@ -7,7 +7,7 @@
 #include "Application.h"
 #include "Scene.h";
 #include "GameScene.h"
-#include "MainMenuScene.h"
+//#include "MainMenuScene.h"
 #include "GameSound.h"
 
 
@@ -115,9 +115,7 @@ void Application::Init()
 	{
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 		//return -1;
-	}
-
-	
+	}	
 }
 
 HWND Application::windowHWND()  {
@@ -126,7 +124,6 @@ HWND Application::windowHWND()  {
 GLFWwindow* Application::getGLFWWindow() {
 	return m_window;
 }
-
 
 void Application::GetMousePos(double& x, double& y) {
 	glfwGetCursorPos(m_window, &x, &y);
