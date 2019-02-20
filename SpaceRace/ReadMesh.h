@@ -20,9 +20,10 @@ public:
 	std::vector<double>	diffuse;
 	std::vector<double> specular;
 	std::vector<double> shininess;
-	
+	std::vector<double> bound;
+	std::vector<int> type;
 
 	
 };
 
-MeshInfo ReadFromMesh(std::string path);
+std::vector<MeshInfo> ReadFromMesh(std::string path);

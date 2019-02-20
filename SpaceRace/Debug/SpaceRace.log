@@ -1,9 +1,11 @@
-﻿  ReadMesh.cpp
-d:\users\l533\desktop\cgp\spacerace\spacerace\readmesh.cpp(14): warning C4018: '<': signed/unsigned mismatch
-  d:\users\l533\desktop\cgp\spacerace\spacerace\readmesh.cpp(55): note: see reference to function template instantiation 'std::vector<double,std::allocator<_Ty>> CheckFormat<double>(std::string,std::string,std::string,int)' being compiled
-          with
-          [
-              _Ty=double
-          ]
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.exe
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\CGP\SpaceRace\Debug\SpaceRace.pdb (Partial PDB)
+﻿  BuildScene.cpp
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(25): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(364): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(367): warning C4101: 'powerUpX': unreferenced local variable
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(366): warning C4101: 'powerUpSpawn': unreferenced local variable
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(367): warning C4101: 'powerUpZ': unreferenced local variable
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(395): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(396): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\study\computer graphics project\spacerace\spacerace\buildscene.cpp(482): warning C4305: 'argument': truncation from 'double' to 'float'
+  SpaceRace.vcxproj -> D:\Study\COMPUTER GRAPHICS PROJECT\SpaceRace\Debug\SpaceRace.exe

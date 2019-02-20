@@ -10,8 +10,12 @@ int HealthConsumable::GetHealth() const {
 }
 
 void HealthConsumable::OnCollide(GameObject& other) {
-	CShipStats* tryShip = static_cast<CShipStats*>(&other);
-	tryShip->SetHealth(tryShip->getHealth() + healthConsumed);
+	Consumable::OnCollide(other);
+	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
+	if (tryShip != nullptr) {
+
+		tryShip->SetHealth(tryShip->getHealth() + healthConsumed);
+	}
 }
 
 HealthConsumable::HealthConsumable()

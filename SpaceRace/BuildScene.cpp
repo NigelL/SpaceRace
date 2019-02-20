@@ -2,15 +2,20 @@
 
 #define SIZE 5
 
+GameObject* cursor;
 
 BuildScene::BuildScene()
 {
 	srand(time(0));
 
-	//Factory f;
-	//f.CreateGameObject(Name Of Obj ,Material ,Bounds)
-	//ship pos amt rot scale
-
+	Mesh* curSphere = MeshBuilder::GenerateSphere("Sphere", Color(1, 1, 1), 1);
+	curSphere->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
+	curSphere->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	curSphere->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
+	curSphere->material.kShininess = 1.0f;
+	cursor = new GameObject(curSphere, Vector3(0, 2, 0), 0, Vector3(0, 1, 0),Vector3(0.05f,0.05f,0.05f));
+	meshList.push_back(cursor);
+	
 	Mesh* curShip = MeshBuilder::GenerateCube("Cube", Color(1, 1, 1), 1, 1, 1);
 	//curShip->textureID = LoadTGA("Image//ship.tga");
 	curShip->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
@@ -18,7 +23,7 @@ BuildScene::BuildScene()
 	curShip->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 	curShip->material.kShininess = 1.0f;
 	mainShip = new GameObject(curShip, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	mainShip->SetBounds(Vector3(1.0f, 1.0f, 1.0f));
+	mainShip->GetTransform().SetBounds(Vector3(1.0f, 1.0f, 1.0f));
 
 	meshList.push_back(mainShip);
 
@@ -36,7 +41,7 @@ BuildScene::BuildScene()
 	splashWaterMesh->waterMesh = splashWater;
 
 	meshList.push_back(new GameObject(splashWater, Vector3(-500, -2.5f, 500), 180, Vector3(1, 0, 0), Vector3(1000, 1, 1000)));
-
+	
 
 }
 
@@ -377,28 +382,36 @@ void BuildScene::SpawnPowerUp()
 
 }
 
+Vector3 rightMove, upMove;
+void BuildScene::UpdateMouseCursor() {
+	double befX = mouseX;
+	double befY = mouseY;
+
+	Application::GetMousePos(mouseX, mouseY);
+	GLfloat* modelView;
+	glGetFloatv(GL_PROJECTION, modelView);
+
+	double diffX = (mouseX - befX) / 1500;
+	double diffY = (mouseY - befY) /  1500;
+
+	 rightMove += camera.right.Normalized() * diffX;
+	 upMove  += camera.up.Normalized() * -diffY;
+
+	cursor->SetPosition(camera.position + camera.view.Normalized() + rightMove + upMove);
+}
 
 void BuildScene::Update(double dt)
 {
-	splashWaterMesh->UpdateWater(10, dt);
+	//splashWaterMesh->UpdateWater(10, dt);
 
-	mainShip->CheckCollision(camera.position, camera.view, 1);
-	for (int j = 0; j < meshList.size(); j++) {
-		/*
-		for (int i = 0; i < meshList.size(); i++) {
-			if (i == j) { continue; }
-			meshList[i]->CheckCollision(*meshList[j]);
-		}
-		*/
-		if (j == 0) { continue; }
-		meshList[0]->CheckCollision(*meshList[j]);
-
-	}
+	mainShip->collision.CheckCollision(camera.position, camera.view, 1);
+	
 
 	short int multipler = 1;
 
 	//Camera Logic
 	camera.Update((float)dt);
+	UpdateMouseCursor();
 	float yaw = DegreeToRadian(mainShip->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = mainShip->GetPosition() - direction * 3;
@@ -772,7 +785,7 @@ void BuildScene::Render()
 	}
 
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS), Color(0, 1, 0), 30, 0, 28);
-	RenderTextOnScreen(gameText, "Collision : " + std::to_string(meshList[0]->collidedList.size()), Color(0, 1, 0), 30, 0, 10);
+	RenderTextOnScreen(gameText, "Collision : " + std::to_string(meshList[0]->collision.collidedList.size()), Color(0, 1, 0), 30, 0, 10);
 
 
 }

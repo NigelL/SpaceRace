@@ -6,8 +6,8 @@
 
 #include "Scene.h"
 #include "Camera3.h"
-//#include "GameObject.h"
 #include "GameObjectFactory.h"
+#include "Consumable.h"
 #include "Light.h"
 #include "MatrixStack.h"
 #include "MeshBuilder.h"
@@ -17,17 +17,12 @@
 #include "shader.hpp"
 #include "Utility.h"
 #include "Mtx44.h"
-
 #include "Water.h"
-
 #include "GameSound.h"
-
-
 #include "LoadTGA.h"
 #include "Application.h"
-
 #include <iostream>
-
+#include <map>
 
 class GameScene : public Scene
 {
@@ -35,7 +30,7 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	float sceneFPS;
-
+	std::map<std::string, GameObject*> sceneObjects;
 
 public:
 	GameScene();

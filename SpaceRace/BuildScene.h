@@ -16,7 +16,7 @@
 #include "shader.hpp"
 #include "Utility.h"
 #include "Mtx44.h"
-
+#include "Application.h"
 #include "Water.h"
 
 #include "GameSound.h"
@@ -34,7 +34,7 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	float sceneFPS;
-
+	double mouseX, mouseY;
 
 public:
 	BuildScene();
@@ -123,6 +123,7 @@ private:
 
 
 	void SpawnPowerUp();
+	void UpdateMouseCursor();
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);

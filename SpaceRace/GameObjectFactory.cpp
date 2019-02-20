@@ -13,36 +13,37 @@ GameObjectFactory::~GameObjectFactory()
 {
 }
 
-GameObject* GameObjectFactory::SpawnGameObject(OBJECT_TYPE type, std::string _name, Material *material, Vector3 _bounds)
+GameObject* GameObjectFactory::SpawnGameObject(OBJECT_TYPE type, std::string _name, Material *material, Transform _transform)
 {
 	if (type == SHIP)
 	{
-		CShipStats* cShip = SpawnShip(_name, material, _bounds);
+		CShipStats* cShip = SpawnShip(_name, material, _transform);
 		return cShip;
 	}
 	if (type == SPDCONSUMABLE)
 	{
-		SpeedConsumable* cSPD = SpawnSpeedConsumable(_name, material, _bounds);
+		SpeedConsumable* cSPD = SpawnSpeedConsumable(_name, material, _transform);
 		return cSPD;
 	}
 	if (type == HPCONSUMABLE)
 	{
-		HealthConsumable* cHP = SpawnHealthConsumable(_name, material, _bounds);
+		HealthConsumable* cHP = SpawnHealthConsumable(_name, material, _transform);
 		return cHP;
 	}
 	if (type == PARTSCONSUMABLE)
 	{
-		PartConsumable* cPart = SpawnPartConsumable(_name, material, _bounds);
+		PartConsumable* cPart = SpawnPartConsumable(_name, material, _transform);
+		cPart->SetPart(20);
 		return cPart;
 	}
 	if (type == ISLAND)
 	{
-		IslandEnvironment* cIE = SpawnIsland(_name, material, _bounds);
+		IslandEnvironment* cIE = SpawnIsland(_name, material, _transform);
 		return cIE;
 	}
 }
 
-CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, Vector3 bounds)
+CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, Transform transform)
 {
 	std::string obj = "OBJ//" + name + ".obj";
 	std::string tga = "Image//" + name + ".tga";
@@ -52,12 +53,14 @@ CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, V
 	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
 	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
 	name1->material.kShininess = material->kShininess;
-	CShipStats* retThis = new CShipStats(name1, Vector3 (0, 0, 0), 90, Vector3 (0, 1, 0), Vector3 (0.1, 0.1, 0.1));
-	retThis->SetBounds(bounds);
+	CShipStats* retThis = new CShipStats(name1,transform.position, transform.amt, transform.rotation,transform.scale);
+	transform.name = name;
+	
+	retThis->SetTransform(transform);
 	return retThis;
 }
 
-HealthConsumable* GameObjectFactory::SpawnHealthConsumable(std::string name, Material *material, Vector3 bounds)
+HealthConsumable* GameObjectFactory::SpawnHealthConsumable(std::string name, Material *material, Transform transform)
 {
 	std::string obj = "OBJ//" + name + ".obj";
 	std::string tga = "Image//" + name + ".tga";
@@ -67,12 +70,13 @@ HealthConsumable* GameObjectFactory::SpawnHealthConsumable(std::string name, Mat
 	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
 	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
 	name1->material.kShininess = material->kShininess;
-	HealthConsumable* retThis = new HealthConsumable(name1, Vector3 (0, 0, 0), 0, Vector3 (0, 1, 0), Vector3 (0.5, 0.5, 0.5));
-	retThis->SetBounds(bounds);
+	HealthConsumable* retThis = new HealthConsumable(name1, transform.position, transform.amt, transform.rotation, transform.scale);
+	retThis->SetTransform(transform);
+	retThis->SetHealth(20);
 	return retThis;
 }
 
-SpeedConsumable* GameObjectFactory::SpawnSpeedConsumable(std::string name, Material *material, Vector3 bounds)
+SpeedConsumable* GameObjectFactory::SpawnSpeedConsumable(std::string name, Material *material, Transform transform)
 {
 	std::string obj = "OBJ//" + name + ".obj";
 	std::string tga = "Image//" + name + ".tga";
@@ -82,12 +86,12 @@ SpeedConsumable* GameObjectFactory::SpawnSpeedConsumable(std::string name, Mater
 	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
 	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
 	name1->material.kShininess = material->kShininess;
-	SpeedConsumable* retThis = new SpeedConsumable(name1, Vector3 (5, 0, 10), 90, Vector3 (0, 1, 0), Vector3 (0.5, 0.5, 0.5));
-	retThis->SetBounds(bounds);
+	SpeedConsumable* retThis = new SpeedConsumable(name1, transform.position, transform.amt, transform.rotation, transform.scale);
+	retThis->SetTransform(transform);
 	return retThis;
 }
 
-PartConsumable* GameObjectFactory::SpawnPartConsumable(std::string name, Material *material, Vector3 bounds)
+PartConsumable* GameObjectFactory::SpawnPartConsumable(std::string name, Material *material, Transform transform)
 {
 	std::string obj = "OBJ//" + name + ".obj";
 	std::string tga = "Image//" + name + ".tga";
@@ -97,22 +101,25 @@ PartConsumable* GameObjectFactory::SpawnPartConsumable(std::string name, Materia
 	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
 	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
 	name1->material.kShininess = material->kShininess;
-	PartConsumable* retThis = new PartConsumable(name1, Vector3(5, 0, 10), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
-	retThis->SetBounds(bounds);
+	PartConsumable* retThis = new PartConsumable(name1, transform.position, transform.amt, transform.rotation, transform.scale);
+	transform.type = 1;
+	transform.name = name;
+	retThis->SetTransform(transform);
 	return retThis;
 }
 
-IslandEnvironment* GameObjectFactory::SpawnIsland(std::string name, Material *material, Vector3 bounds)
+IslandEnvironment* GameObjectFactory::SpawnIsland(std::string name, Material *material, Transform transform)
 {
 	std::string obj = "OBJ//" + name + ".obj";
 	std::string tga = "Image//" + name + ".tga";
 	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
 	name1->textureID = LoadTGA(tga.c_str());
+
 	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
 	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
 	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
 	name1->material.kShininess = material->kShininess;
-	IslandEnvironment* retThis = new IslandEnvironment(name1, Vector3(5, 0, 10), 90, Vector3(0, 1, 0), Vector3(0.5, 0.5, 0.5));
-	retThis->SetBounds(bounds);
+	IslandEnvironment* retThis = new IslandEnvironment(name1, transform.position, transform.amt, transform.rotation, transform.scale);
+	retThis->SetTransform(transform);
 	return retThis;
 }

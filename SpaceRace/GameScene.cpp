@@ -1,19 +1,11 @@
 #include "GameScene.h"
+#include "ReadMesh.h"
+
 
 #define SIZE 5
 
 Water* curWater = new Water();
-GameObject* ship_01;
-GameObject* ship_02;
-GameObject* islands;
-GameObject* parts;
 
-GameObject* pirateShip;
-GameObject* cannon_01;
-GameObject* cannon_02;
-
-GameObject* hpconsumable;
-GameObject* speedconsumable;
 bool cannonOut_01 = false;
 bool cannonOut_02 = false;
 
@@ -21,10 +13,65 @@ GameObject* powerUp[15];
 Mesh* curCube;
 
 GameScene* GameScene::instance;
+
+
+
+
 GameScene::GameScene()
 {
 	srand(time(0));
 	instance = this;
+
+	curCube = MeshBuilder::GenerateCube("Cube", Color(1, 1, 1), 1, 1, 1);
+
+	//Manual Instantiation
+
+	Mesh* waterMesh = MeshBuilder::GenerateQuad("Water", Color(0, 1, 0), 100, 100);
+	waterMesh->textureID = LoadTGA("Image//Water.tga");
+	Material *waterMat = new Material;
+	waterMat->kAmbient.Set(0.4f, 0.4f, 0.4f);
+	waterMat->kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	waterMat->kSpecular.Set(0.2f, 0.2f, 0.2f);
+	waterMat->kShininess = 1.0f;
+	waterMesh->material = *waterMat;
+	sceneObjects["Water"] = new GameObject(waterMesh, Vector3(-50, -5.0f, 50), 180, Vector3(1, 0, 0), Vector3(1000, 1, 1000));
+	
+	curWater->waterMesh = waterMesh;
+	meshList.push_back(sceneObjects["Water"]);
+
+	///////////////////////////////////////////////
+
+	//Read From Text File 
+	std::vector<MeshInfo> readInfo = ReadFromMesh("text.txt");
+	for (auto info : readInfo) {
+		std::string infoName = info.meshName;
+		Vector3 infoPos = Vector3(info.pos[0], info.pos[1], info.pos[2]);
+		Vector3 infoRot = Vector3(info.rot[0], info.rot[1], info.rot[2]);
+		Vector3 infoScale = Vector3(info.scale[0], info.scale[1], info.scale[2]);
+		Vector3 infoBound = Vector3(info.bound[0], info.bound[1], info.bound[2]);
+		float infoAmt = info.amt[0];
+		int infoIndex = info.type[0];
+
+		Transform t = Transform();
+		t.position = infoPos;
+		t.rotation = infoRot;
+		t.scale = infoScale;
+		t.amt = infoAmt;
+		t.SetBounds(infoBound);
+		t.type = infoIndex;
+
+		Material* mat = new Material;
+		mat->kAmbient.Set(info.ambient[0], info.ambient[1], info.ambient[2]);
+		mat->kDiffuse.Set(info.diffuse[0], info.diffuse[1], info.diffuse[2]);
+		mat->kSpecular.Set(info.specular[0], info.specular[1], info.specular[2]);
+		mat->kShininess = info.shininess[0];
+
+		sceneObjects[infoName] = GameObjectFactory::SpawnGameObject((GameObjectFactory::OBJECT_TYPE)(infoIndex), infoName, mat, t);
+		 
+		meshList.push_back(sceneObjects[infoName]);
+	}
+
+	
 
 	Material *mat = new Material;
 	mat->kAmbient.Set(0.4f, 0.4f, 0.4f);
@@ -32,70 +79,17 @@ GameScene::GameScene()
 	mat->kSpecular.Set(0.2f, 0.2f, 0.2f);
 	mat->kShininess = 1.0f;
 
-	ship_01 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship_01", mat, Vector3(5, 5, 5));
-	meshList.push_back(ship_01);
-	ship_02 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship_02", mat, Vector3(5, 5, 5));
-	meshList.push_back(ship_02);
-	speedconsumable = GameObjectFactory::SpawnGameObject(GameObjectFactory::SPDCONSUMABLE, "speedup", mat, Vector3(5, 5, 5));
-	meshList.push_back(speedconsumable);
-	hpconsumable = GameObjectFactory::SpawnGameObject(GameObjectFactory::HPCONSUMABLE, "restorehp", mat, Vector3(5, 5, 5));
-	meshList.push_back(hpconsumable);
-	parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "parts", mat, Vector3(2, 2, 2));
-	meshList.push_back(parts);
-
-	gameText = MeshBuilder::GenerateText("text", 16, 16);
-	gameText->textureID = LoadTGA("Image//calibri.tga");
-
-	Mesh* curMesh = MeshBuilder::GenerateQuad("Test", Color(0, 1, 0), 100, 100);
-	curMesh->textureID = LoadTGA("Image//Water.tga");
-	curMesh->material.kAmbient.Set(0.5f, 0.5f, 0.5f);
-	curMesh->material.kDiffuse.Set(0.0f, 0.0f, 1.0f);
-	curMesh->material.kShininess = 1.0f;
-	curMesh->material.kSpecular.Set(0.0f, 0.0f, 1.0f);
-	curWater->waterMesh = curMesh;
-
-	meshList.push_back(new GameObject(curMesh, Vector3(-500, -2.5f, 500), 180, Vector3(1, 0, 0), Vector3(1000, 1, 1000)));
+	Transform t;
+	t.boxHalf = Vector3(1.5f,1.5f,1.5f);
 	
-
-
-	/*
-
-	Mesh* Cannon_01 = MeshBuilder::GenerateOBJ("cannonball", "OBJ//cannon.obj");
-	Cannon_01->textureID = LoadTGA("Image//cannon.tga");
-	Cannon_01->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-	Cannon_01->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-	Cannon_01->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-	Cannon_01->material.kShininess = 1.0f;
-	cannon_01 = new GameObject(Cannon_01, Vector3(2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(cannon_01);
-
-	Mesh* Cannon_02 = MeshBuilder::GenerateOBJ("cannonball", "OBJ//cannon.obj");
-	Cannon_02->textureID = LoadTGA("Image//ship2.tga");
-	Cannon_02->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-	Cannon_02->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-	Cannon_02->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-	Cannon_02->material.kShininess = 1.0f;
-	cannon_02 = new GameObject(Cannon_02, Vector3(-2, 0, -2), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(cannon_02);
-
-	Mesh* PirateShip = MeshBuilder::GenerateOBJ("PShip", "OBJ//PirateShip.obj");
-	PirateShip->textureID = LoadTGA("Image//PirateShipTexture.tga");
-	PirateShip->material.kDiffuse.Set(0.99f, 0.99f, 0.99f);
-	PirateShip->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
-	PirateShip->material.kAmbient.Set(0.1f, 0.1f, 0.1f);
-	PirateShip->material.kShininess = 1.0f;
-	pirateShip = new GameObject(PirateShip, Vector3(0, 0, 0), 90, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-	meshList.push_back(pirateShip);
-*/
-
 	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
 
 
 	for (int numberofislands = 0; numberofislands < 18; numberofislands++)
 	{
 		bool overlaps = false;
-		islandposx = rand() % 100 + (-50);
-		islandposz = rand() % 100 + (-50);
+		islandposx = rand() % 500;
+		islandposz = rand() % 500 - 500;
 		islandposxA[numberofislands] = islandposx;
 		islandposzA[numberofislands] = islandposz;
 
@@ -119,20 +113,27 @@ GameScene::GameScene()
 		// If it doesn't overlap, overlaps is still false, and will print out an island
 		if (overlaps == false)
 		{
+
 			if (numberofislands <= 8)
 			{
-				islands = GameObjectFactory::SpawnGameObject(GameObjectFactory::ISLAND, "island", mat, Vector3(4, 4, 4));
-				islands->SetPosition(Vector3(islandposx, -2, islandposz));
+				
+				GameObject* islands = GameObjectFactory::SpawnGameObject(GameObjectFactory::ISLAND, "someisland", mat, t);
+				islands->GetTransform().GenerateBounds();
+				islands->SetPosition(Vector3(islandposx, -3.0, islandposz));
+
 				meshList.push_back(islands);
+
 			}
 			else
 			{
-				parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "parts", mat, Vector3(2, 2, 2));
+				GameObject* parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::HPCONSUMABLE, "Parts", mat, t);
+				
 				parts->SetPosition(Vector3(islandposx, 0, islandposz));
+				
 				meshList.push_back(parts);
 			}
 
-			std::cout << "Island Overlapped, making a new one..." << std::endl;
+			//std::cout << "Island Overlapped, making a new one..." << std::endl;
 		}
 	}
 }
@@ -517,10 +518,10 @@ void GameScene::Update2(double dt)
 {
 	//Camera Logic
 	camera.Update((float)dt);
-	float yaw = DegreeToRadian(ship_02->rotate);
+	float yaw = DegreeToRadian(sceneObjects["ship02"]->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
-	Vector3 position = ship_02->GetPosition() - direction * 3;
-	camera.SetTarget(ship_02->GetPosition().x, ship_02->GetPosition().y + 1, ship_02->GetPosition().z);
+	Vector3 position = sceneObjects["ship02"]->GetPosition() - direction * 3;
+	camera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 1, sceneObjects["ship02"]->GetPosition().z);
 	camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
@@ -531,89 +532,89 @@ void GameScene::Update2(double dt)
 	// ship stuff
 	Vector3 pos, rot, scale;
 
-	ship_02->translateX = (float)(2 * dt);
-	ship_02->translateY = (float)(2 * dt);
-	ship_02->translateZ = (float)(2 * dt);
+	sceneObjects["ship02"]->translateX = (float)(2 * dt);
+	sceneObjects["ship02"]->translateY = (float)(2 * dt);
+	sceneObjects["ship02"]->translateZ = (float)(2 * dt);
 
-	// control the ship_02
+	// control the sceneObjects["ship02"]
 
-	position = ship_02->GetPosition() - direction * 3;
-	camera.SetTarget(ship_02->GetPosition().x, ship_02->GetPosition().y + 1, ship_02->GetPosition().z);
+	position = sceneObjects["ship02"]->GetPosition() - direction * 3;
+	camera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 1, sceneObjects["ship02"]->GetPosition().z);
 	camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//if (Application::IsKeyPressed(VK_NUMPAD5)) // 270
 	//{
-	//	if (!(ship_02->GetPosition().x < -45) && !(ship_02->GetPosition().x > 45) && !(ship_02->GetPosition().z < -45) && !(ship_02->GetPosition().z > 45))
+	//	if (!(sceneObjects["ship02"]->GetPosition().x < -45) && !(sceneObjects["ship02"]->GetPosition().x > 45) && !(sceneObjects["ship02"]->GetPosition().z < -45) && !(sceneObjects["ship02"]->GetPosition().z > 45))
 	//	{
 
 	//	}
 
-	//	float direction = DegreeToRadian(ship_02->rotate);
-	//	pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
-	//	ship_02->SetPosition(pos);
+	//	float direction = DegreeToRadian(sceneObjects["ship02"]->rotate);
+	//	pos.Set(sceneObjects["ship02"]->GetPosition().x + (sin(direction) * sceneObjects["ship02"]->translateX), sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z + (cos(direction) * sceneObjects["ship02"]->translateZ));
+	//	sceneObjects["ship02"]->SetPosition(pos);
 
 	//	if (Application::IsKeyPressed(VK_NUMPAD1)) // 0
 	//	{
-	//		ship_02->rotate += (int)(5);
+	//		sceneObjects["ship02"]->rotate += (int)(5);
 
-	//		if (ship_02->rotate >= 360)
+	//		if (sceneObjects["ship02"]->rotate >= 360)
 	//		{
-	//			ship_02->rotate = 0;
+	//			sceneObjects["ship02"]->rotate = 0;
 	//		}
 
 	//		rot.Set(0, 1, 0);
-	//		ship_02->SetRotation(rot, ship_02->rotate);
+	//		sceneObjects["ship02"]->SetRotation(rot, sceneObjects["ship02"]->rotate);
 	//	}
 	//	if (Application::IsKeyPressed(VK_NUMPAD3)) // 180
 	//	{
-	//		ship_02->rotate -= (int)(5);
+	//		sceneObjects["ship02"]->rotate -= (int)(5);
 
-	//		if (ship_02->rotate <= 0)
+	//		if (sceneObjects["ship02"]->rotate <= 0)
 	//		{
-	//			ship_02->rotate = 360;
+	//			sceneObjects["ship02"]->rotate = 360;
 	//		}
 
 	//		rot.Set(0, 1, 0);
-	//		ship_02->SetRotation(rot, ship_02->rotate);
+	//		sceneObjects["ship02"]->SetRotation(rot, sceneObjects["ship02"]->rotate);
 	//	}
 	//}
 
 	if (Application::IsKeyPressed('W')) // 270
 	{
-		if (!(ship_02->GetPosition().x - 1 < -45) && !(ship_02->GetPosition().x + 1 > 45) && !(ship_02->GetPosition().z - 1 < -45) && !(ship_02->GetPosition().z + 1 > 45))
+		if (!(sceneObjects["ship02"]->GetPosition().x - 1 < -45) && !(sceneObjects["ship02"]->GetPosition().x + 1 > 45) && !(sceneObjects["ship02"]->GetPosition().z - 1 < -45) && !(sceneObjects["ship02"]->GetPosition().z + 1 > 45))
 		{
 
 		}
 
-		float direction = DegreeToRadian(ship_02->rotate);
-		pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
-		ship_02->SetPosition(pos);
+		float direction = DegreeToRadian(sceneObjects["ship02"]->rotate);
+		pos.Set(sceneObjects["ship02"]->GetPosition().x + (sin(direction) * sceneObjects["ship02"]->translateX), sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z + (cos(direction) * sceneObjects["ship02"]->translateZ));
+		sceneObjects["ship02"]->SetPosition(pos);
 
 		if (Application::IsKeyPressed('A')) // 0
 		{
-			ship_02->rotate += (int)(2);
+			sceneObjects["ship02"]->rotate += (int)(2);
 
-			if (ship_02->rotate >= 360)
+			if (sceneObjects["ship02"]->rotate >= 360)
 			{
-				ship_02->rotate = 0;
+				sceneObjects["ship02"]->rotate = 0;
 			}
 
 			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
+			sceneObjects["ship02"]->SetRotation(rot, sceneObjects["ship02"]->rotate);
 		}
 	}
 
 	if (Application::IsKeyPressed('D')) // 180
 	{
-		ship_02->rotate -= (int)(2);
+		sceneObjects["ship02"]->rotate -= (int)(2);
 
-		if (ship_02->rotate <= 0)
+		if (sceneObjects["ship02"]->rotate <= 0)
 		{
-			ship_02->rotate = 360;
+			sceneObjects["ship02"]->rotate = 360;
 		}
 
 		rot.Set(0, 1, 0);
-		ship_02->SetRotation(rot, ship_02->rotate);
+		sceneObjects["ship02"]->SetRotation(rot, sceneObjects["ship02"]->rotate);
 	}
 
 	if (bounceTime <= 0)
@@ -621,9 +622,9 @@ void GameScene::Update2(double dt)
 		if (Application::IsKeyPressed('S') && !cannonOut_02) // shoot cannonball
 		{
 			//cannonOut_02 = true;
-			//cannon_02->rotate = ship_02->rotate;
-			//ship_02->x = ship_02->GetPosition().x; // get position of ship
-			//ship_02->z = ship_02->GetPosition().z;
+			//cannon_02->rotate = sceneObjects["ship02"]->rotate;
+			//sceneObjects["ship02"]->x = sceneObjects["ship02"]->GetPosition().x; // get position of ship
+			//sceneObjects["ship02"]->z = sceneObjects["ship02"]->GetPosition().z;
 			//bounceTime = 0.5;
 		}
 	}
@@ -662,14 +663,14 @@ void GameScene::Update2(double dt)
 
 	//	float direction = DegreeToRadian(cannon_02->rotate);
 
-	//	pos.Set(ship_02->x + (sin(direction) * cannon_02->translateX), cannon_02->translateY, ship_02->z + (cos(direction) * cannon_02->translateZ));
+	//	pos.Set(sceneObjects["ship02"]->x + (sin(direction) * cannon_02->translateX), cannon_02->translateY, sceneObjects["ship02"]->z + (cos(direction) * cannon_02->translateZ));
 	//	cannon_02->SetPosition(pos);
 	//}
 	//else
 	//{
 	//	cannon_02->translateX = 0;
 	//	cannon_02->translateZ = 0;
-	//	pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y + 0.25, ship_02->GetPosition().z);
+	//	pos.Set(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 0.25, sceneObjects["ship02"]->GetPosition().z);
 	//	cannon_02->SetPosition(pos);
 	//}
 
@@ -677,26 +678,26 @@ void GameScene::Update2(double dt)
 	{
 		Vector3 initial;
 
-		ship_02->rotate = 90;
-		ship_02->scaleObject = 0;
-		ship_02->translateX = 0;
-		ship_02->translateY = 0;
-		ship_02->translateZ = 0;
+		sceneObjects["ship02"]->rotate = 90;
+		sceneObjects["ship02"]->scaleObject = 0;
+		sceneObjects["ship02"]->translateX = 0;
+		sceneObjects["ship02"]->translateY = 0;
+		sceneObjects["ship02"]->translateZ = 0;
 
 		initial.Set(-2, 0, -2);
-		ship_02->SetPosition(initial);
+		sceneObjects["ship02"]->SetPosition(initial);
 		initial.Set(0, 1, 0);
-		ship_02->SetRotation(initial, ship_02->rotate);
+		sceneObjects["ship02"]->SetRotation(initial, sceneObjects["ship02"]->rotate);
 		initial.Set(0.1, 0.1, 0.1);
-		ship_02->SetScale(initial);
+		sceneObjects["ship02"]->SetScale(initial);
 	}
 
 	if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
 	{
-		//ship_01->scaleObject += (float)(1.5 * dt);
-		ship_02->scaleObject = 0.25;
-		scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
-		ship_02->SetScale(scale);
+		//sceneObjects["ship01"]->scaleObject += (float)(1.5 * dt);
+		sceneObjects["ship02"]->scaleObject = 0.25;
+		scale.Set(sceneObjects["ship02"]->scaleObject, sceneObjects["ship02"]->scaleObject, sceneObjects["ship02"]->scaleObject);
+		sceneObjects["ship02"]->SetScale(scale);
 	}
 }
 
@@ -825,25 +826,34 @@ void GameScene::Update(double dt)
 
 
 	for (int j = 0; j < meshList.size(); j++) {
-		/*
-		for (int i = 0; i < meshList.size(); i++) {
-			if (i == j) { continue; }
-			meshList[i]->CheckCollision(*meshList[j]);
+		if (meshList[j] == sceneObjects["ship01"]) { continue; }
+	
+		if (sceneObjects["ship01"]->collision.CheckCollision(meshList[j]->GetTransform())) {
+			Consumable* cPtr = dynamic_cast<Consumable*>(meshList[j]);
+			IslandEnvironment* isPtr = dynamic_cast<IslandEnvironment*>(meshList[j]);
+			std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr;
+			if (isPtr != nullptr) {
+				//Ship Collision with island 
+			}
+			if (cPtr != nullptr) {
+				cPtr->OnCollide(*sceneObjects["ship01"]);
+
+			}
 		}
-		*/
-		if (j == 0) { continue; }
-		meshList[0]->CheckCollision(*meshList[j]);
-		
 	}
+
+
+
 
 	short int multipler = 1;
 
 	//Camera Logic
 	//camera.Update((float)dt);
-	float yaw = DegreeToRadian(ship_01->rotate);
+	
+	float yaw = DegreeToRadian(sceneObjects["ship01"]->rotate);
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
-	Vector3 position = ship_01->GetPosition() - direction * 3;
-	camera.SetTarget(ship_01->GetPosition().x, ship_01->GetPosition().y + 1, ship_01->GetPosition().z);
+	Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 3;
+	camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 1, sceneObjects["ship01"]->GetPosition().z);
 	camera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
@@ -854,49 +864,49 @@ void GameScene::Update(double dt)
 	// ship stuff
 	Vector3 pos, rot, scale;
 
-	ship_01->translateX = (float)(25 * dt);
-	ship_01->translateY = (float)(25 * dt);
-	ship_01->translateZ = (float)(25 * dt);
+	sceneObjects["ship01"]->translateX = (float)(25 * dt);
+	sceneObjects["ship01"]->translateY = (float)(25 * dt);
+	sceneObjects["ship01"]->translateZ = (float)(25 * dt);
 
-	ship_02->translateX = (float)(5 * dt);
-	ship_02->translateY = (float)(5 * dt);
-	ship_02->translateZ = (float)(5 * dt);
+	sceneObjects["ship02"]->translateX = (float)(5 * dt);
+	sceneObjects["ship02"]->translateY = (float)(5 * dt);
+	sceneObjects["ship02"]->translateZ = (float)(5 * dt);
 
-	// control the ship_01
+	// control the sceneObjects["ship01"]
 	if (Application::IsKeyPressed(VK_UP)) // 270
 	{
-		if (!(ship_01->GetPosition().x - 1 < -45) && !(ship_01->GetPosition().x + 1 > 45) && !(ship_01->GetPosition().z - 1 < -45) && !(ship_01->GetPosition().z + 1 > 45))
+		if (!(sceneObjects["ship01"]->GetPosition().x - 1 < -45) && !(sceneObjects["ship01"]->GetPosition().x + 1 > 45) && !(sceneObjects["ship01"]->GetPosition().z - 1 < -45) && !(sceneObjects["ship01"]->GetPosition().z + 1 > 45))
 		{
 			
 		}
 
-		float direction = DegreeToRadian(ship_01->rotate);
-		pos.Set(ship_01->GetPosition().x + (sin(direction) * ship_01->translateX), ship_01->GetPosition().y, ship_01->GetPosition().z + (cos(direction) * ship_01->translateZ));
-		ship_01->SetPosition(pos);
+		float direction = DegreeToRadian(sceneObjects["ship01"]->rotate);
+		pos.Set(sceneObjects["ship01"]->GetPosition().x + (sin(direction) * sceneObjects["ship01"]->translateX), sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z + (cos(direction) * sceneObjects["ship01"]->translateZ));
+		sceneObjects["ship01"]->SetPosition(pos);
 
 		if (Application::IsKeyPressed(VK_LEFT)) // 0
 		{
-			ship_01->rotate += (int)(2);
+			sceneObjects["ship01"]->rotate += (int)(2);
 
-			if (ship_01->rotate >= 360)
+			if (sceneObjects["ship01"]->rotate >= 360)
 			{
-				ship_01->rotate = 0;
+				sceneObjects["ship01"]->rotate = 0;
 			}
 
 			rot.Set(0, 1, 0);
-			ship_01->SetRotation(rot, ship_01->rotate);
+			sceneObjects["ship01"]->SetRotation(rot, sceneObjects["ship01"]->rotate);
 		}
 		if (Application::IsKeyPressed(VK_RIGHT)) // 180
 		{
-			ship_01->rotate -= (int)(2);
+			sceneObjects["ship01"]->rotate -= (int)(2);
 
-			if (ship_01->rotate <= 0)
+			if (sceneObjects["ship01"]->rotate <= 0)
 			{
-				ship_01->rotate = 360;
+				sceneObjects["ship01"]->rotate = 360;
 			}
 
 			rot.Set(0, 1, 0);
-			ship_01->SetRotation(rot, ship_01->rotate);
+			sceneObjects["ship01"]->SetRotation(rot, sceneObjects["ship01"]->rotate);
 		}
 	}
 	if (bounceTime <= 0)
@@ -904,9 +914,9 @@ void GameScene::Update(double dt)
 		if (Application::IsKeyPressed(VK_DOWN) && !cannonOut_01) // shoot cannonball
 		{
 			//cannonOut_01 = true;
-			//cannon_01->rotate = ship_01->rotate;
-			//ship_01->x = ship_01->GetPosition().x; // get position of ship
-			//ship_01->z = ship_01->GetPosition().z;
+			//cannon_01->rotate = sceneObjects["ship01"]->rotate;
+			//sceneObjects["ship01"]->x = sceneObjects["ship01"]->GetPosition().x; // get position of ship
+			//sceneObjects["ship01"]->z = sceneObjects["ship01"]->GetPosition().z;
 			//bounceTime = 0.5;
 		}
 	}
@@ -915,41 +925,41 @@ void GameScene::Update(double dt)
 		bounceTime -= dt;
 	}
 
-	// control the ship_02
+	// control the sceneObjects["ship02"]
 	if (Application::IsKeyPressed(VK_NUMPAD5)) // 270
 	{
-		if (!(ship_02->GetPosition().x < -45) && !(ship_02->GetPosition().x > 45) && !(ship_02->GetPosition().z < -45) && !(ship_02->GetPosition().z > 45))
+		if (!(sceneObjects["ship02"]->GetPosition().x < -45) && !(sceneObjects["ship02"]->GetPosition().x > 45) && !(sceneObjects["ship02"]->GetPosition().z < -45) && !(sceneObjects["ship02"]->GetPosition().z > 45))
 		{
 			
 		}
 
-		float direction = DegreeToRadian(ship_02->rotate);
-		pos.Set(ship_02->GetPosition().x + (sin(direction) * ship_02->translateX), ship_02->GetPosition().y, ship_02->GetPosition().z + (cos(direction) * ship_02->translateZ));
-		ship_02->SetPosition(pos);
+		float direction = DegreeToRadian(sceneObjects["ship02"]->rotate);
+		pos.Set(sceneObjects["ship02"]->GetPosition().x + (sin(direction) * sceneObjects["ship02"]->translateX), sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z + (cos(direction) * sceneObjects["ship02"]->translateZ));
+		sceneObjects["ship02"]->SetPosition(pos);
 
 		if (Application::IsKeyPressed(VK_NUMPAD1)) // 0
 		{
-			ship_02->rotate += (int)(5);
+			sceneObjects["ship02"]->rotate += (int)(5);
 
-			if (ship_02->rotate >= 360)
+			if (sceneObjects["ship02"]->rotate >= 360)
 			{
-				ship_02->rotate = 0;
+				sceneObjects["ship02"]->rotate = 0;
 			}
 
 			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
+			sceneObjects["ship02"]->SetRotation(rot, sceneObjects["ship02"]->rotate);
 		}
 		if (Application::IsKeyPressed(VK_NUMPAD3)) // 180
 		{
-			ship_02->rotate -= (int)(5);
+			sceneObjects["ship02"]->rotate -= (int)(5);
 
-			if (ship_02->rotate <= 0)
+			if (sceneObjects["ship02"]->rotate <= 0)
 			{
-				ship_02->rotate = 360;
+				sceneObjects["ship02"]->rotate = 360;
 			}
 
 			rot.Set(0, 1, 0);
-			ship_02->SetRotation(rot, ship_02->rotate);
+			sceneObjects["ship02"]->SetRotation(rot, sceneObjects["ship02"]->rotate);
 		}
 	}
 	if (bounceTime <= 0)
@@ -957,9 +967,9 @@ void GameScene::Update(double dt)
 		if (Application::IsKeyPressed(VK_NUMPAD2) && !cannonOut_02) // shoot cannonball
 		{
 			cannonOut_02 = true;
-			cannon_02->rotate = ship_02->rotate;
-			ship_02->x = ship_02->GetPosition().x; // get position of ship
-			ship_02->z = ship_02->GetPosition().z;
+		//	cannon_02->rotate = sceneObjects["ship02"]->rotate;
+			sceneObjects["ship02"]->x = sceneObjects["ship02"]->GetPosition().x; // get position of ship
+			sceneObjects["ship02"]->z = sceneObjects["ship02"]->GetPosition().z;
 			bounceTime = 0.5;
 		}
 	}
@@ -992,14 +1002,14 @@ void GameScene::Update(double dt)
 
 	//	float direction = DegreeToRadian(cannon_01->rotate);
 
-	//	pos.Set(ship_01->x + (sin(direction) * cannon_01->translateX), cannon_01->translateY, ship_01->z + (cos(direction) * cannon_01->translateZ));
+	//	pos.Set(sceneObjects["ship01"]->x + (sin(direction) * cannon_01->translateX), cannon_01->translateY, sceneObjects["ship01"]->z + (cos(direction) * cannon_01->translateZ));
 	//	cannon_01->SetPosition(pos);
 	//}
 	//else
 	//{
 	//	cannon_01->translateX = 0;
 	//	cannon_01->translateZ = 0;
-	//	pos.Set(ship_01->GetPosition().x, ship_01->GetPosition().y + 0.25, ship_01->GetPosition().z);
+	//	pos.Set(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 0.25, sceneObjects["ship01"]->GetPosition().z);
 	//	cannon_01->SetPosition(pos);
 	//}
 
@@ -1029,55 +1039,55 @@ void GameScene::Update(double dt)
 
 	//	float direction = DegreeToRadian(cannon_02->rotate);
 
-	//	pos.Set(ship_02->x + (sin(direction) * cannon_02->translateX),cannon_02->translateY, ship_02->z + (cos(direction) * cannon_02->translateZ));
+	//	pos.Set(sceneObjects["ship02"]->x + (sin(direction) * cannon_02->translateX),cannon_02->translateY, sceneObjects["ship02"]->z + (cos(direction) * cannon_02->translateZ));
 	//	cannon_02->SetPosition(pos);
 	//}
 	//else
 	//{
 	//	cannon_02->translateX = 0;
 	//	cannon_02->translateZ = 0;
-	//	pos.Set(ship_02->GetPosition().x, ship_02->GetPosition().y + 0.25, ship_02->GetPosition().z);
+	//	pos.Set(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 0.25, sceneObjects["ship02"]->GetPosition().z);
 	//	cannon_02->SetPosition(pos);
 	//}
 
 	//if (Application::IsKeyPressed(VK_SPACE)) // temporary scale the second ship
 	//{
-	//	//ship_01->scaleObject += (float)(1.5 * dt);
-	//	ship_02->scaleObject = 0.25;
-	//	scale.Set(ship_02->scaleObject, ship_02->scaleObject, ship_02->scaleObject);
-	//	ship_02->SetScale(scale);
+	//	//sceneObjects["ship01"]->scaleObject += (float)(1.5 * dt);
+	//	sceneObjects["ship02"]->scaleObject = 0.25;
+	//	scale.Set(sceneObjects["ship02"]->scaleObject, sceneObjects["ship02"]->scaleObject, sceneObjects["ship02"]->scaleObject);
+	//	sceneObjects["ship02"]->SetScale(scale);
 	//}
 
 	//if (Application::IsKeyPressed('R'))
 	//{
 	//	Vector3 initial;
-	//	// ship_01
-	//	ship_01->rotate = 90;
-	//	ship_01->scaleObject = 0;
-	//	ship_01->translateX = 0;
-	//	ship_01->translateY = 0;
-	//	ship_01->translateZ = 0;
+	//	// sceneObjects["ship01"]
+	//	sceneObjects["ship01"]->rotate = 90;
+	//	sceneObjects["ship01"]->scaleObject = 0;
+	//	sceneObjects["ship01"]->translateX = 0;
+	//	sceneObjects["ship01"]->translateY = 0;
+	//	sceneObjects["ship01"]->translateZ = 0;
 
 	//	initial.Set(2, 0, -2);
-	//	ship_01->SetPosition(initial);
+	//	sceneObjects["ship01"]->SetPosition(initial);
 	//	initial.Set(0, 1, 0);
-	//	ship_01->SetRotation(initial, ship_01->rotate);
+	//	sceneObjects["ship01"]->SetRotation(initial, sceneObjects["ship01"]->rotate);
 	//	initial.Set(0.1, 0.1, 0.1);
-	//	ship_01->SetScale(initial);
+	//	sceneObjects["ship01"]->SetScale(initial);
 
-	//	// ship_02
-	//	ship_02->rotate = 90;
-	//	ship_02->scaleObject = 0;
-	//	ship_02->translateX = 0;
-	//	ship_02->translateY = 0;
-	//	ship_02->translateZ = 0;
+	//	// sceneObjects["ship02"]
+	//	sceneObjects["ship02"]->rotate = 90;
+	//	sceneObjects["ship02"]->scaleObject = 0;
+	//	sceneObjects["ship02"]->translateX = 0;
+	//	sceneObjects["ship02"]->translateY = 0;
+	//	sceneObjects["ship02"]->translateZ = 0;
 
 	//	initial.Set(-2, 0, -2);
-	//	ship_02->SetPosition(initial);
+	//	sceneObjects["ship02"]->SetPosition(initial);
 	//	initial.Set(0, 1, 0);
-	//	ship_02->SetRotation(initial, ship_02->rotate);
+	//	sceneObjects["ship02"]->SetRotation(initial, sceneObjects["ship02"]->rotate);
 	//	initial.Set(0.1, 0.1, 0.1);
-	//	ship_02->SetScale(initial);
+	//	sceneObjects["ship02"]->SetScale(initial);
 	//}
 
 
@@ -1093,6 +1103,7 @@ void GameScene::Update(double dt)
 	else if (Application::IsKeyPressed(VK_NUMPAD4)) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}*/
+
 
 	if (Application::IsKeyPressed('I'))
 		light[0].position.z -= (float)(LSPEED * dt);
@@ -1366,11 +1377,13 @@ void GameScene::Render()
 
 	for (int i = 0; i < (int)meshList.size(); i++) {
 
+		
+		
 		for (int j = 0; j < 8; j++) {
 
 
 			modelStack.PushMatrix();
-			modelStack.Translate(meshList[i]->GetPosition().x + meshList[i]->allBounds[j].x, meshList[i]->GetPosition().y + meshList[i]->allBounds[j].y, meshList[i]->GetPosition().z + meshList[i]->allBounds[j].z);
+			modelStack.Translate(meshList[i]->GetPosition().x + meshList[i]->GetTransform().allBounds[j].x, meshList[i]->GetPosition().y + meshList[i]->GetTransform().allBounds[j].y, meshList[i]->GetPosition().z + meshList[i]->GetTransform().allBounds[j].z);
 
 			modelStack.PushMatrix();
 			modelStack.Scale(0.1f, 0.1f, 0.1f);
@@ -1378,6 +1391,7 @@ void GameScene::Render()
 			modelStack.PopMatrix();
 			modelStack.PopMatrix();
 		}
+		
 
 
 		modelStack.PushMatrix();
@@ -1398,7 +1412,7 @@ void GameScene::Render()
 	}
 
 	RenderTextOnScreen(gameText, "FPS : " + std::to_string(sceneFPS), Color(0, 1, 0), 30, 0, 28);
-	RenderTextOnScreen(gameText, "Collision : " + std::to_string(meshList[0]->collidedList.size()), Color(0, 1, 0), 30, 0, 10);
+	RenderTextOnScreen(gameText, "Collision : " + std::to_string(meshList[0]->collision.collidedList.size()), Color(0, 1, 0), 30, 0, 10);
 
 
 	glDisable(GL_SCISSOR_TEST);
