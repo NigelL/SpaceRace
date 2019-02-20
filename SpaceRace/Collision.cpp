@@ -7,16 +7,16 @@ Collision::Collision()
 	
 }
 
-void Collision::CheckCollision(Vector3 origin, Vector3 dir, float t) {
+Vector3 Collision::CheckCollision(Vector3 origin, Vector3 dir, float t,Camera2 cam) {
 	Transform thisObj = *(this->thisObj);
 	thisObj.GenerateBounds();
-	std::cout << "origin : " << origin << std::endl;
-	std::cout << "Dir :" << dir << std::endl;
+	//std::cout << "origin : " << origin << std::endl;
+	//std::cout << "Dir :" << dir << std::endl;
 
 	//Top Face
 	Vector3 topFaceR = Vector3(thisObj.maxX, thisObj.maxY, thisObj.minZ) - Vector3(thisObj.minX, thisObj.maxY, thisObj.minZ);
 	Vector3 topFaceRU = Vector3(thisObj.minX, thisObj.maxY, thisObj.maxZ) - Vector3(thisObj.minX, thisObj.maxY, thisObj.minZ);
-	Vector3 topFaceNormal = (topFaceR.Cross(topFaceRU)).Normalized();
+	Vector3 topFaceNormal = (topFaceR.Cross(topFaceRU)).Normalized() ;
 
 	Vector3 botFaceNormal = -topFaceNormal;
 
@@ -28,61 +28,46 @@ void Collision::CheckCollision(Vector3 origin, Vector3 dir, float t) {
 
 	Vector3 frontFaceR = Vector3(thisObj.maxX, thisObj.minY, thisObj.minZ) - Vector3(thisObj.minX, thisObj.minY, thisObj.minZ);
 	Vector3 frontFaceRU = Vector3(thisObj.minX, thisObj.maxY, thisObj.minZ) - Vector3(thisObj.minX, thisObj.minY, thisObj.minZ);
-	Vector3 frontFaceNormal = (frontFaceR.Cross(frontFaceRU)).Normalized();
+	Vector3 frontFaceNormal =  (frontFaceR.Cross(frontFaceRU)).Normalized();
 
 	Vector3 backFaceNormal = -frontFaceNormal;
 
+	float distTop = Vector3((thisObj.maxX + thisObj.minX) / 2, thisObj.maxY, (thisObj.maxZ + thisObj.minZ) / 2).Dot(topFaceNormal);
+	float distLeft = Vector3(thisObj.minX, (thisObj.maxY + thisObj.minY) / 2, (thisObj.maxZ + thisObj.minZ) / 2).Dot(leftFaceNormal);
+	float distFront = Vector3((thisObj.maxX + thisObj.minX) / 2, (thisObj.maxY + thisObj.minY) / 2, thisObj.minZ).Dot(frontFaceNormal);
+
 	int tIndex = 0;
-	float minT = 1e9;
-	float testT = (-origin.Dot(topFaceNormal)) / (dir.Dot(topFaceNormal));
+	float maxT = -1e9;
+	float testT = abs((-origin.Dot(topFaceNormal) + distTop) / (dir.Dot(topFaceNormal)));
+	if (testT > 0) { if (testT > maxT) { maxT = testT; tIndex = 0; } }
 
-	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 0; } }
-
-	testT = (-origin.Dot(botFaceNormal)) / (dir.Dot(botFaceNormal));
-
-	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 1; } }
-
-
-
-	testT = (-origin.Dot(leftFaceNormal)) / (dir.Dot(leftFaceNormal));
-	if (testT >= 0) {
-		if (testT < minT) {
-			minT = testT; tIndex = 2;
+	testT = abs((-origin.Dot(leftFaceNormal ) + distLeft) / (dir.Dot(leftFaceNormal)));
+	if (testT > 0) {
+		if (testT > maxT) {
+			maxT = testT; tIndex = 2;
 		}
 	}
+	testT = abs((-origin.Dot(frontFaceNormal) + distFront ) / (dir.Dot(frontFaceNormal)));
 
-	testT = (-origin.Dot(rightFaceNormal)) / (dir.Dot(rightFaceNormal));
-	std::cout << testT << std::endl;
-	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 3; } }
+	if (testT > 0) { if (testT > maxT) { maxT = testT; tIndex = 4; } }
 
-	testT = (-origin.Dot(frontFaceNormal)) / (dir.Dot(frontFaceNormal));
-	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 4; } }
-
-	testT = -testT;
-	if (testT >= 0) { if (testT < minT) { minT = testT; tIndex = 5; } }
-
+	
 	switch (tIndex) {
 	case 0:
-		std::cout << "Top face" << std::endl;
-		break;
-	case 1:
-		std::cout << "Bot face" << std::endl;
+		return -topFaceNormal;
 		break;
 	case 2:
-		std::cout << "Left face" << std::endl;
+		return -leftFaceNormal;
 		break;
-	case 3:
-		std::cout << "Right face" << std::endl;
+	case 4:		
+		return -frontFaceNormal;
 		break;
-	case 4:
-		std::cout << "Front face" << std::endl;
-		break;
-	case 5:
-		std::cout << "Back face" << std::endl;
-		break;
-	}
 
-	system("cls");
+	}
+	
+	
+
+	return origin + (dir * maxT);
 
 
 

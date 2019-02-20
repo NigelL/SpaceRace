@@ -20,6 +20,8 @@ void Camera2::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	right.y = 0;
 	right.Normalize();
 	this->up = defaultUp = right.Cross(view).Normalized();
+	camMat.SetToIdentity();
+	updatedUP = up;
 }
 
 void Camera2::Update(double dt)
@@ -34,12 +36,14 @@ void Camera2::Update(double dt)
 		if (Application::IsKeyPressed('A')) {
 			Mtx44 rot;
 			rot.SetToRotation(1.0f * CAMERA_SPEED, up.x, up.y, up.z);
+			camMat = camMat * rot;
 			position = rot * position;
 			//target = position + view;
 		}
 		if (Application::IsKeyPressed('D')) {
 			Mtx44 rot;
 			rot.SetToRotation(-1.0f * CAMERA_SPEED, up.x, up.y, up.z);
+			camMat = camMat * rot;
 			position = rot * position;
 			//target = position + view;
 			
@@ -47,14 +51,20 @@ void Camera2::Update(double dt)
 		if (Application::IsKeyPressed('W')) {
 			Mtx44 rot;
 			rot.SetToRotation(1.0f * CAMERA_SPEED, right.x, right.y, right.z);
+			camMat = camMat * rot;
 			position = rot * position;
+			updatedUP = rot * updatedUP;
 			//target = position + view;
 		}
 		if (Application::IsKeyPressed('S')) {
 			Mtx44 rot;
 			rot.SetToRotation(-1.0f * CAMERA_SPEED, right.x, right.y, right.z);
+			camMat = camMat * rot;
 			position = rot * position;
+			updatedUP = rot * updatedUP;
 		}
+
+		
 
 	
 	if(Application::IsKeyPressed('N'))

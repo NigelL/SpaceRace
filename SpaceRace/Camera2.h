@@ -15,6 +15,9 @@ public:
 	Vector3 defaultPosition;
 	Vector3 defaultTarget;
 	Vector3 defaultUp;
+	Vector3 updatedUP;
+
+	Mtx44 camMat;
 
 	Camera2();
 	~Camera2();

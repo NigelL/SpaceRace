@@ -136,10 +136,10 @@ void Application::GetMousePos(double& x, double& y) {
 
 void Application::Run()
 {
-	Scene* scene = new GameScene();
+	Scene* scene = new BuildScene();
 	scene->Init();
-	Scene* scene2 = scene;
-	scene2->Init2();
+	//Scene* scene2 = scene;
+	//scene2->Init2();
 
 
 
@@ -157,8 +157,8 @@ void Application::Run()
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 
-		scene2->Update2(m_timer.getElapsedTime());
-		scene2->Render2();
+		//scene2->Update2(m_timer.getElapsedTime());
+		//scene2->Render2();
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
