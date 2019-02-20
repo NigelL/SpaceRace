@@ -1,5 +1,5 @@
 #include "IslandEnvironment.h"
-
+#include "CShipStats.h"
 
 
 IslandEnvironment::IslandEnvironment()
@@ -15,8 +15,11 @@ IslandEnvironment::~IslandEnvironment()
 {
 }
 
-void IslandEnvironment::OnCollide(GameObject& other)
+void IslandEnvironment::OnCollide(GameObject & other)
 {
+	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
+	if (tryShip != nullptr) {
 
+		tryShip->SetHealth(tryShip->getHealth() - 2);
+	}
 }
-

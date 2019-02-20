@@ -1,5 +1,5 @@
 #include "GameObject.h"
-
+#include "GameScene.h"
 
 GameObject::GameObject() {
 	curObject = nullptr;

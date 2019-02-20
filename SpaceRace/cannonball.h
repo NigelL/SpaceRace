@@ -8,7 +8,7 @@ public:
 	cannonball();
 	~cannonball();
 	cannonball::cannonball(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
-	void cannonball::OnCollide(GameObject& other);
+	virtual void OnCollide(GameObject& other);
 };
 
 #endif

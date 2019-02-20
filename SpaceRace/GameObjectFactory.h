@@ -5,6 +5,7 @@
 #include "CShipStats.h"
 #include "PartConsumable.h"
 #include "IslandEnvironment.h"
+#include "cannonball.h"
 #include <string>
 
 class GameObjectFactory
@@ -20,6 +21,7 @@ public:
 		HPCONSUMABLE,
 		PARTSCONSUMABLE,
 		ISLAND,
+		CANNON,
 		OBJECT_TOTAL
 	};
 
@@ -27,6 +29,7 @@ public:
 
 	std::vector<GameObject*> meshList;
 	static GameObject* SpawnGameObject(OBJECT_TYPE type, std::string _name, Material *material, Transform);
+	static cannonball* SpawnCannonBall(std::string name, Material *material, Transform transform);
 	static CShipStats* SpawnShip(std::string name, Material *material, Transform);
 	static HealthConsumable* SpawnHealthConsumable(std::string name, Material *material, Transform);
 	static SpeedConsumable* SpawnSpeedConsumable(std::string name, Material *material, Transform);

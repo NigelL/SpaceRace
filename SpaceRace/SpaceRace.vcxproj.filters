@@ -122,6 +122,8 @@
     </ClCompile>
     <ClCompile Include="CamMenu.cpp">
       <Filter>Source Files\src\camera</Filter>
+    <ClCompile Include="Physic.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +219,8 @@
     </ClInclude>
     <ClInclude Include="CamMenu.h">
       <Filter>Source Files\src\camera</Filter>
+    <ClInclude Include="Physic.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,8 @@ public:
 	IslandEnvironment();
 	IslandEnvironment(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
 	~IslandEnvironment();
-	void OnCollide(GameObject& other);
+
+	virtual void OnCollide(GameObject& other);
 };
 
 #endif
