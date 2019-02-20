@@ -120,6 +120,12 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cannonball.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Physic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vertex.h">
@@ -210,6 +216,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cannonball.h">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Physic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -71,8 +71,6 @@ void Application::Init()
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
 
-
-
 	//Initialize GLFW
 	if (!glfwInit())
 	{

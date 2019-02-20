@@ -412,7 +412,7 @@ void BuildScene::Update(double dt)
 	//Camera Logic
 	camera.Update((float)dt);
 	UpdateMouseCursor();
-	float yaw = DegreeToRadian(mainShip->rotate);
+	float yaw = DegreeToRadian(mainShip->GetAmt());
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = mainShip->GetPosition() - direction * 3;
 	
@@ -422,13 +422,7 @@ void BuildScene::Update(double dt)
 	double mouseX, mouseY;
 	Application::GetMousePos(mouseX, mouseY);
 
-	// ship stuff
-	Vector3 pos, rot, scale;
-
-	mainShip->translateX = (float)(25 * dt);
-	mainShip->translateY = (float)(25 * dt);
-	mainShip->translateZ = (float)(25 * dt);
-
+	/*
 	// control the mainShip
 	if (Application::IsKeyPressed(VK_UP)) // 270
 	{
@@ -484,7 +478,7 @@ void BuildScene::Update(double dt)
 		initial.Set(0.1, 0.1, 0.1);
 		mainShip->SetScale(initial);
 
-	}
+	}*/
 
 
 	/*if (Application::IsKeyPressed(VK_NUMPAD1)) {

@@ -24,6 +24,8 @@
 #include <iostream>
 #include <map>
 
+#include "Physic.h"
+
 class GameScene : public Scene
 {
 private:
@@ -31,7 +33,6 @@ private:
 	Mesh* gameText;
 	float sceneFPS;
 	std::map<std::string, GameObject*> sceneObjects;
-
 public:
 	GameScene();
 	~GameScene();
@@ -39,9 +40,7 @@ public:
 	static GameScene* instance;
 	std::vector<GameObject*> meshList;
 
-
 	Mtx44 MVP;
-
 
 	enum GEOMETRY_TYPE
 	{
@@ -115,19 +114,13 @@ private:
 	Camera3 camera;
 
 	void SpawnPowerUp();
+	void renderSkybox();
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
-
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
-
 	void RenderUI(Mesh* mesh, float size, float x, float y);
-
 	void RenderText(Mesh* mesh, std::string text, Color color);
-	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float
-		x, float y);
-	
-
-
+	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 public:
 	virtual void Init();
 	virtual void Init2();
