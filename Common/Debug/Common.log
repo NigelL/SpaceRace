@@ -1,2 +1,6 @@
-﻿  Vector3.cpp
+﻿  MatrixStack.cpp
+  Mtx44.cpp
+  timer.cpp
+  Vector3.cpp
+  Generating Code...
   Common.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\Common.lib

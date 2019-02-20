@@ -108,7 +108,7 @@ GameScene::GameScene()
 
 			if (numberofislands <= 8)
 			{
-				GameObject* islands = GameObjectFactory::SpawnGameObject(GameObjectFactory::ISLAND, "someisland", mat, t);
+				GameObject* islands = GameObjectFactory::SpawnGameObject(GameObjectFactory::ISLAND, "island", mat, t);
 				islands->GetTransform().GenerateBounds();
 				islands->SetPosition(Vector3(islandposx, -3.0, islandposz));
 				islands->SetScale(Vector3(0.25, 0.25, 0.25));
