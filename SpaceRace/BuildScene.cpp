@@ -388,7 +388,7 @@ void BuildScene::UpdateMouseCursor() {
 	double befY = mouseY;
 
 	Application::GetMousePos(mouseX, mouseY);
-	GLfloat* modelView;
+	GLfloat* modelView = new GLfloat[16];
 	glGetFloatv(GL_PROJECTION, modelView);
 
 	double diffX = (mouseX - befX) / 1500;
