@@ -1,3 +1,3 @@
 ﻿  Application.cpp
-e:\users\irwen yap\documents\github\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  SpaceRace.vcxproj -> E:\Users\Irwen Yap\Documents\GitHub\SpaceRace\Debug\SpaceRace.exe
+d:\users\l533\desktop\spacerace\spacerace\application.cpp(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe

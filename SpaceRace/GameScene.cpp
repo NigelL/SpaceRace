@@ -117,7 +117,6 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-
 }
 
 static inline float DegreeToRadian(float value)

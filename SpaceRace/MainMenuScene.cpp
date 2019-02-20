@@ -61,7 +61,7 @@ void MainMenuScene::Init()
 	m_parameters[U_MVP] = glGetUniformLocation(m_programID, "MVP");
 
 	//Initialize camera settings
-	camera.Init(Vector3(0, 0, 15), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(0, 2, 15), Vector3(0, 2, 0), Vector3(0, 1, 0));
 
 	//Initialize all meshes to NULL
 	for (int i = 0; i < NUM_GEOMETRY; ++i)
@@ -84,7 +84,7 @@ void MainMenuScene::Init()
 void MainMenuScene::RenderMainMenu()
 {
 	RenderMesh(meshList[GEO_AXES], false);
-	modelStack.Scale(1.6, 1.3, 0);
+	modelStack.Scale(1.7, 1.1, 0);
 	RenderMesh(meshList[MainMenu], false);
 }
 
@@ -157,6 +157,8 @@ int MainMenuScene::getMode()
 
 void MainMenuScene::Update(double dt)
 {
+	float translateZ = 15 + dt;
+
 	camera.Update((float)dt);
 	if (Application::IsKeyPressed(VK_NUMPAD1))
 	{
@@ -177,14 +179,18 @@ void MainMenuScene::Update(double dt)
 
 	if (MainMenuScene::play)
 	{
-		if (MainMenuScene::mode == 1)
+		if (translateZ < 15)
 		{
-			meshList[MainMenu]->textureID = LoadTGA("Image//singleplayer.tga");
+			camera.SetPosition(0, 0, translateZ);
 		}
-		if (!MainMenuScene::mode == 2)
-		{
-			meshList[MainMenu]->textureID = LoadTGA("Image//multiplayer.tga");
-		}
+		//if (MainMenuScene::mode == 1)
+		//{
+		//	meshList[MainMenu]->textureID = LoadTGA("Image//singleplayer.tga");
+		//}
+		//if (!MainMenuScene::mode == 2)
+		//{
+		//	meshList[MainMenu]->textureID = LoadTGA("Image//multiplayer.tga");
+		//}
 	}
 }
 
@@ -193,9 +199,6 @@ void MainMenuScene::Render()
 	// Render VBO here
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 1, 1);
-
-	//viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
-
 
 	modelStack.LoadIdentity();
 

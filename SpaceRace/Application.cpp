@@ -68,9 +68,7 @@ void Application::Init()
 {
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
-
-
-
+	
 	//Initialize GLFW
 	if (!glfwInit())
 	{
@@ -134,13 +132,8 @@ void Application::Run()
 	MainMenuScene MainMenu;
 	Scene* scene = new MainMenuScene();
 	scene->Init();
-	Scene* scene2 = new GameScene();
+	Scene* scene2 = scene;
 
-
-	//Scene* scene = new GameScene();
-	//scene->Init();
-	//Scene* scene2 = scene;
-	//scene2->Init2();
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 
 
@@ -154,36 +147,48 @@ void Application::Run()
 		glfwPollEvents();
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
+		//if (Application::IsKeyPressed(VK_SPACE))
+		//{
+		//	MainMenu.setPlay(true);
+		//	if (Application::IsKeyPressed('W'))
+		//	{
+		//		MainMenu.setMode(1);
+		//		if (Application::IsKeyPressed(VK_SPACE))
+		//		{
+		//			scene = new GameScene();
+		//			scene->Init();
+		//		}
+		//	}
+		//	if (Application::IsKeyPressed('S'))
+		//	{
+		//		MainMenu.setMode(2);
+		//		if (Application::IsKeyPressed(VK_SPACE))
+		//		{
+		//			scene = new GameScene();
+		//			scene->Init();
+		//			Scene* scene2 = scene;
+		//			scene2->Init2();
+		//		}
+		//	}
+		//}
+
 		if (Application::IsKeyPressed(VK_SPACE))
 		{
 			MainMenu.setPlay(true);
-			if (Application::IsKeyPressed('W'))
-			{
-				MainMenu.setMode(1);
-				if (Application::IsKeyPressed(VK_SPACE))
-				{
-					scene = new GameScene();
-					scene->Init();
-				}
-			}
-			if (Application::IsKeyPressed('S'))
-			{
-				MainMenu.setMode(2);
-				if (Application::IsKeyPressed(VK_SPACE))
-				{
-					scene = new GameScene();
-					scene->Init();
-					scene2 = scene;
-					scene2->Init2();
-				}
-			}
+			scene = new GameScene();
+			scene->Init();
+			scene2 = scene;
+			scene2->Init2();
 		}
 
-		if (!MainMenu.getMode())
-		{
-			scene2->Update2(m_timer.getElapsedTime());
-			scene2->Render2();
-		}
+		scene2->Update2(m_timer.getElapsedTime());
+		scene2->Render2();
+
+		//if (MainMenu.getMode() == 2)
+		//{
+		//	scene2->Update2(m_timer.getElapsedTime());
+		//	scene2->Render2();
+		//}
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
