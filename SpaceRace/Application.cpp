@@ -177,7 +177,7 @@ void Application::Run()
 		//	}
 		//}
 
-		if (Application::IsKeyPressed(VK_SPACE))
+		if (Application::IsKeyPressed(VK_SPACE) && !MainMenu.getPlay())
 		{
 			MainMenu.setPlay(true);
 			scene = new GameScene();
