@@ -19,8 +19,6 @@ void Consumable::OnCollide(GameObject& other) {
 	}
 }
 
-
-
 Consumable::~Consumable()
 {
 }
