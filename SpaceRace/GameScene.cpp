@@ -432,7 +432,7 @@ void GameScene::Init()
 	glUniform1f(m_parameters[U_LIGHT2_COSINNER], light[2].cosInner);
 	glUniform1f(m_parameters[U_LIGHT2_EXPONENT], light[2].exponent);
 
-
+	SpawnPowerUp();
 	
 	m_programID = LoadShaders("Shader//Texture.vertexshader",
 		"Shader//Text.fragmentshader");
@@ -443,15 +443,6 @@ void GameScene::Init()
 
 	glfwSetCursorPos(Application::getGLFWWindow(), 1000, 700);
 }
-
-static double LSPEED = 10.0;
-static short int lightType = 0;
-static bool openShop = false;
-int shopItem;
-
-Vector3 ray_wor;
-Vector3 ray_Clip;
-Vector3 curHitPoint;
 
 static double bounceTime = 0.0;
 
@@ -837,7 +828,10 @@ void GameScene::Update(double dt)
 			}
 			if (cPtr != nullptr) {
 				cPtr->OnCollide(*sceneObjects["ship01"]);
+				//if (cPtr == HealthConsumable)
+				//{
 
+				//}
 			}
 		}
 	}
@@ -1105,40 +1099,6 @@ void GameScene::Update(double dt)
 	}*/
 
 
-	if (Application::IsKeyPressed('I'))
-		light[0].position.z -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('K'))
-		light[0].position.z += (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('J'))
-		light[0].position.x -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('L'))
-		light[0].position.x += (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('O'))
-		light[0].position.y -= (float)(LSPEED * dt);
-	if (Application::IsKeyPressed('P'))
-		light[0].position.y += (float)(LSPEED * dt);
-			
-	if (bounceTime <= 0.0) {
-		if (Application::IsKeyPressed('G')) {
-			openShop = !openShop;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('1')) {
-			shopItem = 1;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('2')) {
-			shopItem = 2;
-			bounceTime = 0.5;
-		}
-		if (Application::IsKeyPressed('3')) {
-			shopItem = 3;
-			bounceTime = 0.5;
-		}
-	}
-	else {
-		bounceTime -= dt;
-	}
 }
 
 void GameScene::RenderMesh(GameObject* curType, bool enableLight)
