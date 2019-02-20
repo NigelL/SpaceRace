@@ -10,4 +10,3 @@ public:
 	void RenderMainMenu();
 	bool getPlay();
 };
-

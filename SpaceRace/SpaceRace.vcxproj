@@ -123,6 +123,7 @@
     <ClCompile Include="Camera2.cpp" />
     <ClCompile Include="Camera3.cpp" />
     <ClCompile Include="CamMenu.cpp" />
+    <ClCompile Include="cannonball.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="CShipStats.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Camera2.h" />
     <ClInclude Include="Camera3.h" />
     <ClInclude Include="CamMenu.h" />
+    <ClInclude Include="cannonball.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Consumable.h" />
     <ClInclude Include="CShipStats.h" />
