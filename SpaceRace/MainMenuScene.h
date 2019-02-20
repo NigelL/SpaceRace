@@ -1,7 +1,6 @@
 #ifndef MAINMENUSCENE_H
 #define MAINMENUSCENE_H
 #include "Scene.h"
-#include "Camera2.h"
 #include "CamMenu.h"
 #include "MatrixStack.h"
 #include "MeshBuilder.h"
@@ -74,8 +73,7 @@ private:
 	unsigned int m_indexBuffer;
 	unsigned m_programID;
 
-	Camera2 camera;
-	//CamMenu camera;
+	CamMenu camera;
 
 	Mesh* meshList[NUM_GEOMETRY];
 

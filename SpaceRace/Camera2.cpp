@@ -14,82 +14,19 @@ void Camera2::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 {
 	this->position = defaultPosition = pos;
 	this->target = defaultTarget = target;
-	Vector3 view = (target - position).Normalized();
-	position = -view * 2.0f;
-	Vector3 right = view.Cross(up);
-	right.y = 0;
-	right.Normalize();
-	this->up = defaultUp = right.Cross(view).Normalized();
-	camMat.SetToIdentity();
-	updatedUP = up;
+	this->up = defaultUp = up;
 }
 
 void Camera2::Update(double dt)
 {
-	static const float CAMERA_SPEED = 2.5f;
-
-	view = target - position;
-	right = view.Cross(up);
-	
-	
-	
-		if (Application::IsKeyPressed('A')) {
-			Mtx44 rot;
-			rot.SetToRotation(1.0f * CAMERA_SPEED, up.x, up.y, up.z);
-			camMat = camMat * rot;
-			position = rot * position;
-			//target = position + view;
-		}
-		if (Application::IsKeyPressed('D')) {
-			Mtx44 rot;
-			rot.SetToRotation(-1.0f * CAMERA_SPEED, up.x, up.y, up.z);
-			camMat = camMat * rot;
-			position = rot * position;
-			//target = position + view;
-			
-		}
-		if (Application::IsKeyPressed('W')) {
-			Mtx44 rot;
-			rot.SetToRotation(1.0f * CAMERA_SPEED, right.x, right.y, right.z);
-			camMat = camMat * rot;
-			position = rot * position;
-			updatedUP = rot * updatedUP;
-			//target = position + view;
-		}
-		if (Application::IsKeyPressed('S')) {
-			Mtx44 rot;
-			rot.SetToRotation(-1.0f * CAMERA_SPEED, right.x, right.y, right.z);
-			camMat = camMat * rot;
-			position = rot * position;
-			updatedUP = rot * updatedUP;
-		}
-
-		
-
-	
-	if(Application::IsKeyPressed('N'))
-	{
-		Vector3 direction = target - position;
-		if(direction.Length() > 5)
-		{
-			Vector3 view = (target - position).Normalized();
-			position += view * (float)(10.f * dt);
-		}
-	}
-	if(Application::IsKeyPressed('M'))
-	{
-		Vector3 view = (target - position).Normalized();
-		position -= view * (float)(10.f * dt);
-	}
-	if(Application::IsKeyPressed('R'))
-	{
-		Reset();
-	}
+	static const float CAMERA_SPEED = 50.f;
+	Vector3 view = (target - position).Normalized();
+	Vector3 right = view.Cross(up);
 }
-
-void Camera2::Reset()
+void Camera2::SetPosition(float _x, float _y, float _z)
 {
-	position = defaultPosition;
-	target = defaultTarget;
-	up = defaultUp;
+	position.x = _x;
+	position.y = _y;
+	position.z = _z;
 }
+

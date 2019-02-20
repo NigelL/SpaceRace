@@ -6,24 +6,15 @@
 class Camera2 : public Camera
 {
 public:
-	//Vector3 position;
-	//Vector3 target;
-	//Vector3 up;
-
-	Vector3 view, right;
-
 	Vector3 defaultPosition;
 	Vector3 defaultTarget;
 	Vector3 defaultUp;
-	Vector3 updatedUP;
-
-	Mtx44 camMat;
 
 	Camera2();
 	~Camera2();
 	virtual void Init(const Vector3& pos, const Vector3& target, const Vector3& up);
 	virtual void Update(double dt);
-	virtual void Reset();
+	void SetPosition(float _x, float _y, float _z);
 };
 
 #endif

@@ -87,9 +87,6 @@
     <ClCompile Include="Consumable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CamMenu.cpp">
-      <Filter>Source Files\src\camera</Filter>
-    </ClCompile>
     <ClCompile Include="PartConsumable.cpp">
       <Filter>Source Files\src\gameobjects</Filter>
     </ClCompile>
@@ -122,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="cannonball.cpp">
       <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="CamMenu.cpp">
+      <Filter>Source Files\src\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +182,6 @@
     <ClInclude Include="Consumable.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="CamMenu.h">
-      <Filter>Source Files\src\camera</Filter>
-    </ClInclude>
     <ClInclude Include="PartConsumable.h">
       <Filter>Source Files\src\gameobjects</Filter>
     </ClInclude>
@@ -217,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="cannonball.h">
       <Filter>Source Files\src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CamMenu.h">
+      <Filter>Source Files\src\camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
