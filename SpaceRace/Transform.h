@@ -23,6 +23,7 @@ public:
 	int type = 0;
 
 	float amt;
+	float translateX, translateY, translateZ;
 	Vector3 allBounds[8];
 	Vector3 position, rotation, scale;
 

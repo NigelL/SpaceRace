@@ -25,6 +25,10 @@ void Water::UpdateWater(int lengthX,float dt) {
 	}
 }
 
+float Water::getWater()
+{
+	return abs(sin(Deg2Rad(curDeg)));
+}
 
 Water::~Water()
 {
