@@ -1,71 +1,132 @@
-﻿  GameScene.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+﻿  Application.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.h(49): error C2365: 'Physic::thrust': redefinition; previous definition was 'data member'
+  d:\users\l533\desktop\spacerace\spacerace\physic.h(30): note: see declaration of 'Physic::thrust'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2059: syntax error: '='
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2059: syntax error: 'return'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2143: syntax error: missing ';' before '}'
+  cannonball.cpp
+  Consumable.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.h(49): error C2365: 'Physic::thrust': redefinition; previous definition was 'data member'
+  d:\users\l533\desktop\spacerace\spacerace\physic.h(30): note: see declaration of 'Physic::thrust'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2059: syntax error: '='
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2059: syntax error: 'return'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2143: syntax error: missing ';' before '}'
+  CShipStats.cpp
+  GameObject.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.h(49): error C2365: 'Physic::thrust': redefinition; previous definition was 'data member'
+  d:\users\l533\desktop\spacerace\spacerace\physic.h(30): note: see declaration of 'Physic::thrust'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2059: syntax error: '='
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2059: syntax error: 'return'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2143: syntax error: missing ';' before '}'
+d:\users\l533\desktop\spacerace\spacerace\gameobject.cpp(101): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gameobject.cpp(114): warning C4305: '-=': truncation from 'double' to 'float'
+  GameObjectFactory.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.h(49): error C2365: 'Physic::thrust': redefinition; previous definition was 'data member'
+  d:\users\l533\desktop\spacerace\spacerace\physic.h(30): note: see declaration of 'Physic::thrust'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2059: syntax error: '='
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2059: syntax error: 'return'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2143: syntax error: missing ';' before '}'
+  GameScene.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.h(49): error C2365: 'Physic::thrust': redefinition; previous definition was 'data member'
+  d:\users\l533\desktop\spacerace\spacerace\physic.h(30): note: see declaration of 'Physic::thrust'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2059: syntax error: '='
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2059: syntax error: 'return'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2143: syntax error: missing ';' before '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(48): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(51): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(49): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(53): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(51): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(54): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(66): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(64): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(67): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(65): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(68): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(66): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(69): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(67): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(126): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(83): warning C4101: 'islandz': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(83): warning C4101: 'islandx': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(346): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(358): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(436): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(438): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(456): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(546): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(547): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(548): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(592): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(667): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(496): warning C4101: 'output': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(823): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(868): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(869): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(870): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(915): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1132): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1154): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1155): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(351): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(363): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(445): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(447): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(465): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(553): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(554): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(555): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(599): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(615): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(616): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(772): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(817): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(818): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(819): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(864): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1081): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1103): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1104): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  HealthConsumable.cpp
+  IslandEnvironment.cpp
+  PartConsumable.cpp
+  Physic.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.h(49): error C2365: 'Physic::thrust': redefinition; previous definition was 'data member'
+  d:\users\l533\desktop\spacerace\spacerace\physic.h(30): note: see declaration of 'Physic::thrust'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2059: syntax error: '='
+d:\users\l533\desktop\spacerace\spacerace\physic.h(50): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2059: syntax error: 'return'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(52): error C2238: unexpected token(s) preceding ';'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\physic.h(55): error C2143: syntax error: missing ';' before '}'
+  SpeedConsumable.cpp
+d:\users\l533\desktop\spacerace\spacerace\speedconsumable.cpp(16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\speedconsumable.cpp(21): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
