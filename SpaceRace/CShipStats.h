@@ -5,7 +5,7 @@
 class CShipStats : public GameObject
 {
 private:
-	int speed;
+	double speed;
 	int health;
 	int rotate;
 	int fireRate;
@@ -14,13 +14,13 @@ public:
 	CShipStats();
 	CShipStats(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
 	~CShipStats();
-	int getSpeed();
+	double getSpeed();
 	int getHealth();
 	int getParts();
 	int getRotate();
 	int getFireRate();
 	void SetHealth(int _health) ;
-	void SetSpeed(int _speed);
+	void SetSpeed(double _speed);
 	void SetParts(int _parts);
 	void setStats(int speed, int health, int rotate, int fireRate, int parts);
 };

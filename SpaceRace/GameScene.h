@@ -112,7 +112,7 @@ private:
 	unsigned m_programID;
 
 	Light light[3];
-	Camera3 camera;
+	Camera3 camera,secondCamera;
 
 	void SpawnPowerUp();
 	void renderSkybox();

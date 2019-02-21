@@ -1,7 +1,6 @@
 #ifndef MAINMENUSCENE_H
 #define MAINMENUSCENE_H
 #include "Scene.h"
-#include "CamMenu.h"
 #include "MatrixStack.h"
 #include "MeshBuilder.h"
 #include "GL\glew.h"
@@ -15,11 +14,11 @@
 
 #include "GameSound.h"
 
+#include "CamMenu.h"
 
 #include "LoadTGA.h"
 #include "Application.h"
 
-#include <iostream>
 
 class MainMenuScene : public Scene
 {

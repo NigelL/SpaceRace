@@ -114,7 +114,7 @@ GameScene::GameScene()
 			{
 				GameObject* islands = GameObjectFactory::SpawnGameObject(GameObjectFactory::ISLAND, "island", mat, t);
 				islands->GetTransform().GenerateBounds();
-				islands->SetPosition(Vector3(islandposx, -3.0, islandposz));
+				islands->SetPosition(Vector3(islandposx, -1.0, islandposz));
 				islands->SetScale(Vector3(0.25, 0.25, 0.25));
 				islands->GetTransform().SetBounds(Vector3(1.35f, 1.55f, 1.35f));
 				meshList.push_back(islands);
@@ -123,9 +123,9 @@ GameScene::GameScene()
 			else
 			{
 				GameObject* parts = GameObjectFactory::SpawnGameObject(GameObjectFactory::PARTSCONSUMABLE, "Parts", mat, t);
-				parts->SetPosition(Vector3(islandposx, -4, islandposz));
+				parts->SetPosition(Vector3(islandposx, 0, islandposz));
 				parts->SetScale(Vector3(0.25, 0.25, 0.25));
-				parts->GetTransform().SetBounds(Vector3(0.35f, 0.2f, 0.55f));
+				parts->GetTransform().SetBounds(Vector3(1.0f, 1.0f, 1.0f));
 				meshList.push_back(parts);
 			}
 
@@ -466,7 +466,8 @@ void GameScene::Update(double dt)
 			Consumable* cPtr = dynamic_cast<Consumable*>(meshList[j]);
 			IslandEnvironment* isPtr = dynamic_cast<IslandEnvironment*>(meshList[j]);
 			cannonball* cannonPtr = dynamic_cast<cannonball*>(meshList[j]);
-			std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr << std::endl;
+			//std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr << std::endl;
+
 			if (isPtr != nullptr) {
 				isPtr->OnCollide(*ship01Stats); //Ship Collision with island
 				bouncing = true;
@@ -474,7 +475,7 @@ void GameScene::Update(double dt)
 		
 			
 			if (cPtr != nullptr) {
-				cPtr->OnCollide(*sceneObjects["ship01"]); // consumable collision
+				cPtr->OnCollide(*ship01Stats); // consumable collision
 			}
 
 			if (cannonPtr != nullptr && meshList[j] == sceneObjects["cannon02"]) { // other ship cannon hit ship01
@@ -545,8 +546,8 @@ void GameScene::Update(double dt)
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 3;
 	camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 1, sceneObjects["ship01"]->GetPosition().z);
-
-	input2 = sceneObjects["ship01"]->GetPosition().x;
+	camera.SetPosition(position.x, position.y + 1, position.z);
+	//input2 = sceneObjects["ship01"]->GetPosition().x;
 	//Lerp(input2, input1, dt);
 
 
@@ -706,9 +707,11 @@ void GameScene::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
-	position.x += (camera.position.x - position.x) * 0.25 * dt;
-	position.z += (camera.position.z - position.z) * 0.25 * dt;
-	camera.SetPosition(position.x, position.y + 1, position.z);
+	camera.UpdateCameraSkyBox(ship01Stats,ship02Stats);
+	secondCamera.UpdateCameraSkyBox(ship01Stats, ship02Stats);
+	//position.x += (camera.position.x - position.x) * 0.25 * dt;
+	//position.z += (camera.position.z - position.z) * 0.25 * dt;
+	//camera.SetPosition(position.x, position.y + 1, position.z);
 }
 
 
@@ -778,6 +781,27 @@ void GameScene::Render()
 			&lightPosition_cameraspace.x);
 	}
 
+	GameObject* allSkyBox = camera.GetAllSkyBox();
+	if (allSkyBox != nullptr) {
+		for (int i = 0; i < camera.GetSkyBoxSize(); i++) {
+			modelStack.PushMatrix();
+			modelStack.Translate(allSkyBox[i].GetPosition().x, 0, allSkyBox[i].GetPosition().z);
+			std::cout << "Camera Position : " << allSkyBox[i].GetPosition() << std::endl;
+			modelStack.PushMatrix();
+			modelStack.Rotate(allSkyBox[i].GetAmt(), allSkyBox[i].GetRotation().x, allSkyBox[i].GetRotation().y, allSkyBox[i].GetRotation().z);
+			modelStack.PushMatrix();
+			modelStack.Scale(allSkyBox[i].GetScale().x, allSkyBox[i].GetScale().y, allSkyBox[i].GetScale().z);
+
+
+			RenderMesh(&allSkyBox[i],false);
+			modelStack.PopMatrix();
+			modelStack.PopMatrix();			
+			modelStack.PopMatrix();
+
+
+		}
+	}
+
 	for (int i = 0; i < (int)meshList.size(); i++) {
 
 		for (int j = 0; j < 8; j++) {
@@ -825,7 +849,7 @@ void GameScene::Render()
 
 void GameScene::Init2() {
 	//Camera Init
-	camera.Init(Vector3(10, 20, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
+	secondCamera.Init(Vector3(10, 20, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -845,12 +869,12 @@ void GameScene::Init2() {
 void GameScene::Update2(double dt)
 {
 	//Camera Logic
-	camera.Update((float)dt);
+	//camera.Update((float)dt);
 	float yaw = DegreeToRadian(sceneObjects["ship02"]->GetAmt());
 	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 	Vector3 position = sceneObjects["ship02"]->GetPosition() - direction * 3;
-	camera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 1, sceneObjects["ship02"]->GetPosition().z);
-	camera.SetPosition(position.x, position.y + 1, position.z);
+	secondCamera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 1, sceneObjects["ship02"]->GetPosition().z);
+	secondCamera.SetPosition(position.x, position.y + 1, position.z);
 
 	//Game Logic
 	sceneFPS = 1.0f / (float)dt;
@@ -858,9 +882,9 @@ void GameScene::Update2(double dt)
 	Application::GetMousePos(mouseX, mouseY);
 
 	// control the sceneObjects["ship02"]
-	position = sceneObjects["ship02"]->GetPosition() - direction * 3;
-	camera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 1, sceneObjects["ship02"]->GetPosition().z);
-	camera.SetPosition(position.x, position.y + 1, position.z);
+   //position = sceneObjects["ship02"]->GetPosition() - direction * 3;
+	//camera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 1, sceneObjects["ship02"]->GetPosition().z);
+	//camera.SetPosition(position.x, position.y + 1, position.z);
 
 	// collision for ship and cannon
 	for (int j = 0; j < meshList.size(); j++)
@@ -973,7 +997,7 @@ void GameScene::Render2()
 
 	glEnable(GL_SCISSOR_TEST);
 
-	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
+	viewStack.LookAt(secondCamera.position.x, secondCamera.position.y, secondCamera.position.z, secondCamera.target.x, secondCamera.target.y, secondCamera.target.z, secondCamera.up.x, secondCamera.up.y, secondCamera.up.z);
 
 	glViewport(1920 / 2, 0, 1920 / 2, 1440);
 	glScissor(1920 / 2, 0, 1920 / 2, 1440);
@@ -1001,6 +1025,30 @@ void GameScene::Render2()
 		glUniform3fv(m_parameters[U_LIGHT2_POSITION], 1,
 			&lightPosition_cameraspace.x);
 	}
+
+	GameObject* allSkyBox = secondCamera.GetAllSkyBox();
+	if (allSkyBox != nullptr) {
+		for (int i = 0; i < secondCamera.GetSkyBoxSize(); i++) {
+			modelStack.PushMatrix();
+			modelStack.Translate(allSkyBox[i].GetPosition().x, 0, allSkyBox[i].GetPosition().z);
+			std::cout << "Camera Position 2 : " << allSkyBox[i].GetPosition() << std::endl;
+
+
+			modelStack.PushMatrix();
+			modelStack.Rotate(allSkyBox[i].GetAmt(), allSkyBox[i].GetRotation().x, allSkyBox[i].GetRotation().y, allSkyBox[i].GetRotation().z);
+			modelStack.PushMatrix();
+			modelStack.Scale(allSkyBox[i].GetScale().x, allSkyBox[i].GetScale().y, allSkyBox[i].GetScale().z);
+
+
+			RenderMesh(&allSkyBox[i], false);
+			modelStack.PopMatrix();
+			modelStack.PopMatrix();
+			modelStack.PopMatrix();
+
+
+		}
+	}
+
 
 	for (int i = 0; i < (int)meshList.size(); i++) {
 
@@ -1219,12 +1267,12 @@ void GameScene::SpawnPowerUp()
 	}
 }
 
+
 void GameScene::renderSkybox()
 {
 	GameObject* box;
 
 	// no top and bottom
-#pragma region skybox
 	Mesh* Left = MeshBuilder::GenerateOBJ("left", "OBJ//side.obj");
 	Left->material.kAmbient.Set(0.2f, 0.2f, 0.2f);
 	Left->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
@@ -1249,19 +1297,51 @@ void GameScene::renderSkybox()
 	Front->material.kSpecular.Set(0.1f, 0.1f, 0.1f);
 	Front->material.kShininess = 1.0f;
 
+	GameObject* allSkyBox = new GameObject[4];
+
 	Left->textureID = LoadTGA("Image//left.tga");
-	box = new GameObject(Left, Vector3(0, 0, -1050), 90, Vector3(1, 0, 0), Vector3(2100, 2100, 2100));
-	meshList.push_back(box);
+	box = new GameObject(Left, Vector3(0, 0, -500), 90, Vector3(1, 0, 0), Vector3(2100, 2100, 2100));
+	allSkyBox[0] = *box;
+	//meshList.push_back(box);
 	Right->textureID = LoadTGA("Image//right.tga");
-	box = new GameObject(Right, Vector3(0, 0, 1050), -90, Vector3(1, 0, 0), Vector3(2100, 2100, 2100));
-	meshList.push_back(box);
+	box = new GameObject(Right, Vector3(0, 0, 500), -90, Vector3(1, 0, 0), Vector3(2100, 2100, 2100));
+	allSkyBox[1] = *box;
+	//meshList.push_back(box);
 	Back->textureID = LoadTGA("Image//back.tga");
-	box = new GameObject(Back, Vector3(-1050, 0, 0), -90, Vector3(0, 0, 1), Vector3(2100, 2100, 2100));
-	meshList.push_back(box);
+	box = new GameObject(Back, Vector3(-500, 0, 0), -90, Vector3(0, 0, 1), Vector3(2100, 2100, 2100));
+	allSkyBox[2] = *box;
+
+	//meshList.push_back(box);
 	Front->textureID = LoadTGA("Image//front.tga");
-	box = new GameObject(Front, Vector3(1050, 0, 0), 90, Vector3(0, 0, 1), Vector3(2100, 2100, 2100));
-	meshList.push_back(box);
-#pragma endregion
+	box = new GameObject(Front, Vector3(500, 0, 0), 90, Vector3(0, 0, 1), Vector3(2100, 2100, 2100));
+	allSkyBox[3] = *box;
+
+	//meshList.push_back(box);
+	
+	camera.SetCameraSkyBox(allSkyBox, 4);
+
+	GameObject* allSecondSkyBox = new GameObject[4];
+
+
+	Left->textureID = LoadTGA("Image//left.tga");
+	box = new GameObject(Left, Vector3(0, 0, -500), 90, Vector3(1, 0, 0), Vector3(2100, 2100, 2100));
+	allSecondSkyBox[0] = *box;
+	//meshList.push_back(box);
+	Right->textureID = LoadTGA("Image//right.tga");
+	box = new GameObject(Right, Vector3(0, 0, 500), -90, Vector3(1, 0, 0), Vector3(2100, 2100, 2100));
+	allSecondSkyBox[1] = *box;
+	//meshList.push_back(box);
+	Back->textureID = LoadTGA("Image//back.tga");
+	box = new GameObject(Back, Vector3(-500, 0, 0), -90, Vector3(0, 0, 1), Vector3(2100, 2100, 2100));
+	allSecondSkyBox[2] = *box;
+
+	//meshList.push_back(box);
+	Front->textureID = LoadTGA("Image//front.tga");
+	box = new GameObject(Front, Vector3(500, 0, 0), 90, Vector3(0, 0, 1), Vector3(2100, 2100, 2100));
+	allSecondSkyBox[3] = *box;
+
+	secondCamera.SetCameraSkyBox(allSecondSkyBox, 4);
+
 }
 
 void GameScene::Exit()

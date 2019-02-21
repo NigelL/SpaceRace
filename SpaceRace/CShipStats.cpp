@@ -1,7 +1,6 @@
 #include "CShipStats.h"
 #include <string>
 
-using namespace std;
 
 CShipStats::CShipStats() {
 
@@ -16,7 +15,7 @@ CShipStats::~CShipStats()
 {
 }
 
-int CShipStats::getSpeed()
+double CShipStats::getSpeed()
 {
 	return speed;
 }
@@ -54,7 +53,7 @@ void CShipStats::SetHealth(int _health) {
 	health = _health;
 }
 
-void CShipStats::SetSpeed(int _speed) {
+void CShipStats::SetSpeed(double _speed) {
 	speed = _speed;
 }
 

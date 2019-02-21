@@ -7,8 +7,8 @@
 #include "Application.h"
 #include "Scene.h"
 #include "GameScene.h"
-#include "MainMenuScene.h"
 #include "GameSound.h"
+#include "MainMenuScene.h"
 #include "SplashScene.h"
 #include "BuildScene.h"
 

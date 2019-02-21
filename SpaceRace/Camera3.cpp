@@ -17,6 +17,10 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->up = defaultUp = up;
 }
 
+int Camera3::GetSkyBoxSize() const {
+	return skyBoxSize;
+}
+
 void Camera3::SetTarget(float _x, float _y, float _z)
 {
 	target.x = _x;
@@ -29,6 +33,32 @@ void Camera3::SetPosition(float _x, float _y, float _z)
 	position.x = _x;
 	position.y = _y;
 	position.z = _z;
+}
+
+
+void Camera3::SetCameraSkyBox(GameObject* skies, int size) {
+	cameraSkiesOffset = new Vector3[size];
+	cameraSkyBox = skies;
+	skyBoxSize = size;
+
+	for (int i = 0; i < size; i++) {
+		if (skies[i].GetPosition().Length() == abs(skies[i].GetPosition().x) || skies[i].GetPosition().Length() == abs(skies[i].GetPosition().y) || skies[i].GetPosition().Length() == abs(skies[i].GetPosition().z)) {
+			cameraSkiesOffset[i] = skies[i].GetPosition();
+		}
+	}
+}
+void Camera3::UpdateCameraSkyBox(GameObject* curObj,GameObject* otherObj) {
+
+	//Vector3 avgCamPos = (curObj->GetPosition() + otherObj->GetPosition()) * 0.5f;
+
+	for (int i = 0; i < skyBoxSize; i++) {
+		cameraSkyBox[i].SetPosition(position + cameraSkiesOffset[i]);
+	
+	}
+}
+
+GameObject* Camera3::GetAllSkyBox() {
+	return cameraSkyBox;
 }
 
 void Camera3::Update(double dt)

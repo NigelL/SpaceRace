@@ -123,7 +123,7 @@ PartConsumable* GameObjectFactory::SpawnPartConsumable(std::string name, Materia
 	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
 	name1->material.kShininess = material->kShininess;
 	PartConsumable* retThis = new PartConsumable(name1, transform.position, transform.amt, transform.rotation, transform.scale);
-	transform.type = 1;
+	transform.type = 2;
 	transform.name = name;
 	retThis->SetTransform(transform);
 	return retThis;
