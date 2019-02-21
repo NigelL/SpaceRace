@@ -416,9 +416,9 @@ void GameScene::Init()
 	renderSkybox();
 
 	ship01Stats = dynamic_cast<CShipStats*>(sceneObjects["ship01"]);
-	ship01Stats->setStats(50, 10, 5, 10, 0);
+	ship01Stats->setStats(0,300, 10, 5, 10, 0,15);
 	ship02Stats = dynamic_cast<CShipStats*>(sceneObjects["ship02"]);
-	ship02Stats->setStats(50, 15, 5, 15, 0);
+	ship02Stats->setStats(0,300, 15, 5, 15, 0,15);
 }
 
 static double LSPEED = 10.0;
@@ -445,60 +445,7 @@ bool cannonForce_01 = false;
 
 float floating = 0.0f;
 
-void GameScene::Update(double dt)
-{
-	std::cout << ship01Stats->getParts() << std::endl;
 
-bool bouncing = false;
-
-	/////////
-
-	Physic physic;
-
-	physic.VoA(20, 0.18);
-	physic.AdvRatio(200, 10);
-	physic.thrust(0.12, 10, 10);
-
-	/////////
-
-	for (int j = 0; j < meshList.size(); j++) {
-		if (meshList[j] == sceneObjects["ship01"]) { continue; }
-	
-		if (sceneObjects["ship01"]->collision.CheckCollision(meshList[j]->GetTransform())) {
-			Consumable* cPtr = dynamic_cast<Consumable*>(meshList[j]);
-			IslandEnvironment* isPtr = dynamic_cast<IslandEnvironment*>(meshList[j]);
-			cannonball* cannonPtr = dynamic_cast<cannonball*>(meshList[j]);
-			//std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr << std::endl;
-
-			if (isPtr != nullptr) {
-				isPtr->OnCollide(*ship01Stats); //Ship Collision with island
-				bouncing = true;
-			}
-		
-			
-			if (cPtr != nullptr) {
-				cPtr->OnCollide(*ship01Stats); // consumable collision
-			}
-
-			if (cannonPtr != nullptr && meshList[j] == sceneObjects["cannon02"]) { // other ship cannon hit ship01
-				cannonPtr->OnCollide(*ship01Stats);
-			}
-		}
-	}
-
-	
-	if (bouncing && ship01Stats->getSpeed() > 0)
-	{
-		physic.bounceBack(*ship01Stats, dt, 10);
-		sceneObjects["ship01"]->translateObj(-ship01Stats->getSpeed() * 1.5, dt);
-	}
-	else
-	{
-		bouncing = false;
-	}
-
-	if (ship01Stats->getSpeed() > 50)
-float floating = 0.0f; // maybe use
 
 void GameScene::Update(double dt)
 {
@@ -583,7 +530,7 @@ void GameScene::Update(double dt)
 		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, (-curWater->getWater() - 40) / 10, sceneObjects["ship01"]->GetPosition().z));
 	}
 	// ship ...physics
-	/*if (curWater->getWater() < 0.5)
+   if (curWater->getWater() < 0.5)
 	{
 		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, -curWater->getWater() / 20, sceneObjects["ship01"]->GetPosition().z));
 	}
@@ -773,9 +720,9 @@ void GameScene::Render()
 			modelStack.Scale(allSkyBox[i].GetScale().x, allSkyBox[i].GetScale().y, allSkyBox[i].GetScale().z);
 
 
-			RenderMesh(&allSkyBox[i],false);
+			RenderMesh(&allSkyBox[i], false);
 			modelStack.PopMatrix();
-			modelStack.PopMatrix();			
+			modelStack.PopMatrix();
 			modelStack.PopMatrix();
 
 
@@ -801,18 +748,18 @@ void GameScene::Render()
 
 
 			modelStack.PushMatrix();
-				modelStack.Translate(meshList[i]->GetPosition().x + meshList[i]->GetTransform().allBounds[j].x, meshList[i]->GetPosition().y + meshList[i]->GetTransform().allBounds[j].y, meshList[i]->GetPosition().z + meshList[i]->GetTransform().allBounds[j].z);
+			modelStack.Translate(meshList[i]->GetPosition().x + meshList[i]->GetTransform().allBounds[j].x, meshList[i]->GetPosition().y + meshList[i]->GetTransform().allBounds[j].y, meshList[i]->GetPosition().z + meshList[i]->GetTransform().allBounds[j].z);
 
-				modelStack.PushMatrix();
-					modelStack.Scale(0.1f, 0.1f, 0.1f);
-					RenderMesh(curCube, false);
-				modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Scale(0.1f, 0.1f, 0.1f);
+			RenderMesh(curCube, false);
+			modelStack.PopMatrix();
 			modelStack.PopMatrix();
 		}
 
 		modelStack.PushMatrix();
 		modelStack.Translate(meshList[i]->GetPosition().x, meshList[i]->GetPosition().y, meshList[i]->GetPosition().z);
-
+	}
 	RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship01Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship01Stats->getParts()), Color(0, 1, 0), 45, 4, 3);
 	RenderUI(partsCount, 20, 7, 5, 22);
@@ -823,6 +770,7 @@ void GameScene::Render()
 
 	glDisable(GL_SCISSOR_TEST);
 }
+
 
 void GameScene::Init2() {
 	//Camera Init
