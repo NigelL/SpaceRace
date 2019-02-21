@@ -20,6 +20,6 @@ void IslandEnvironment::OnCollide(GameObject & other)
 	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
 	if (tryShip != nullptr) {
 
-		tryShip->SetHealth(tryShip->getHealth() - 2);
+		tryShip->SetHealth(tryShip->getHealth() - 10);
 	}
 }

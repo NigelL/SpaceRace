@@ -118,7 +118,7 @@ GameScene::GameScene()
 				islands->GetTransform().GenerateBounds();
 				islands->SetPosition(Vector3(islandposx, -1.0, islandposz));
 				islands->SetScale(Vector3(0.25, 0.25, 0.25));
-				islands->GetTransform().SetBounds(Vector3(1.35f, 4.f, 1.35f));
+				islands->GetTransform().SetBounds(Vector3(1.75f, 3.f, 1.75f));
 				meshList.push_back(islands);
 
 			}
@@ -335,7 +335,7 @@ void GameScene::Init()
 	light[0].type = Light::LIGHT_DIRECTIONAL;
 	light[0].position.Set(0, 1000, 0);
 	light[0].color.Set(1, 1, 1);
-	light[0].power = 1.f;
+	light[0].power = 0.5f;
 	light[0].kC = 1.0f;
 	light[0].kL = 0.01f;
 	light[0].kQ = 0.001f;
@@ -411,7 +411,7 @@ void GameScene::Init()
 	renderSkybox();
 
 	ship01Stats = dynamic_cast<CShipStats*>(sceneObjects["ship01"]);
-	ship01Stats->setStats(50, 10, 5, 10);
+	ship01Stats->setStats(0, 10, 5, 10);
 	ship02Stats = dynamic_cast<CShipStats*>(sceneObjects["ship02"]);
 	ship02Stats->setStats(50, 15, 5, 15);
 }
@@ -427,9 +427,24 @@ Vector3 curHitPoint;
 
 static double bounceTime = 0.0;
 
+bool bouncing = false;
+bool cannonForce_01 = false;
+
+float floating = 0.0f;
+
 void GameScene::Update(double dt)
 {
 	curWater->UpdateWater(10, dt / 2);
+
+	/////////
+
+	Physic physic;
+
+	physic.VoA(20, 0.18);
+	physic.AdvRatio(200, 10);
+	physic.thrust(0.12, 10, 10);
+
+	/////////
 
 	for (int j = 0; j < meshList.size(); j++) {
 		if (meshList[j] == sceneObjects["ship01"]) { continue; }
@@ -442,26 +457,34 @@ void GameScene::Update(double dt)
 			std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr << std::endl;
 
 			if (isPtr != nullptr) {
-				//Ship Collision with island
-				isPtr->OnCollide(*ship01Stats);
-				ship01Stats->SetSpeed(0);
+				isPtr->OnCollide(*ship01Stats); //Ship Collision with island
+				bouncing = true;
 			}
 			
-			if(ship01Stats->getSpeed() == 0) // bounce back
-			{
-				ship01Stats->SetSpeed(20);
-				sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x - (sin(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * ((float)(ship01Stats->getSpeed() * 5 * dt))), sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - (cos(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * ((float)(ship01Stats->getSpeed() * 5 * dt)))));
-			}
+			//if(ship01Stats->getSpeed() == 0) // bounce back
+			//{
+			//	ship01Stats->SetSpeed(20);
+			//	sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x - (sin(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * ((float)(ship01Stats->getSpeed() * 5 * dt))), sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - (cos(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * ((float)(ship01Stats->getSpeed() * 5 * dt)))));
+			//}
 
 			if (cPtr != nullptr) {
-				cPtr->OnCollide(*sceneObjects["ship01"]);
+				cPtr->OnCollide(*sceneObjects["ship01"]); // consumable collision
 			}
 
-			if (cannonPtr != nullptr && meshList[j] == sceneObjects["cannon02"])
-			{
+			if (cannonPtr != nullptr && meshList[j] == sceneObjects["cannon02"]) { // other ship cannon hit ship01
 				cannonPtr->OnCollide(*ship01Stats);
 			}
 		}
+	}
+
+	if (bouncing && ship01Stats->getSpeed() > 0)
+	{
+		physic.bounceBack(*ship01Stats, dt, 10);
+		sceneObjects["ship01"]->translateObj(-ship01Stats->getSpeed() * 1.5, dt);
+	}
+	else
+	{
+		bouncing = false;
 	}
 
 	short int multipler = 1;
@@ -480,14 +503,48 @@ void GameScene::Update(double dt)
 	Application::GetMousePos(mouseX, mouseY);
 
 	// ship ...physics
-	if (curWater->getWater() < 0.5)
+	/*if (curWater->getWater() < 0.5)
 	{
 		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, -curWater->getWater() / 20, sceneObjects["ship01"]->GetPosition().z));
 	}
 	else if (curWater->getWater() > 0.5)
 	{
 		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, curWater->getWater() / 20, sceneObjects["ship01"]->GetPosition().z));
+	}*/
+
+	/*if (floating < -0.5)
+	{
+		floating += (float)(0.1 * dt);
 	}
+	else if (floating > 0.5)
+	{
+		floating -= (float)(0.1 * dt);
+	}
+	else
+	{
+		floating -= (float)(0.1 * dt);
+	}*/
+
+	/*if (floating < -0.5)
+	{
+		while (floating < 0.5)
+		{
+			floating += (float)(0.1 * dt);
+		}
+	}
+	else if (floating > 0.5)
+	{
+		while (floating > -0.5)
+		{
+			floating -= (float)(0.1 * dt);
+		}
+	}*/
+
+
+
+	sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, floating, sceneObjects["ship01"]->GetPosition().z));
+
+	std::cout << "float : " << floating << std::endl;
 
 	if (Application::IsKeyPressed(VK_SPACE))
 	{
@@ -495,14 +552,16 @@ void GameScene::Update(double dt)
 	}
 
 	// control the sceneObjects["ship01"]
-	if (Application::IsKeyPressed(VK_UP)) // 270
+	if (Application::IsKeyPressed(VK_UP) && !bouncing) // 270
 	{
-		Physic aaa;
-		int newSpeed;
+		if (ship01Stats->getSpeed() < 300) // speed limit
+		{
+			//std::cout << " thrust : " << physic.Thrust << std::endl;
 
-		newSpeed = aaa.acceleration(ship01Stats->getSpeed(), dt);
-		std::cout << " speed : " << newSpeed << std::endl;
-		sceneObjects["ship01"]->translateObj(newSpeed, dt);
+			ship01Stats->SetSpeed(physic.acceleration(ship01Stats->getSpeed(), dt));
+		}
+
+		sceneObjects["ship01"]->translateObj(ship01Stats->getSpeed(), dt);
 
 		if (Application::IsKeyPressed(VK_LEFT)) // 0
 		{
@@ -517,11 +576,24 @@ void GameScene::Update(double dt)
 		light[1].position.y = sceneObjects["ship01"]->GetPosition().y + 0.25;
 		light[1].position.z = sceneObjects["ship01"]->GetPosition().z + (cos(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * 1.5);
 	}
+	else if (ship01Stats->getSpeed() > 0 && cannonForce_01)
+	{
+		physic.bounceBack(*ship01Stats, dt, 3);
+		sceneObjects["ship01"]->translateObj(-ship01Stats->getSpeed() * 1.5, dt);
+	}
+	else
+	{
+		cannonForce_01 = false;
+		ship01Stats->SetSpeed(physic.deceleration(ship01Stats->getSpeed(), dt));
+		sceneObjects["ship01"]->translateObj(ship01Stats->getSpeed(), dt);
+	}
+
 	if (bounceTime <= 0)
 	{
 		if (Application::IsKeyPressed(VK_DOWN) && !cannonOut_01) // shoot cannonball
 		{
 			cannonOut_01 = true;
+			cannonForce_01 = true;
 			sceneObjects["cannon01"]->SetAmt(sceneObjects["ship01"]->GetAmt());
 			bounceTime = 0.5;
 		}
@@ -541,6 +613,12 @@ void GameScene::Update(double dt)
 
 		sceneObjects["cannon01"]->translateObj(ship01Stats->getFireRate(), dt);
 		sceneObjects["cannon01"]->translateCannon(ship01Stats->getFireRate(), dt);
+
+		if (ship01Stats->getSpeed() > 0)
+		{
+			physic.bounceBack(*ship01Stats, dt, 3);
+			sceneObjects["ship01"]->translateObj(-ship01Stats->getSpeed() * 1.5, dt);
+		}
 
 		if (sceneObjects["cannon01"]->GetTranslateX() > 5 && sceneObjects["cannon01"]->GetTranslateZ() > 5)
 		{
@@ -797,14 +875,14 @@ void GameScene::Update2(double dt)
 		}
 	}
 
-	if (curWater->getWater() < 0.5)
+	/*if (curWater->getWater() < 0.5)
 	{
 		sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, -curWater->getWater() / 20, sceneObjects["ship02"]->GetPosition().z));
 	}
 	else if (curWater->getWater() > 0.5)
 	{
 		sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, curWater->getWater() / 20, sceneObjects["ship02"]->GetPosition().z));
-	}
+	}*/
 
 	// control the sceneObjects["ship02"]
 	if (Application::IsKeyPressed('W')) // 270
