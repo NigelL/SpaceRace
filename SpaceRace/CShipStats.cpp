@@ -20,6 +20,11 @@ double CShipStats::getSpeed()
 	return speed;
 }
 
+double CShipStats::getMaxSpeed()
+{
+	return maxSpeed;
+}
+
 int CShipStats::getHealth()
 {
 	return health;
@@ -35,19 +40,27 @@ int CShipStats::getFireRate()
 	return fireRate;
 }
 
-void CShipStats::setStats(double speed, int health, int rotate, int fireRate)
+int CShipStats::getFireDist()
 {
-	this->speed = speed;
-	this->health = health;
-	this->rotate = rotate;
-	this->fireRate = fireRate;
+	return fireDist;
 }
 
-void CShipStats::SetHealth(int _health) {
+void CShipStats::SetHealth(int _health) 
+{
 	health = _health;
 }
 
-void CShipStats::SetSpeed(double _speed) {
+void CShipStats::SetSpeed(double _speed) 
+{
 	speed = _speed;
 }
 
+void CShipStats::setStats(double speed, double maxSpeed, int health, int rotate, int fireRate, int fireDist)
+{
+	this->speed = speed;
+	this->maxSpeed = maxSpeed;
+	this->health = health;
+	this->rotate = rotate;
+	this->fireRate = fireRate;
+	this->fireDist = fireDist;
+}

@@ -1,4 +1,11 @@
-﻿  GameScene.cpp
+﻿  Application.cpp
+  CShipStats.cpp
+  Consumable.cpp
+  GameObject.cpp
+d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(102): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(115): warning C4305: '-=': truncation from 'double' to 'float'
+  GameObjectFactory.cpp
+  GameScene.cpp
 d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
@@ -51,26 +58,32 @@ d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(85): warning C4
 d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(85): warning C4101: 'islandx': unreferenced local variable
 d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(348): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(360): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(437): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(443): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(445): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(449): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(483): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(562): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(573): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(574): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(575): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(580): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(586): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(618): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(638): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(855): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(888): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(899): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(900): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(901): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(946): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1165): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1186): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1187): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(436): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(442): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(444): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(448): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(482): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(551): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(552): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(553): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(565): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(579): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(610): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(841): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(871): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(872): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(873): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(878): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1151): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1167): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1168): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  HealthConsumable.cpp
+  IslandEnvironment.cpp
+  PartConsumable.cpp
+  Physic.cpp
+d:\users\l533\documents\github\spacerace\spacerace\physic.cpp(7): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  SpeedConsumable.cpp
+  cannonball.cpp
+  Generating Code...
+d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(48): warning C4715: 'GameObjectFactory::SpawnGameObject': not all control paths return a value
   SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.exe

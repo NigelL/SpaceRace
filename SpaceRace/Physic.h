@@ -19,7 +19,6 @@ public:
 	void bounceBack(CShipStats& sth, double dt, int rate);
 	void floating();
 
-
 	double mass = 5000;
 	int diameter = 10;
 	int prop_pitch = 10;
