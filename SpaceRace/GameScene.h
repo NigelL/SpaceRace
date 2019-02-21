@@ -32,6 +32,7 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	Mesh* healthBar;
+	Mesh* partsCount;
 	float sceneFPS;
 	std::map<std::string, GameObject*> sceneObjects;
 public:
@@ -119,7 +120,7 @@ private:
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
-	void RenderUI(Mesh* mesh, float size, float x, float y);
+	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 public:

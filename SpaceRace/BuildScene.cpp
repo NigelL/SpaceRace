@@ -3,6 +3,7 @@
 //#define SIZE 5
 //
 //GameObject* cursor;
+//
 //BuildScene::BuildScene()
 //{
 //	srand(time(0));
@@ -22,7 +23,7 @@
 //	curShip->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
 //	curShip->material.kShininess = 1.0f;
 //	mainShip = new GameObject(curShip, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-//	mainShip->GetTransform().SetBounds(Vector3(0.5f, 0.5f, 0.5f));
+//	mainShip->GetTransform().SetBounds(Vector3(1.0f, 1.0f, 1.0f));
 //
 //	meshList.push_back(mainShip);
 //
@@ -168,8 +169,7 @@
 //void BuildScene::Init()
 //{
 //	//Camera Init
-//	camera.Init(Vector3(0, 0, 10.0f),
-//		Vector3(0,0,0), Vector3(0, 1, 0));
+//	camera.Init(Vector3(0, 0, 0.1f), Vector3(0, 0, 0), Vector3(0, 1, 0));
 //
 //	//GameSound::instance()->GameBGM->setDefaultVolume(0.1f);
 //	//GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
@@ -384,50 +384,27 @@
 //
 //Vector3 rightMove, upMove;
 //void BuildScene::UpdateMouseCursor() {
+//	double befX = mouseX;
+//	double befY = mouseY;
 //
 //	Application::GetMousePos(mouseX, mouseY);
-//	
+//	GLfloat* modelView = new GLfloat[16];
+//	glGetFloatv(GL_PROJECTION, modelView);
 //
-//	float x = (2.0f * mouseX) / 1920 - 1.0f;
-//	float y = 1.0f - (2.0f * mouseY) / 1440;
-//	float z = 1.0f;
+//	double diffX = (mouseX - befX) / 1500;
+//	double diffY = (mouseY - befY) /  1500;
 //
-//	Vector3 ray_nds = Vector3(x, y , z );
-//	Vector3 ray_clip = Vector3(ray_nds.x, ray_nds.y, -1.0f);
+//	 rightMove += camera.right.Normalized() * diffX;
+//	 upMove  += camera.up.Normalized() * -diffY;
 //
-//	Vector3 ray_eye = (projectionStack.Top().GetInverse()) * ray_clip;
-//	ray_eye = Vector3(ray_eye.x, ray_eye.y, -1.0);
-//	Vector3 ray_wor = (viewStack.Top().GetInverse() * ray_eye);
-//
-//	Vector3 updateMouse = camera.right.Normalized() * x + camera.up.Normalized() * y;
-//
-//	Vector3 camMove = camera.position + camera.view.Normalized() + updateMouse;
-//	Vector3 camDir = (camMove - camera.position).Normalized();
-//
-//	Vector3 dirNormalCube = mainShip->collision.CheckCollision(camera.position, ray_wor, 1,camera);
-//	
-//
-//	if (Application::IsKeyPressed(VK_LBUTTON) && dirNormalCube != Vector3(0,0,0)) {
-//		Mesh* newCube = MeshBuilder::GenerateCube("NewCube", Color(1, 1, 1), 1, 1, 1);
-//		newCube->material.kAmbient.Set(0.4f, 0.4f, 0.4f);
-//		newCube->material.kDiffuse.Set(0.1f, 0.1f, 0.1f);
-//		newCube->material.kSpecular.Set(0.2f, 0.2f, 0.2f);
-//		newCube->material.kShininess = 1.0f;
-//		GameObject* cubeObj = new GameObject(newCube, dirNormalCube, 0, Vector3(0, 1, 0), Vector3(0.1, 0.1, 0.1));
-//		cubeObj->GetTransform().SetBounds(Vector3(0.5f, 0.5f, 0.5f));
-//		mainShip = cubeObj;
-//		camera.target = mainShip->GetPosition();
-//		meshList.push_back(cubeObj);
-//		
-//	}
-//	
-//	cursor->SetPosition(camMove);
+//	cursor->SetPosition(camera.position + camera.view.Normalized() + rightMove + upMove);
 //}
 //
 //void BuildScene::Update(double dt)
 //{
 //	//splashWaterMesh->UpdateWater(10, dt);
 //
+//	mainShip->collision.CheckCollision(camera.position, camera.view, 1);
 //	
 //
 //	short int multipler = 1;

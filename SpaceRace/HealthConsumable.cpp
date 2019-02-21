@@ -13,8 +13,10 @@ void HealthConsumable::OnCollide(GameObject& other) {
 	Consumable::OnCollide(other);
 	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
 	if (tryShip != nullptr) {
-
-		tryShip->SetHealth(tryShip->getHealth() + healthConsumed);
+		if (tryShip->getHealth() != tryShip->getMaxHP())
+		{
+			tryShip->SetHealth(tryShip->getHealth() + healthConsumed);
+		}
 	}
 }
 
