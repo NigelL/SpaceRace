@@ -1,27 +1,16 @@
-﻿  Application.cpp
-  BuildScene.cpp
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(25): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(364): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(367): warning C4101: 'powerUpX': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(366): warning C4101: 'powerUpSpawn': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(367): warning C4101: 'powerUpZ': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(397): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\buildscene.cpp(398): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Camera.cpp
-  Camera2.cpp
-  Camera3.cpp
-  CamMenu.cpp
-  cannonball.cpp
-  Collision.cpp
-  Consumable.cpp
-  CShipStats.cpp
-  GameObject.cpp
-d:\users\l533\desktop\spacerace\spacerace\gameobject.cpp(102): warning C4305: '+=': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gameobject.cpp(115): warning C4305: '-=': truncation from 'double' to 'float'
-  GameObjectFactory.cpp
+﻿  GameObjectFactory.cpp
   GameScene.cpp
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(48): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(49): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
@@ -32,17 +21,17 @@ d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(51): warning C4244: 'arg
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(53): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(64): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(54): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(65): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
@@ -52,108 +41,140 @@ d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(66): warning C4244: 'arg
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(67): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(67): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(68): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(69): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(119): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(128): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(85): warning C4101: 'islandz': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(85): warning C4101: 'islandx': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(348): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(360): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(437): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(443): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(445): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(449): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(483): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(564): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(575): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(576): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(577): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(582): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(588): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(620): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(640): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(857): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(890): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(901): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(902): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(903): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(948): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1167): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1188): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1189): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  GameSound.cpp
-  HealthConsumable.cpp
-  IslandEnvironment.cpp
-  LoadOBJ.cpp
-  LoadTGA.cpp
-  main.cpp
-  MainMenuScene.cpp
-  Generating Code...
-d:\users\l533\desktop\spacerace\spacerace\gameobjectfactory.cpp(48): warning C4715: 'GameObjectFactory::SpawnGameObject': not all control paths return a value
-  Compiling...
-  Mesh.cpp
-  MeshBuilder.cpp
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(253): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=unsigned int
-          ]
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(254): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=unsigned int
-          ]
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(255): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=unsigned int
-          ]
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(257): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=unsigned int
-          ]
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(258): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=unsigned int
-          ]
-d:\users\l533\desktop\spacerace\spacerace\meshbuilder.cpp(259): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
-          with
-          [
-              _Ty=unsigned int
-          ]
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(119): error C2059: syntax error: '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(121): error C2059: syntax error: '=='
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(123): error C2059: syntax error: '>>'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(130): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(355): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(367): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(421): error C2059: syntax error: '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(423): error C2059: syntax error: '=='
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(425): error C2059: syntax error: '>>'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(458): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(464): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(466): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(470): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(478): error C2059: syntax error: '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(489): error C2059: syntax error: '=='
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(492): error C2059: syntax error: '>>'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(493): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(494): error C2065: 'cPtr': undeclared identifier
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(499): error C2059: syntax error: '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(500): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(500): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(503): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(503): error C2143: syntax error: missing ';' before '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(504): error C2143: syntax error: missing ';' before '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(504): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(507): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(507): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(511): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(512): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(512): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(515): error C2059: syntax error: '=='
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(517): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(517): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(553): error C2059: syntax error: '>>'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(564): error C2065: 'sceneObjects': undeclared identifier
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(566): error C2065: 'sceneObjects': undeclared identifier
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): error C3484: syntax error: expected '->' before the return type
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): error C3613: missing return type after '->' ('int' assumed)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): error C2146: syntax error: missing ';' before identifier 'SetTarget'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(569): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(569): error C2371: 'input2': redefinition; different basic types
+  d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(560): note: see declaration of 'input2'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(569): error C2065: 'sceneObjects': undeclared identifier
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(574): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(574): error C2065: 'dt': undeclared identifier
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(576): error C2761: 'void Application::GetMousePos(double &,double &)': redeclaration of member is not allowed
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(578): error C2059: syntax error: '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(629): error C2143: syntax error: missing ';' before '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(629): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(629): error C2371: 'std::cout': redefinition; different basic types
+  d:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.15.26726\include\iostream(29): note: see declaration of 'std::cout'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(631): error C2059: syntax error: 'if'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(632): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(632): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(637): error C2059: syntax error: 'if'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(638): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(638): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(664): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(665): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(665): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(669): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(670): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(670): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(676): error C2059: syntax error: 'if'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(677): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(677): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(686): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(687): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(687): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(691): error C2059: syntax error: 'if'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(692): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(692): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(713): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(714): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(714): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(720): error C2059: syntax error: 'if'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(721): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(721): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(728): error C2059: syntax error: 'if'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(728): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(728): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(731): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(731): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(731): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(734): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(734): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(734): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(737): error C2059: syntax error: 'else'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(737): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(737): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(741): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(741): error C3484: syntax error: expected '->' before the return type
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(741): error C3613: missing return type after '->' ('int' assumed)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(741): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(741): error C2371: 'position': redefinition; different basic types
+  d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(566): note: see declaration of 'position'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(741): error C2146: syntax error: missing ';' before identifier 'x'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(742): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(742): error C3484: syntax error: expected '->' before the return type
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(742): error C3613: missing return type after '->' ('int' assumed)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(742): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(742): error C2371: 'position': redefinition; different basic types
+  d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(566): note: see declaration of 'position'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(742): error C2146: syntax error: missing ';' before identifier 'z'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(743): error C3927: '->': trailing return type is not allowed after a non-function declarator
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(743): error C3484: syntax error: expected '->' before the return type
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(743): error C3613: missing return type after '->' ('int' assumed)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(743): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(743): error C2086: 'int camera': redefinition
+  d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(567): note: see declaration of 'camera'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(743): error C2146: syntax error: missing ';' before identifier 'SetPosition'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(744): error C2059: syntax error: '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(744): error C2143: syntax error: missing ';' before '}'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(748): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(748): error C2447: '{': missing function header (old-style formal list?)
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(898): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(909): error C2059: syntax error: '<<'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(925): error C2143: syntax error: missing ';' before '{'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(928): error C2181: illegal else without matching if
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(928): fatal error C1003: error count exceeds 100; stopping compilation
   PartConsumable.cpp
   Physic.cpp
 d:\users\l533\desktop\spacerace\spacerace\physic.cpp(7): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  ReadMesh.cpp
-d:\users\l533\desktop\spacerace\spacerace\readmesh.cpp(14): warning C4018: '<': signed/unsigned mismatch
-  d:\users\l533\desktop\spacerace\spacerace\readmesh.cpp(57): note: see reference to function template instantiation 'std::vector<std::string,std::allocator<_Ty>> CheckFormat<std::string>(std::string,std::string,std::string,int)' being compiled
-          with
-          [
-              _Ty=std::string
-          ]
-  shader.cpp
+d:\users\l533\desktop\spacerace\spacerace\physic.cpp(47): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   SpeedConsumable.cpp
-  Transform.cpp
-  Utility.cpp
-  Water.cpp
-d:\users\l533\desktop\spacerace\spacerace\water.cpp(14): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\speedconsumable.cpp(16): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\speedconsumable.cpp(21): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
-  LINK : D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe not found or not built by the last incremental link; performing full link
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe
+d:\users\l533\desktop\spacerace\spacerace\gameobjectfactory.cpp(48): warning C4715: 'GameObjectFactory::SpawnGameObject': not all control paths return a value
