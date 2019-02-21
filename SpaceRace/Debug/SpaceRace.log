@@ -54,12 +54,14 @@ d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(358): warning C4244: 'ar
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(436): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(438): warning C4018: '<': signed/unsigned mismatch
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(456): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(545): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(546): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(547): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(548): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(592): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(667): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(591): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(666): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(667): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(496): warning C4101: 'output': unreferenced local variable
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(497): warning C4101: 'input1': unreferenced local variable
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(823): warning C4018: '<': signed/unsigned mismatch
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(868): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(869): warning C4244: '=': conversion from 'double' to 'float', possible loss of data

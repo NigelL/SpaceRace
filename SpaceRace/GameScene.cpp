@@ -425,14 +425,14 @@ static double bounceTime = 0.0;
 static double cannonHit_01 = 0.0f;
 static double cannonHit_02 = 0.0f;
 
-float Lerp(float start, float end, float t) {
-	return (1 - t) * start + t * end;
+float Lerp(float position, float target, float amt) 
+{
+	float lerp = (target - position) * amt;
+	return position + lerp;
 }
 
 void GameScene::Update(double dt)
 {
-	std::cout << ship01stats->getSpeed() << std::endl;
-
 	curWater->UpdateWater(10, dt / 2);
 
 	for (int j = 0; j < meshList.size(); j++) {
@@ -504,7 +504,6 @@ void GameScene::Update(double dt)
 	Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 3;
 	camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 1, sceneObjects["ship01"]->GetPosition().z);
 
-	input1 = position.x;
 	input2 = sceneObjects["ship01"]->GetPosition().x;
 	//Lerp(input2, input1, dt);
 
@@ -664,7 +663,9 @@ void GameScene::Update(double dt)
 		bounceTime -= dt;
 	}
 
-	camera.SetPosition(Lerp(input2, input1, dt), position.y + 1, position.z);
+	position.x += (sceneObjects["ship01"]->GetPosition().x - position.x) * dt;
+	position.z += (sceneObjects["ship01"]->GetPosition().z - position.z) * dt;
+	camera.SetPosition(position.x, position.y + 1, position.z);
 }
 
 
