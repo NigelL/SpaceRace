@@ -31,6 +31,7 @@ class GameScene : public Scene
 private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
+	Mesh* healthBar;
 	float sceneFPS;
 	std::map<std::string, GameObject*> sceneObjects;
 public:

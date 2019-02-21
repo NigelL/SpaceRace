@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include <vector>
 #include "Vector3.h"
+#include "Camera2.h"
 
 #include "MyMath.h"
 
@@ -22,7 +23,7 @@ struct Collision {
 	};
 
 	bool CheckCollision(Transform& other);
-	void CheckCollision(Vector3 origin, Vector3 other, float t);
+	Vector3 CheckCollision(Vector3 origin, Vector3 other, float t,Camera2 rot);
 
 	
 

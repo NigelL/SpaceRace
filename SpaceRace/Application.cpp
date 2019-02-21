@@ -134,13 +134,10 @@ void Application::GetMousePos(double& x, double& y) {
 
 void Application::Run()
 {
-	Scene* scene = new GameScene();
+	MainMenuScene MainMenu;
+	Scene* scene = new MainMenuScene();
 	scene->Init();
 	Scene* scene2 = scene;
-	scene2->Init2();
-
-
-
 
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 
@@ -150,10 +147,44 @@ void Application::Run()
 	{
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
+
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
 		glfwPollEvents();
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
+		//if (Application::IsKeyPressed(VK_SPACE))
+		//{
+		//	MainMenu.setPlay(true);
+		//	if (Application::IsKeyPressed('W'))
+		//	{
+		//		MainMenu.setMode(1);
+		//		if (Application::IsKeyPressed(VK_SPACE))
+		//		{
+		//			scene = new GameScene();
+		//			scene->Init();
+		//		}
+		//	}
+		//	if (Application::IsKeyPressed('S'))
+		//	{
+		//		MainMenu.setMode(2);
+		//		if (Application::IsKeyPressed(VK_SPACE))
+		//		{
+		//			scene = new GameScene();
+		//			scene->Init();
+		//			Scene* scene2 = scene;
+		//			scene2->Init2();
+		//		}
+		//	}
+		//}
+
+		if (Application::IsKeyPressed(VK_SPACE) && !MainMenu.getPlay())
+		{
+			MainMenu.setPlay(true);
+			scene = new GameScene();
+			scene->Init();
+			scene2 = scene;
+			scene2->Init2();
+		}
 
 		scene2->Update2(m_timer.getElapsedTime());
 		scene2->Render2();

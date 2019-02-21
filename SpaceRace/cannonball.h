@@ -1,8 +1,6 @@
 #ifndef CANNONBALL_H
 #define CANNONBALL_H
-
 #include "GameObject.h"
-
 
 class cannonball : public GameObject
 {

@@ -278,6 +278,53 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName,Color color, float l
 	return mesh;
 }
 
+Mesh* MeshBuilder::GenerateMenu(const std::string &meshName, Color color, float length)
+{
+	Vertex v;
+
+	std::vector<Vertex> vertex_buffer_data;
+	std::vector<GLuint> index_buffer_data;
+
+	v.pos.Set(-0.5 * length, -0.5f * length, 0);
+	v.color = color;
+	v.texCoord.Set(0, 0);
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(0.5 * length, -0.5f * length, 0);
+	v.color = color;
+	v.texCoord.Set(1, 0);
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(0.5 * length, 0.5f * length, 0);
+	v.color = color;
+	v.texCoord.Set(1, 1);
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(-0.5 * length, 0.5f * length, 0);
+	v.color = color;
+	v.texCoord.Set(0, 1);
+	vertex_buffer_data.push_back(v);
+
+	index_buffer_data.push_back(3);
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(0);
+
+	Mesh *mesh = new Mesh(meshName);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+	mesh->indexSize = index_buffer_data.size();
+	mesh->mode = Mesh::DRAW_TRIANGLES;
+
+	return mesh;
+}
 /******************************************************************************/
 /*!
 \brief
@@ -516,153 +563,6 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName,Color color, float l
 
 
 }
-Mesh* MeshBuilder::GeneratePikachuEars(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ) {
-	std::vector<Vertex> vertexBuffer;
-	Vertex v;
-	v.color = color;
-
-	v.pos.Set(lengthX / 5 , lengthY, lengthZ / 5);
-	v.normal.Set(0, 0, lengthZ / 5);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX / 5, lengthY, lengthZ / 5);
-	v.normal.Set(0, 0, lengthZ / 5);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX / 5, -lengthY, lengthZ / 5);
-	v.normal.Set(0, 0, lengthZ / 5);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX / 5, -lengthY, lengthZ / 5);
-	v.normal.Set(0, 0, lengthZ / 5);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, lengthY, -lengthZ);
-	v.normal.Set(0, 0, -lengthZ );
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, lengthY, -lengthZ);
-	v.normal.Set(0, 0, -lengthZ);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, -lengthY, -lengthZ);
-	v.normal.Set(0, 0, -lengthZ);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, -lengthY, -lengthZ);
-	v.normal.Set(0, 0, -lengthZ);
-	vertexBuffer.push_back(v);
-
-
-	v.pos.Set(lengthX / 5, lengthY, lengthZ / 5);
-	v.normal.Set(lengthX / 5, 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX / 5, lengthY, lengthZ / 5);
-	v.normal.Set(-lengthX / 5, 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX / 5, -lengthY, lengthZ / 5);
-	v.normal.Set(-lengthX / 5, 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX / 5, -lengthY, lengthZ / 5);
-	v.normal.Set(lengthX / 5, 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, lengthY, -lengthZ);
-	v.normal.Set(lengthX , 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, lengthY, -lengthZ);
-	v.normal.Set(-lengthX , 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, -lengthY, -lengthZ);
-	v.normal.Set(-lengthX, 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, -lengthY, -lengthZ);
-	v.normal.Set(lengthX, 0, 0);
-	vertexBuffer.push_back(v);
-
-	v.pos.Set(lengthX / 5, lengthY, lengthZ / 5);
-	v.normal.Set(0, lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX / 5, lengthY, lengthZ / 5);
-	v.normal.Set(0, lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX / 5, -lengthY, lengthZ / 5);
-	v.normal.Set(0, -lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX / 5, -lengthY, lengthZ / 5);
-	v.normal.Set(0, -lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, lengthY, -lengthZ);
-	v.normal.Set(0, lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, lengthY, -lengthZ);
-	v.normal.Set(0, lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, -lengthY, -lengthZ);
-	v.normal.Set(0, -lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, -lengthY, -lengthZ);
-	v.normal.Set(0, -lengthY, 0);
-	vertexBuffer.push_back(v);
-
-
-
-	std::vector<GLuint> index_buffer_data;
-	int startIndex = 0;
-	for (startIndex = 0; startIndex < 3; startIndex++) {
-		index_buffer_data.push_back(startIndex * 8);
-		index_buffer_data.push_back(startIndex * 8 + 1);
-		index_buffer_data.push_back(startIndex * 8 + 2);
-
-		index_buffer_data.push_back(startIndex * 8);
-		index_buffer_data.push_back(startIndex * 8 + 2);
-		index_buffer_data.push_back(startIndex * 8 + 3);
-
-		index_buffer_data.push_back(startIndex * 8 + 5);
-		index_buffer_data.push_back(startIndex * 8 + 4);
-		index_buffer_data.push_back(startIndex * 8 + 7);
-
-		index_buffer_data.push_back(startIndex * 8 + 5);
-		index_buffer_data.push_back(startIndex * 8 + 7);
-		index_buffer_data.push_back(startIndex * 8 + 6);
-
-		index_buffer_data.push_back(startIndex * 8 + 3);
-		index_buffer_data.push_back(startIndex * 8 + 4);
-		index_buffer_data.push_back(startIndex * 8 + 5);
-
-		index_buffer_data.push_back(startIndex * 8 + 3);
-		index_buffer_data.push_back(startIndex * 8 + 5);
-		index_buffer_data.push_back(startIndex * 8 + 6);
-
-		index_buffer_data.push_back(startIndex * 8 + 4);
-		index_buffer_data.push_back(startIndex * 8);
-		index_buffer_data.push_back(startIndex * 8 + 3);
-
-		index_buffer_data.push_back(startIndex * 8 + 4);
-		index_buffer_data.push_back(startIndex * 8 + 3);
-		index_buffer_data.push_back(startIndex * 8 + 7);
-
-		index_buffer_data.push_back(startIndex * 8 + 1);
-		index_buffer_data.push_back(startIndex * 8 + 5);
-		index_buffer_data.push_back(startIndex * 8 + 6);
-
-		index_buffer_data.push_back(startIndex * 8 + 1);
-		index_buffer_data.push_back(startIndex * 8 + 6);
-		index_buffer_data.push_back(startIndex * 8 + 2);
-
-		index_buffer_data.push_back(startIndex * 8 + 5);
-		index_buffer_data.push_back(startIndex * 8 + 1);
-		index_buffer_data.push_back(startIndex * 8);
-
-		index_buffer_data.push_back(startIndex * 8 + 5);
-		index_buffer_data.push_back(startIndex * 8);
-		index_buffer_data.push_back(startIndex * 8 + 4);
-
-	}
-	Mesh *mesh = new Mesh(meshName);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBuffer.size() * sizeof(Vertex),
-		&vertexBuffer[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint),
-		&index_buffer_data[0], GL_STATIC_DRAW);
-	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_TRIANGLES;
-	return mesh;
-}
 
 Mesh* MeshBuilder::GenerateTorus(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float outerR, float innerR)
 {
@@ -709,135 +609,6 @@ Mesh* MeshBuilder::GenerateTorus(const std::string &meshName, Color color, unsig
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
 
-	return mesh;
-}
-
-Mesh* MeshBuilder::GeneratePikachuEarsBlack(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ) {
-	std::vector<Vertex> vertexBuffer;
-	Vertex v;
-	v.color = color;
-
-	v.pos.Set(lengthX, 0, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX,0 , 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, 0, lengthZ);
-	vertexBuffer.push_back(v);
-	v.pos.Set(lengthX, 0, lengthZ);
-	vertexBuffer.push_back(v);
-	v.pos.Set(0, lengthY, lengthZ / 2);
-	vertexBuffer.push_back(v);
-	/*
-	vertexBuffer.push_back(v);
-	v.pos.Set(0, lengthY, 0);
-	vertexBuffer.push_back(v);
-	v.pos.Set(-lengthX, 0, -lengthZ);
-	vertexBuffer.push_back(v);
-	v.pos.Set(0, lengthY, 0);
-	vertexBuffer.push_back(v);
-	*/	
-	//std::vector<GLuint> index_buffer_data = { 0, 1, 2 ,4,0,1 , 4,1,2, 4,2,3 };
-
-	std::vector<GLuint> index_buffer_data = {4,1,0,4,0,1,4,2,1,4,1,2,4,3,2,4,2,3,4,3,0,4,0,3 };
-
-	//,3,2,1 , 1,3,2   4,3,0
-
-	Mesh *mesh = new Mesh(meshName);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBuffer.size() * sizeof(Vertex),
-		&vertexBuffer[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint),
-		&index_buffer_data[0], GL_STATIC_DRAW);
-	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_FAN;
-	return mesh;
-}
-
-Mesh* MeshBuilder::GeneratePikachuBody(const std::string &meshName, Color color, float radius) {
-
-	std::vector<Vertex> vertexBuffer;
-	Vertex v;
-	v.color = color;
-	
-		
-	double deg = 0.0, polarDeg = 0.0;
-
-	for (polarDeg = 0.0; polarDeg <= 180; polarDeg += 10.0) {
-		for (deg = 0.0; deg <= 360; deg += 10.0) {
-
-			double x = cos(DegreeToRadian((float)deg)) * radius * sin(DegreeToRadian((float)polarDeg));
-			double z = radius * cos(DegreeToRadian((float)polarDeg));
-			double y = radius * sin(DegreeToRadian((float)deg)) * sin(DegreeToRadian((float)polarDeg));
-			if(deg >= 180) {
-				//z = (radius + 1) * cos(DegreeToRadian(polarDeg));
-				y = -0.4;		
-			}																
-			v.pos.Set((float)x, (float)y, (float)z);
-			v.normal.Set((float)x, (float)y , (float)z);
-			vertexBuffer.push_back(v);
-		}
-	}
-						
-	
-
-	std::vector<GLuint> index_buffer_data;
-
-	for (int i = 0; i < (int)vertexBuffer.size() - 35; i++) {
-		index_buffer_data.push_back(i);
-		index_buffer_data.push_back(i + 35);
-	}
-
-	Mesh *mesh = new Mesh(meshName);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBuffer.size() * sizeof(Vertex),
-		&vertexBuffer[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint),
-		&index_buffer_data[0], GL_STATIC_DRAW);
-	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
-	return mesh;
-}
-Mesh* MeshBuilder::GeneratePikachuHand(const std::string &meshName, Color color, float radius) {
-	std::vector<Vertex> vertexBuffer;
-	Vertex v;
-	v.color = color;
-					
-	short int resolution = 30;
-	for (int i = 0; i < resolution; i++) {
-		for (double angle = 0; angle <= 180.0; angle += 10.0)
-		{
-			v.pos.Set(sin(DegreeToRadian((float)angle)) * radius, -cos(DegreeToRadian((float)angle)) * radius, (float)(i + 1) / (float)resolution);
-			v.normal.Set(v.pos.x, v.pos.y, v.pos.z);
-			vertexBuffer.push_back(v);
-			v.pos.Set(sin(DegreeToRadian(180.0f - (float)angle)) * radius, -cos(DegreeToRadian(180.0f - (float)angle)) * radius, (float)(i + 1) / (float)resolution);
-			v.normal.Set(v.pos.x, v.pos.y, v.pos.z);
-			vertexBuffer.push_back(v);
-		}
-	
-	}																
-
-		
-	std::vector<GLuint> index_buffer_data;
-
-	for (int i = 0; i < (int)vertexBuffer.size() - 18 ; i++) {
-		index_buffer_data.push_back(i);	
-		index_buffer_data.push_back(i + 18);		
-	}
-
-	Mesh *mesh = new Mesh(meshName);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexBuffer.size() * sizeof(Vertex),
-		&vertexBuffer[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint),
-		&index_buffer_data[0], GL_STATIC_DRAW);
-	mesh->indexSize = index_buffer_data.size();
-	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
 	return mesh;
 }
 

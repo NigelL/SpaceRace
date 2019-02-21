@@ -43,5 +43,7 @@ public:
 	GameObject(Mesh* _curObject);
 	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
 	virtual ~GameObject();
+
+	int health = 0;
 };
 #endif;
