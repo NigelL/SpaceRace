@@ -116,11 +116,7 @@ GameScene::GameScene()
 				islands->GetTransform().GenerateBounds();
 				islands->SetPosition(Vector3(islandposx, -3.0, islandposz));
 				islands->SetScale(Vector3(0.25, 0.25, 0.25));
-<<<<<<< HEAD
-				islands->GetTransform().SetBounds(Vector3(1.75f, 3.f, 1.75f));
-=======
 				islands->GetTransform().SetBounds(Vector3(1.35f, 1.55f, 1.35f));
->>>>>>> Week1.5
 				meshList.push_back(islands);
 
 			}
@@ -418,11 +414,7 @@ void GameScene::Init()
 	renderSkybox();
 
 	ship01Stats = dynamic_cast<CShipStats*>(sceneObjects["ship01"]);
-<<<<<<< HEAD
-	ship01Stats->setStats(0, 10, 5, 10);
-=======
 	ship01Stats->setStats(50, 10, 5, 10, 0);
->>>>>>> Week1.5
 	ship02Stats = dynamic_cast<CShipStats*>(sceneObjects["ship02"]);
 	ship02Stats->setStats(50, 15, 5, 15, 0);
 }
@@ -473,36 +465,25 @@ void GameScene::Update(double dt)
 		if (sceneObjects["ship01"]->collision.CheckCollision(meshList[j]->GetTransform())) {
 			Consumable* cPtr = dynamic_cast<Consumable*>(meshList[j]);
 			IslandEnvironment* isPtr = dynamic_cast<IslandEnvironment*>(meshList[j]);
+			cannonball* cannonPtr = dynamic_cast<cannonball*>(meshList[j]);
 			std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr << std::endl;
 			if (isPtr != nullptr) {
-<<<<<<< HEAD
 				isPtr->OnCollide(*ship01Stats); //Ship Collision with island
 				bouncing = true;
 			}
+		
 			
-			//if(ship01Stats->getSpeed() == 0) // bounce back
-			//{
-			//	ship01Stats->SetSpeed(20);
-			//	sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x - (sin(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * ((float)(ship01Stats->getSpeed() * 5 * dt))), sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - (cos(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * ((float)(ship01Stats->getSpeed() * 5 * dt)))));
-			//}
-
-=======
-				//Ship Collision with island 
-			}
->>>>>>> Week1.5
 			if (cPtr != nullptr) {
 				cPtr->OnCollide(*sceneObjects["ship01"]); // consumable collision
 			}
-		}
-	}
 
-<<<<<<< HEAD
 			if (cannonPtr != nullptr && meshList[j] == sceneObjects["cannon02"]) { // other ship cannon hit ship01
 				cannonPtr->OnCollide(*ship01Stats);
 			}
 		}
 	}
 
+	
 	if (bouncing && ship01Stats->getSpeed() > 0)
 	{
 		physic.bounceBack(*ship01Stats, dt, 10);
@@ -512,7 +493,7 @@ void GameScene::Update(double dt)
 	{
 		bouncing = false;
 	}
-=======
+
 	if (ship01Stats->getSpeed() > 50)
 	{
 		timer += dt;
@@ -550,7 +531,6 @@ void GameScene::Update(double dt)
 	{
 		exit(0);
 	}*/
->>>>>>> Week1.5
 
 	short int multipler = 1;
 
@@ -575,28 +555,19 @@ void GameScene::Update(double dt)
 	double mouseX, mouseY;
 	Application::GetMousePos(mouseX, mouseY);
 
-<<<<<<< HEAD
-	// ship ...physics
-	/*if (curWater->getWater() < 0.5)
-=======
 	//ship ...physics
 	if (curWater->getWater() < 0.5)
->>>>>>> Week1.5
 	{
 		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, (-curWater->getWater() - 40) / 10, sceneObjects["ship01"]->GetPosition().z));
 	}
 	else if (curWater->getWater() > 0.5)
 	{
-<<<<<<< HEAD
 		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, curWater->getWater() / 20, sceneObjects["ship01"]->GetPosition().z));
-	}*/
+	}
 
 	/*if (floating < -0.5)
 	{
 		floating += (float)(0.1 * dt);
-=======
-		sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, (curWater->getWater() - 40) / 10, sceneObjects["ship01"]->GetPosition().z));
->>>>>>> Week1.5
 	}
 	else if (floating > 0.5)
 	{
@@ -636,7 +607,6 @@ void GameScene::Update(double dt)
 	// control the sceneObjects["ship01"]
 	if (Application::IsKeyPressed(VK_UP) && !bouncing) // 270
 	{
-<<<<<<< HEAD
 		if (ship01Stats->getSpeed() < 300) // speed limit
 		{
 			//std::cout << " thrust : " << physic.Thrust << std::endl;
@@ -644,8 +614,6 @@ void GameScene::Update(double dt)
 			ship01Stats->SetSpeed(physic.acceleration(ship01Stats->getSpeed(), dt));
 		}
 
-=======
->>>>>>> Week1.5
 		sceneObjects["ship01"]->translateObj(ship01Stats->getSpeed(), dt);
 
 		if (Application::IsKeyPressed(VK_LEFT)) // 0
@@ -906,9 +874,6 @@ void GameScene::Update2(double dt)
 		// sceneObjects["ship02"]->CheckCollision(*cannon_01, sceneObjects["ship02"]>collideCannon);
 	}
 
-<<<<<<< HEAD
-	/*if (curWater->getWater() < 0.5)
-=======
 	/*if (sceneObjects["ship02"]->collideCannon.size() > 0 && cannonHit_02 <= 0)
 	{
 		sceneObjects["ship02"]->health--;
@@ -921,19 +886,13 @@ void GameScene::Update2(double dt)
 
 	//Ship 2 Bobbing
 	if (curWater->getWater() < 0.5)
->>>>>>> Week1.5
 	{
 		sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, (-curWater->getWater() - 40) / 10, sceneObjects["ship02"]->GetPosition().z));
 	}
 	else if (curWater->getWater() > 0.5)
 	{
-<<<<<<< HEAD
 		sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, curWater->getWater() / 20, sceneObjects["ship02"]->GetPosition().z));
-	}*/
-=======
-		sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, (curWater->getWater() - 40) / 10, sceneObjects["ship02"]->GetPosition().z));
 	}
->>>>>>> Week1.5
 
 	// control the sceneObjects["ship02"]
 	if (Application::IsKeyPressed('W')) // 270
