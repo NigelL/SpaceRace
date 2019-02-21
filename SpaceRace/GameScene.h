@@ -24,6 +24,8 @@
 #include <iostream>
 #include <map>
 
+#include "Physic.h"
+
 class GameScene : public Scene
 {
 private:
@@ -118,7 +120,7 @@ private:
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
-	void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y);
+	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 public:

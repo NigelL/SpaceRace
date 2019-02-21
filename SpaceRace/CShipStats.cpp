@@ -11,14 +11,18 @@ CShipStats::CShipStats(Mesh* _curMesh,Vector3 _pos, float amt, Vector3 _rot, Vec
 {
 }
 
-
 CShipStats::~CShipStats()
 {
 }
 
-int CShipStats::getSpeed()
+double CShipStats::getSpeed()
 {
 	return speed;
+}
+
+double CShipStats::getMaxSpeed()
+{
+	return maxSpeed;
 }
 
 int CShipStats::getHealth()
@@ -47,25 +51,31 @@ int CShipStats::getFireRate()
 	return fireRate;
 }
 
-void CShipStats::setStats(int speed, int health, int rotate, int fireRate, int parts)
+void CShipStats::setStats(int speed, int health, int rotate, int fireRate, int parts, int fireDist)
 {
 	this->speed = speed;
 	this->health = health;
 	maxHP = health;
 	this->rotate = rotate;
 	this->fireRate = fireRate;
+	this->fireDist = fireDist;
 	this->parts = parts;
+	
+int CShipStats::getFireDist()
+{
+	return fireDist;
 }
 
-void CShipStats::SetHealth(int _health) {
+void CShipStats::SetHealth(int _health) 
+{
 	health = _health;
 }
 
-void CShipStats::SetSpeed(int _speed) {
+void CShipStats::SetSpeed(double _speed) 
+{
 	speed = _speed;
 }
 
 void CShipStats::SetParts(int _parts) {
 	parts = _parts;
 }
-

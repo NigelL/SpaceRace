@@ -1,4 +1,5 @@
 #include "cannonball.h"
+#include "CShipStats.h"
 
 
 
@@ -15,9 +16,11 @@ cannonball::~cannonball()
 {
 }
 
-
 void cannonball::OnCollide(GameObject& other)
 {
+	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
+	if (tryShip != nullptr) {
 
+		tryShip->SetHealth(tryShip->getHealth() - 1);
+	}
 }
-

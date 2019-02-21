@@ -1,46 +1,53 @@
-﻿  GameScene.cpp
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(48): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+﻿  Application.cpp
+  CShipStats.cpp
+  Consumable.cpp
+  GameObject.cpp
+d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(102): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(115): warning C4305: '-=': truncation from 'double' to 'float'
+  GameObjectFactory.cpp
+  GameScene.cpp
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(49): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(51): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(51): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(53): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(54): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(64): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(66): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(65): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(67): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(66): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(68): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(67): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(69): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
