@@ -1,8 +1,6 @@
 #include "CShipStats.h"
 #include <string>
 
-using namespace std;
-
 CShipStats::CShipStats() {
 
 }
@@ -51,16 +49,18 @@ int CShipStats::getFireRate()
 	return fireRate;
 }
 
-void CShipStats::setStats(int speed, int health, int rotate, int fireRate, int parts, int fireDist)
+void CShipStats::setStats(double speed, double maxSpeed, int health, int rotate, int fireRate, int parts, int fireDist)
 {
 	this->speed = speed;
 	this->health = health;
+	this->maxSpeed = maxSpeed;
 	maxHP = health;
 	this->rotate = rotate;
 	this->fireRate = fireRate;
 	this->fireDist = fireDist;
 	this->parts = parts;
-	
+}
+
 int CShipStats::getFireDist()
 {
 	return fireDist;

@@ -9,6 +9,7 @@ private:
 public:
 	void SetSpeed(float _speed);
 	float GetSpeed() const;
+	static bool spdup;
 
 	virtual void OnCollide(GameObject& other);
 	void Timer(double dt);

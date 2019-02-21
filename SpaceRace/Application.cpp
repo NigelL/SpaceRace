@@ -145,12 +145,20 @@ void Application::Run()
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
+
+		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
+
 		scene->Update(m_timer.getElapsedTime());
+
 		scene->Render();
+
+		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
+		scene2->Update2(m_timer.getElapsedTime());
+		scene2->Render2();
 
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
 		glfwPollEvents();
-		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
+		       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 		//if (Application::IsKeyPressed(VK_SPACE))
 		//{
@@ -186,13 +194,11 @@ void Application::Run()
 			scene2->Init2();
 		}
 
-		scene2->Update2(m_timer.getElapsedTime());
-		scene2->Render2();
+		
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
 		glfwPollEvents();
-		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 	} //Check if the ESC key had been pressed or if the window had been closed
 
