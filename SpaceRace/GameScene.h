@@ -21,9 +21,7 @@
 #include "GameSound.h"
 #include "LoadTGA.h"
 #include "Application.h"
-#include <iostream>
 #include <map>
-
 #include "Physic.h"
 
 class GameScene : public Scene
@@ -114,15 +112,19 @@ private:
 
 	Light light[3];
 	Camera3 camera;
+	double timer;
 
 	void SpawnPowerUp();
 	void renderSkybox();
+	void renderSmoke();
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
 	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+	double getTimer();
+	void setTimer(double timer);
 public:
 	virtual void Init();
 	virtual void Init2();

@@ -66,6 +66,11 @@ int CShipStats::getFireDist()
 	return fireDist;
 }
 
+int CShipStats::getObjectDir()
+{
+	return objectDir;
+}
+
 void CShipStats::SetHealth(int _health) 
 {
 	health = _health;
@@ -78,4 +83,9 @@ void CShipStats::SetSpeed(double _speed)
 
 void CShipStats::SetParts(int _parts) {
 	parts = _parts;
+}
+
+void CShipStats::setObjectDir(int rotate)
+{
+	objectDir = rotate;
 }

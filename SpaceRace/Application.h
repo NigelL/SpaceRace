@@ -30,7 +30,6 @@ public:
 
 
 private:
-
 	//Declare a window object
 	StopWatch m_timer;
 };

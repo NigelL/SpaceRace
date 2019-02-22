@@ -128,10 +128,14 @@ void GameObject::translateWater(float water)
 	}
 }
 
-void GameObject::translateCannon(int speed, double dt)
+void GameObject::translateCannon(int speed, double dt, GameObject& other)
 {
 	transform.translateX += (float)(speed * dt);
 	transform.translateZ += (float)(speed * dt);
+	 
+	float direction = transform.amt * 3.142f / 180.0f;
+	
+	SetPosition(Vector3(other.GetPosition().x + (sin(direction) * ((float)(speed * dt))), other.GetPosition().y, other.GetPosition().z + (cos(direction) * ((float)(speed * dt)))));
 }
 
 void GameObject::rotateObj(int speed)

@@ -53,9 +53,28 @@ void Physic::bounceBack(CShipStats& sth, double dt, int rate)
 	moment = v * mass;*/
 }
 
-void Physic::floating()
+void Physic::floating(GameObject& other, float speed, double dt, bool direction)
 {
+	if (direction)
+	{
+		if (posY == 0)
+		{
+			dt = 0.017;
+		}
 
+		posY = ((float)(speed * dt / 2));
+	}
+	else if (!direction)
+	{
+		if (posY == 0)
+		{
+			dt = 0.017;
+		}
+
+		posY = ((float)(-speed * dt / 2));
+	}
+
+	other.SetPosition(Vector3(other.GetPosition().x, other.GetPosition().y + posY, other.GetPosition().z));
 }
 
 double Physic::VoA(int _knot, float _wake)

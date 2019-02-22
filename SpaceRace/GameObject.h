@@ -36,7 +36,7 @@ public:
 
 	void translateObj(int speed, double dt);
 	void translateWater(float water);
-	void translateCannon(int speed, double dt);
+	void translateCannon(int speed, double dt, GameObject& other);
 	void rotateObj(int speed);
 
 	GameObject();
@@ -44,6 +44,6 @@ public:
 	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
 	virtual ~GameObject();
 
-	int health = 0;
+	double lifespan = 0;
 };
 #endif;
