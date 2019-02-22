@@ -25,7 +25,7 @@ public:
 	int getRotate();
 	int getFireRate();
 	int getFireDist();
-	void SetHealth(int _health) ;
+	void SetHealth(int _health);
 	void SetSpeed(double _speed);
 	void SetParts(int _parts);
 	void setStats(double speed, double maxSpeed, int health, int rotate, int fireRate, int parts, int fireDist);

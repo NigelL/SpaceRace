@@ -10,9 +10,14 @@ class GameObject
 {
 private:
 	Transform transform;
+
 public:
 	Mesh* curObject;
 	Collision collision;
+	Vector3 objectDir;
+
+
+
 
 	Mesh* GetMesh() const;
 	Vector3 GetPosition() const;
@@ -23,7 +28,7 @@ public:
 	float GetTranslateY();
 	float GetTranslateZ();
 	Transform& GetTransform();
-	
+
 	void SetPosition(const Vector3& pos);
 	void SetRotation(Vector3 rot, float _amt);
 	void SetScale(Vector3 scal);
@@ -41,7 +46,7 @@ public:
 
 	GameObject();
 	GameObject(Mesh* _curObject);
-	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
+	GameObject(Mesh* _curObject, Vector3 _pos, float deg, Vector3 _rotation, Vector3 _scale);
 	virtual ~GameObject();
 
 	int health = 0;

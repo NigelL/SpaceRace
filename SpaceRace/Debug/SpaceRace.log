@@ -1,83 +1,89 @@
 ﻿  GameScene.cpp
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(48): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(49): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(50): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
 d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(51): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(53): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(64): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(54): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(65): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(55): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(66): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(67): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(67): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=double
           ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(68): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(69): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(70): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(120): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(129): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(86): warning C4101: 'islandz': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(86): warning C4101: 'islandx': unreferenced local variable
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(356): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(368): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(453): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(463): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(469): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(471): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(477): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(505): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(545): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(546): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(547): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(560): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(574): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(605): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(753): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(784): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(794): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(800): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(802): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(808): warning C4018: '<': signed/unsigned mismatch
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(836): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(871): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(872): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(873): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(886): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(900): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(931): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1172): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1321): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1337): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1338): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(126): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(83): warning C4101: 'islandz': unreferenced local variable
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(83): warning C4101: 'islandx': unreferenced local variable
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(353): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(365): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(462): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(478): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(482): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(494): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(504): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(510): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(512): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(518): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(546): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(583): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(584): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(585): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(599): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(604): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(608): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(612): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(624): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(823): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(855): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(865): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(871): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(873): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(879): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(906): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(930): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(959): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(960): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(961): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(974): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(988): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(998): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1271): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1420): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1436): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\desktop\spacerace\spacerace\gamescene.cpp(1437): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   SpaceRace.vcxproj -> D:\Users\l533\Desktop\SpaceRace\Debug\SpaceRace.exe

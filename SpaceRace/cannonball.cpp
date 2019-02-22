@@ -16,6 +16,10 @@ cannonball::~cannonball()
 {
 }
 
+void cannonball::Update() {
+	SetPosition(GetPosition() + (dir * speed));
+}
+
 void cannonball::OnCollide(GameObject& other)
 {
 	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);

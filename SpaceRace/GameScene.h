@@ -34,6 +34,9 @@ private:
 	Mesh* healthBar;
 	Mesh* partsCount;
 	float sceneFPS;
+	float translateY;
+	float rotateAmt;
+	float LPower;
 	std::map<std::string, GameObject*> sceneObjects;
 public:
 	GameScene();
@@ -113,7 +116,7 @@ private:
 	unsigned m_programID;
 
 	Light light[3];
-	Camera3 camera;
+	Camera3 camera, secondCamera;
 
 	void SpawnPowerUp();
 	void renderSkybox();
@@ -135,4 +138,3 @@ public:
 };
 
 #endif
-

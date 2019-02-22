@@ -4,7 +4,7 @@
 GameObject::GameObject() {
 	curObject = nullptr;
 	collision.thisObj = &transform;
-	
+
 }
 
 GameObject::GameObject(Mesh* _curObject)
@@ -13,7 +13,7 @@ GameObject::GameObject(Mesh* _curObject)
 	collision.thisObj = &transform;
 }
 
-GameObject::GameObject(Mesh* _curObject, Vector3 _position,float deg, Vector3 _rotation, Vector3 _scale)
+GameObject::GameObject(Mesh* _curObject, Vector3 _position, float deg, Vector3 _rotation, Vector3 _scale)
 {
 	curObject = _curObject;
 	collision.thisObj = &transform;
@@ -24,7 +24,7 @@ GameObject::GameObject(Mesh* _curObject, Vector3 _position,float deg, Vector3 _r
 	transform.name = curObject->name;
 }
 
- Mesh* GameObject::GetMesh() const {
+Mesh* GameObject::GetMesh() const {
 	return curObject;
 }
 Vector3 GameObject::GetPosition() const {
@@ -81,7 +81,7 @@ void GameObject::SetTransform(Transform _trans) {
 void GameObject::translateObj(int speed, double dt)
 {
 	float direction = transform.amt * 3.142f / 180.0f;
-
+	objectDir = Vector3(sin(direction), 0, cos(direction));
 	SetPosition(Vector3(GetPosition().x + (sin(direction) * ((float)(speed * dt))), GetPosition().y, GetPosition().z + (cos(direction) * ((float)(speed * dt)))));
 }
 
