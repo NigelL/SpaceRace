@@ -139,6 +139,7 @@ GameScene::GameScene()
 	healthBar->textureID = LoadTGA("Image//hpbar.tga");
 	partsCount = MeshBuilder::GenerateMenu("partsUI", Color(1, 0, 0), 10);
 	partsCount->textureID = LoadTGA("Image//partsUI.tga");
+
 }
 
 GameScene::~GameScene()
@@ -421,8 +422,10 @@ void GameScene::Init()
 	ship02Stats->setStats(0, 300, 15, 0, 15, 0, 15);
 
 	translateY = sceneObjects["ship01"]->GetPosition().y;
-	rotateAmt = sceneObjects["ship01"]->GetAmt();
-	LPower = 0.5f;
+	rotateAmt = 0;
+	shipUpgrade = false;
+
+	
 } 
 
 static double LSPEED = 10.0;
@@ -451,14 +454,12 @@ float floating = 0.0f;
 
 void GameScene::Update(double dt)
 {
-
-	std::cout << sceneObjects["ship01"]->GetPosition().y << std::endl;
-	std::cout << translateY << std::endl;
-
 	if (ship01Stats->getParts() >= 5 && Application::IsKeyPressed('B'))
 	{
-		LPower += 1000.0f;
-
+		shipUpgrade = true;
+	}
+	if (shipUpgrade)
+	{
 		for (int j = 0; j < meshList.size(); j++) {
 			if (meshList[j] == sceneObjects["ship01"])
 			{
@@ -472,25 +473,42 @@ void GameScene::Update(double dt)
 				t.SetBounds(Vector3(1.3f, 1.3f, 1.3f));
 				t.position.x = sceneObjects["ship01"]->GetPosition().x;
 				t.position.z = sceneObjects["ship01"]->GetPosition().z;
-				
-				if (sceneObjects["ship01"]->GetPosition().y <= 20)
+
+				camera.SetPosition(sceneObjects["ship01"]->GetPosition().x + 50, sceneObjects["ship01"]->GetPosition().y + 15, sceneObjects["ship01"]->GetPosition().z + 50);
+
+				if (sceneObjects["ship01"]->GetPosition().y <= 20 && sceneObjects["ship01"]->GetAmt() <= 2500)
 				{
 					translateY += 30 * dt;
 					sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, translateY, sceneObjects["ship01"]->GetPosition().z));
 				}
-				light[1].power = LPower;
+
 				sceneObjects["ship01"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship01"]->GetAmt() + 500 * dt);
 
-				//GameObject* smthelse = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship01-2", mat, t);
-				//sceneObjects["ship01"] = smthelse;
-				//meshList[j] = smthelse;
-				//ship01Stats->SetParts(ship01Stats->getParts() - 5);
+				if (sceneObjects["ship01"]->GetAmt() >= 2000 && sceneObjects["ship01"]->GetPosition().y >= 20)
+				{
+					GameObject* smthelse = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship01-2", mat, t);
+					sceneObjects["ship01"] = smthelse;
+					meshList[j] = smthelse;
+					ship01Stats->SetParts(ship01Stats->getParts() - 5);
+					shipUpgrade = false;
+				}
+
 			}
 		}
 	}
 
-	if (SpeedConsumable::spdup)
+	if (!shipUpgrade)
 	{
+		if (sceneObjects["ship01"]->GetPosition().y >= 0 )
+		{
+			translateY -= 30 * dt;
+			sceneObjects["ship01"]->SetPosition(Vector3(sceneObjects["ship01"]->GetPosition().x, translateY, sceneObjects["ship01"]->GetPosition().z));
+			sceneObjects["ship01"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship01"]->GetAmt() + 500 * dt);
+		}
+	}
+
+	if (SpeedConsumable::spdup) 
+		{
 		timer += dt;
 
 		if (timer >= 5)
@@ -509,7 +527,7 @@ void GameScene::Update(double dt)
 
 	physic.VoA(20, 0.18);
 	physic.AdvRatio(200, 10);
-	physic.thrust(0.12, 10, 10);
+	physic.thrust(0.12, 10, 10);	
 
 	//std::cout << physic.Thrust << std::endl;
 
@@ -583,6 +601,8 @@ void GameScene::Update(double dt)
 	light[1].position.x = sceneObjects["ship01"]->GetPosition().x + (sin(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * 1.5);
 	light[1].position.y = sceneObjects["ship01"]->GetPosition().y + 0.25;
 	light[1].position.z = sceneObjects["ship01"]->GetPosition().z + (cos(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * 1.5);
+
+	
 
 	// control the sceneObjects["ship01"]
 	if (Application::IsKeyPressed(VK_UP) && !bouncing) // 270
@@ -690,11 +710,14 @@ void GameScene::Update(double dt)
 	camera.UpdateCameraSkyBox();
 
 	//Camera Logic
-	float yaw = DegreeToRadian(sceneObjects["ship01"]->GetAmt());
-	Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
-	Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 50;
-	camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 6, sceneObjects["ship01"]->GetPosition().z);
-	camera.SetPosition(position.x, position.y + 15, position.z);
+	if (!shipUpgrade)
+	{
+		float yaw = DegreeToRadian(sceneObjects["ship01"]->GetAmt());
+		Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
+		Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 50;
+		camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 6, sceneObjects["ship01"]->GetPosition().z);
+		camera.SetPosition(position.x, position.y + 15, position.z);
+	}
 
 }
 

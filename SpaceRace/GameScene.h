@@ -36,7 +36,9 @@ private:
 	float sceneFPS;
 	float translateY;
 	float rotateAmt;
-	float LPower;
+	bool shipUpgrade;
+	int ship01type;
+	int ship02type;
 	std::map<std::string, GameObject*> sceneObjects;
 public:
 	GameScene();
