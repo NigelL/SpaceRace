@@ -24,6 +24,7 @@ public:
 
 	irrklang::ISoundSource* PaintSplat = engine->addSoundSourceFromFile("OST/PaintSplat.wav");
 
+	irrklang::ISoundSource* WaterSplash = engine->addSoundSourceFromFile("OST/WaterSplash.wav");
 
 	static GameSound *instance()
 	{

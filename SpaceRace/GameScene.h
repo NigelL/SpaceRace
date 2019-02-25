@@ -121,12 +121,10 @@ private:
 
 	void SpawnPowerUp();
 	void renderSkybox();
-	void renderSmoke();
-	void smokeTime();
-	void renderDamage();
-	void damageTime();
-	void renderSplash();
-	void splashTime();
+	void renderDamage(GameObject& other);
+	void damageTime(GameObject& other);
+	void renderSplash(GameObject& other);
+	void splashTime(GameObject& other);
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
