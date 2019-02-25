@@ -28,7 +28,6 @@ public:
 	static bool IsKeyPressed(unsigned short key);
 	static bool IsGlfwKeyPressed(int key);
 
-
 private:
 
 	//Declare a window object

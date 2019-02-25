@@ -37,8 +37,11 @@ private:
 	float translateY;
 	float rotateAmt;
 	bool shipUpgrade;
-	int ship01type;
-	int ship02type;
+	bool shipUpgrade2;
+	int ship01Type;
+	int ship02Type;
+	bool winCondition1;
+	bool winCondition2;
 	std::map<std::string, GameObject*> sceneObjects;
 public:
 	GameScene();
