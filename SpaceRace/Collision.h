@@ -25,7 +25,8 @@ struct Collision {
 	bool CheckCollision(Transform& other);
 	Vector3 CheckCollision(Vector3 origin, Vector3 other, float t,Camera2 rot);
 
-	
+	bool Intersect(Vector3 origin, Vector3 dir);
+
 
 
 

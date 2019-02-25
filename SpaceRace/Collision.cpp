@@ -73,7 +73,57 @@ Vector3 Collision::CheckCollision(Vector3 origin, Vector3 dir, float t,Camera2 c
 
 }
 
+bool Collision::Intersect(Vector3 origin, Vector3 dir)
+{
 
+	thisObj->GenerateBounds();
+	float tmin = (thisObj->position.x + thisObj->minX - origin.x) / dir.x;
+	float tmax = (thisObj->position.x + thisObj->maxX - origin.x) / dir.x;
+
+	if (tmin > tmax) {
+		std::swap(tmin, tmax);
+	}
+
+	float tymin = (thisObj->position.y + thisObj->minY - origin.y) / dir.y;
+	float tymax = (thisObj->position.y + thisObj->maxY - origin.y) / dir.y;
+
+	if (tymin > tymax) {
+		std::swap(tymin, tymax);
+	}
+
+	if ((tmin > tymax) || (tymin > tmax)) {
+		return false;
+	}
+
+	if (tymin > tmin) {
+		tmin = tymin;
+	}
+
+	if (tymax < tmax) {
+		tmax = tymax;
+	}
+
+	float tzmin = (thisObj->position.z + thisObj->minZ - origin.z) / dir.z;
+	float tzmax = (thisObj->position.z + thisObj->maxZ - origin.z) / dir.z;
+
+	if (tzmin > tzmax) {
+		std::swap(tzmin, tzmax);
+	}
+
+	if ((tmin > tzmax) || (tzmin > tmax)) {
+		return false;
+	}
+
+	if (tzmin > tmin) {
+		tmin = tzmin;
+	}
+
+	if (tzmax < tmax) {
+		tmax = tzmax;
+	}
+
+	return true;
+}
 
 bool Collision::CheckCollision(Transform& otherObj) {
 	Transform& thisObj = *(this->thisObj);

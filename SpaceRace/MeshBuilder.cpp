@@ -159,7 +159,50 @@ Mesh* MeshBuilder::GenerateText(const std::string &meshName, unsigned numRow,
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 	return mesh;
 }
+Mesh* MeshBuilder::GenerateRealQuad(const std::string &meshName, Color color, float lengthX, float lengthY)
+{
 
+	Vertex v;
+	std::vector<Vertex> vertex_buffer_data;
+
+	v.color.Set(color.r, color.g, color.b);
+	v.pos.Set(lengthX, lengthY, 0);
+	v.normal.Set(0, 1, 3.0);
+	v.texCoord.Set(0, 0);
+	vertex_buffer_data.push_back(v);
+	v.pos.Set(-lengthX, lengthY, 0);
+	v.texCoord.Set(1, 0);
+	vertex_buffer_data.push_back(v);
+	v.pos.Set(-lengthX, -lengthY, 0);
+	v.texCoord.Set(1, 1);
+	vertex_buffer_data.push_back(v);
+	v.pos.Set(lengthX, -lengthY, 0);
+	v.texCoord.Set(0, 1);
+	vertex_buffer_data.push_back(v);
+
+
+
+	std::vector<GLuint> index_buffer_data;
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(2);
+
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(3);
+
+	Mesh *mesh = new Mesh(meshName);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex),
+		&vertex_buffer_data[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint),
+		&index_buffer_data[0], GL_STATIC_DRAW);
+	mesh->indexSize = index_buffer_data.size();
+	mesh->mode = Mesh::DRAW_TRIANGLES;
+	return mesh;
+}
 
 
 float DegreeToRadian(float value)
