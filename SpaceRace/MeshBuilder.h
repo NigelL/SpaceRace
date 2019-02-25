@@ -28,6 +28,8 @@ public:
 	static Mesh* MeshBuilder::GenerateTorus(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float outerR, float innerR);
 	static Mesh* MeshBuilder::GenerateText(const std::string &meshName, unsigned numRow,
 		unsigned numCol);
+	static Mesh* MeshBuilder::GenerateRealQuad(const std::string &meshName, Color color, float lengthX, float lengthY);
+
 
 };
 

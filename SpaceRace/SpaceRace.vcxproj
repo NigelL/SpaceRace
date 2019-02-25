@@ -145,6 +145,7 @@
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="SpeedConsumable.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UIObject.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Water.cpp" />
   </ItemGroup>
@@ -178,6 +179,7 @@
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="SpeedConsumable.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UIObject.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Water.h" />
