@@ -14,7 +14,7 @@ class StopWatch
     UINT     wTimerRes;
 
  public:
-     StopWatch();
+     StopWatch() ;
      ~StopWatch();
      void startTimer();
      double getElapsedTime(); // get time in seconds since the last call to this function

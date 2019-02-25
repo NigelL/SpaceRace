@@ -5,9 +5,10 @@ CShipStats::CShipStats() {
 
 }
 
-CShipStats::CShipStats(Mesh* _curMesh,Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca) : GameObject(_curMesh, _pos, amt, _rot, _sca)
+CShipStats::CShipStats(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca) : GameObject(_curMesh, _pos, amt, _rot, _sca)
 {
 }
+
 
 CShipStats::~CShipStats()
 {
@@ -66,26 +67,17 @@ int CShipStats::getFireDist()
 	return fireDist;
 }
 
-int CShipStats::getObjectDir()
-{
-	return objectDir;
-}
-
-void CShipStats::SetHealth(int _health) 
+void CShipStats::SetHealth(int _health)
 {
 	health = _health;
 }
 
-void CShipStats::SetSpeed(double _speed) 
+void CShipStats::SetSpeed(double _speed)
 {
+	_speed = Math::Clamp<double>(_speed, 0, maxSpeed);
 	speed = _speed;
 }
 
 void CShipStats::SetParts(int _parts) {
 	parts = _parts;
-}
-
-void CShipStats::setObjectDir(int rotate)
-{
-	objectDir = rotate;
 }

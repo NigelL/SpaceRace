@@ -12,7 +12,7 @@ int PartConsumable::GetPart() const
 void PartConsumable::OnCollide(GameObject& other)
 {
 	Consumable::OnCollide(other);
-	CShipStats* murShip = dynamic_cast<CShipStats*>(&other);
+	CShipStats* murShip = static_cast<CShipStats*>(&other);
 	murShip->SetParts(murShip->getParts() + 1);
 }
 

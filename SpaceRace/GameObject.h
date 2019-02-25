@@ -10,9 +10,11 @@ class GameObject
 {
 private:
 	Transform transform;
+
 public:
 	Mesh* curObject;
 	Collision collision;
+	Vector3 objectDir;
 
 	Mesh* GetMesh() const;
 	Vector3 GetPosition() const;
@@ -23,7 +25,7 @@ public:
 	float GetTranslateY();
 	float GetTranslateZ();
 	Transform& GetTransform();
-	
+
 	void SetPosition(const Vector3& pos);
 	void SetRotation(Vector3 rot, float _amt);
 	void SetScale(Vector3 scal);
@@ -36,14 +38,14 @@ public:
 
 	void translateObj(int speed, double dt);
 	void translateWater(float water);
-	void translateCannon(int speed, double dt, GameObject& other);
+	void translateCannon(int speed, double dt);
 	void rotateObj(int speed);
 
 	GameObject();
 	GameObject(Mesh* _curObject);
-	GameObject(Mesh* _curObject,Vector3 _pos,float deg,Vector3 _rotation ,Vector3 _scale);
+	GameObject(Mesh* _curObject, Vector3 _pos, float deg, Vector3 _rotation, Vector3 _scale);
 	virtual ~GameObject();
 
-	double lifespan = 0;
+	float lifespan = 4;
 };
 #endif;

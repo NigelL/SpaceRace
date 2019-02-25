@@ -13,7 +13,6 @@ private:
 	int fireRate;
 	int parts;
 	int fireDist;
-	int objectDir;
 public:
 	CShipStats();
 	CShipStats(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);
@@ -26,11 +25,9 @@ public:
 	int getRotate();
 	int getFireRate();
 	int getFireDist();
-	int getObjectDir();
-	void SetHealth(int _health) ;
+	void SetHealth(int _health);
 	void SetSpeed(double _speed);
 	void SetParts(int _parts);
-	void setObjectDir(int rotate);
 	void setStats(double speed, double maxSpeed, int health, int rotate, int fireRate, int parts, int fireDist);
 };
 

@@ -21,7 +21,9 @@
 #include "GameSound.h"
 #include "LoadTGA.h"
 #include "Application.h"
+#include <iostream>
 #include <map>
+
 #include "Physic.h"
 
 class GameScene : public Scene
@@ -32,6 +34,9 @@ private:
 	Mesh* healthBar;
 	Mesh* partsCount;
 	float sceneFPS;
+	float translateY;
+	float rotateAmt;
+	float LPower;
 	std::map<std::string, GameObject*> sceneObjects;
 public:
 	GameScene();
@@ -111,12 +116,17 @@ private:
 	unsigned m_programID;
 
 	Light light[3];
-	Camera3 camera;
+	Camera3 camera, secondCamera;
 	double timer;
 
 	void SpawnPowerUp();
 	void renderSkybox();
 	void renderSmoke();
+	void smokeTime();
+	void renderDamage();
+	void damageTime();
+	void renderSplash();
+	void splashTime();
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
@@ -124,7 +134,7 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	double getTimer();
-	void setTimer(double timer);
+	void setTimer(double _timer);
 public:
 	virtual void Init();
 	virtual void Init2();
@@ -137,4 +147,3 @@ public:
 };
 
 #endif
-

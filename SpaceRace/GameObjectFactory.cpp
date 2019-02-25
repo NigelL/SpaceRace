@@ -47,6 +47,23 @@ GameObject* GameObjectFactory::SpawnGameObject(OBJECT_TYPE type, std::string _na
 	}
 }
 
+CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, Transform transform)
+{
+	std::string obj = "OBJ//" + name + ".obj";
+	std::string tga = "Image//" + name + ".tga";
+	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
+	name1->textureID = LoadTGA(tga.c_str());
+	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+	name1->material.kShininess = material->kShininess;
+	CShipStats* retThis = new CShipStats(name1,transform.position, transform.amt, transform.rotation,transform.scale);
+	transform.name = name;
+	
+	retThis->SetTransform(transform);
+	return retThis;
+}
+
 cannonball * GameObjectFactory::SpawnCannonBall(std::string name, Material *material, Transform transform)
 {
 	std::string obj = "OBJ//" + name + ".obj";
@@ -64,22 +81,6 @@ cannonball * GameObjectFactory::SpawnCannonBall(std::string name, Material *mate
 	return retThis;
 }
 
-CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, Transform transform)
-{
-	std::string obj = "OBJ//" + name + ".obj";
-	std::string tga = "Image//" + name + ".tga";
-	Mesh* name1 = MeshBuilder::GenerateOBJ(name, obj);
-	name1->textureID = LoadTGA(tga.c_str());
-	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
-	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
-	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
-	name1->material.kShininess = material->kShininess;
-	CShipStats* retThis = new CShipStats(name1,transform.position, transform.amt, transform.rotation,transform.scale);
-	transform.name = name;
-	
-	retThis->SetTransform(transform);
-	return retThis;
-}
 
 HealthConsumable* GameObjectFactory::SpawnHealthConsumable(std::string name, Material *material, Transform transform)
 {
