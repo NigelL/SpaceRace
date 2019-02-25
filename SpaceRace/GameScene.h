@@ -33,6 +33,13 @@ private:
 	Mesh* gameText;
 	Mesh* healthBar;
 	Mesh* partsCount;
+	Mesh* MapWater;
+	Mesh* ShipMarker1;
+	Mesh* ShipMarker2;
+	Mesh* IslandMarker;
+	Mesh* PartsMarker;
+	Mesh* HealthMarker;
+	Mesh* SpeedUpMarker;
 	float sceneFPS;
 	float translateY;
 	float rotateAmt;
@@ -146,6 +153,7 @@ public:
 	virtual void Render();
 	virtual void Render2();
 	virtual void Exit();
+	virtual void MiniMap();
 
 };
 

@@ -7,8 +7,13 @@ Water* curWater = new Water();
 
 CShipStats* ship01Stats;
 CShipStats* ship02Stats;
+std::vector<Vector3> partsmarkervector;
+
 
 Mesh* curCube;
+
+int islandx, islandz, islandposx, islandposz, islandposxA[38], islandposzA[38];
+
 
 GameScene* GameScene::instance;
 
@@ -75,13 +80,11 @@ GameScene::GameScene()
 	Transform t;
 	t.boxHalf = Vector3(1.5f, 1.5f, 1.5f);
 
-	int islandx, islandz, islandposx, islandposz, islandposxA[18], islandposzA[18];
-
-	for (int numberofislands = 0; numberofislands < 18; numberofislands++)
+	for (int numberofislands = 0; numberofislands < 38; numberofislands++)
 	{
 		bool overlaps = false;
-		islandposx = rand() % 500;
-		islandposz = rand() % 500 - 500;
+		islandposx = rand() % 1700 + (-900);
+		islandposz = rand() % 1800 + (-800);
 		islandposxA[numberofislands] = islandposx;
 		islandposzA[numberofislands] = islandposz;
 
@@ -121,6 +124,8 @@ GameScene::GameScene()
 				parts->SetScale(Vector3(1, 1, 1));
 				parts->GetTransform().SetBounds(Vector3(1.4f, 0.8f, 2.2f));
 				meshList.push_back(parts);
+				partsmarkervector.push_back(Vector3(islandposx, 0, islandposz));
+
 			}
 
 			//std::cout << "Island Overlapped, making a new one..." << std::endl;
@@ -134,6 +139,20 @@ GameScene::GameScene()
 	partsCount = MeshBuilder::GenerateMenu("partsUI", Color(1, 0, 0), 10);
 	partsCount->textureID = LoadTGA("Image//partsUI.tga");
 
+	MapWater = MeshBuilder::GenerateMenu("mapwater", Color(1, 0, 0), 40);
+	MapWater->textureID = LoadTGA("Image//NavyBlue.tga");
+	ShipMarker1 = MeshBuilder::GenerateMenu("shipmarker1", Color(1, 0, 0), 40);
+	ShipMarker1->textureID = LoadTGA("Image//White.tga");
+	ShipMarker2 = MeshBuilder::GenerateMenu("shipmarker2", Color(1, 0, 0), 40);
+	ShipMarker2->textureID = LoadTGA("Image//Red.tga");
+	IslandMarker = MeshBuilder::GenerateMenu("islandmarker", Color(1, 0, 0), 40);
+	IslandMarker->textureID = LoadTGA("Image//Green.tga");
+	PartsMarker = MeshBuilder::GenerateMenu("partsmarker", Color(1, 0, 0), 40);
+	PartsMarker->textureID = LoadTGA("Image//Yellow.tga");
+	HealthMarker = MeshBuilder::GenerateMenu("healthmarker", Color(1, 0, 0), 40);
+	HealthMarker->textureID = LoadTGA("Image//LightGreen.tga");
+	SpeedUpMarker = MeshBuilder::GenerateMenu("speedupmarker", Color(1, 0, 0), 40);
+	SpeedUpMarker->textureID = LoadTGA("Image//Purple.tga");
 }
 
 GameScene::~GameScene()
@@ -827,6 +846,12 @@ void GameScene::Update(double dt)
 
 			if (cPtr != nullptr) {
 				cPtr->OnCollide(*sceneObjects["ship01"]); // consumable collision
+
+				auto i = std::find(partsmarkervector.begin(), partsmarkervector.end(), cPtr->GetPosition());
+				if (i != partsmarkervector.end()) {
+					int dist = std::distance(partsmarkervector.begin(), i);
+					partsmarkervector.erase(partsmarkervector.begin() + dist);
+				}
 			}
 
 			if (cannonPtr != nullptr && cannonPtr->playerType == 1) { // other ship cannon hit ship01
@@ -1071,11 +1096,11 @@ void GameScene::Render()
 
 	viewStack.LoadIdentity();
 
-	glEnable(GL_SCISSOR_TEST);
+
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 
 	glViewport(0, 0, 1920 / 2, 1440);
-	glScissor(0, 0, 1920 / 2, 1440);
+
 
 	if (light[0].type == Light::LIGHT_DIRECTIONAL)
 	{
@@ -1182,7 +1207,12 @@ void GameScene::Render()
 
 	//RenderTextOnScreen(gameText, "Collision : ", Color(0, 1, 0), 10, 2, 15);
 
-	glDisable(GL_SCISSOR_TEST);
+	
+	MiniMap();
+
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(0);
 }
 
 
@@ -1434,8 +1464,15 @@ void GameScene::Update2(double dt)
 
 			}
 
+
 			if (cPtr != nullptr) {
 				cPtr->OnCollide(*sceneObjects["ship02"]); // consumable collision
+
+				auto i = std::find(partsmarkervector.begin(), partsmarkervector.end(), cPtr->GetPosition());
+				if (i != partsmarkervector.end()) {
+					int dist = std::distance(partsmarkervector.begin(), i);
+					partsmarkervector.erase(partsmarkervector.begin() + dist);
+				}
 			}
 
 			if (cannonPtr != nullptr && cannonPtr->playerType == 0) { // other ship cannon hit ship02
@@ -1563,12 +1600,11 @@ void GameScene::Render2()
 	modelStack.LoadIdentity();
 	viewStack.LoadIdentity();
 
-	glEnable(GL_SCISSOR_TEST);
 
 	viewStack.LookAt(secondCamera.position.x, secondCamera.position.y, secondCamera.position.z, secondCamera.target.x, secondCamera.target.y, secondCamera.target.z, secondCamera.up.x, secondCamera.up.y, secondCamera.up.z);
 
 	glViewport(1920 / 2, 0, 1920 / 2, 1440);
-	glScissor(1920 / 2, 0, 1920 / 2, 1440);
+
 
 	if (light[2].type == Light::LIGHT_DIRECTIONAL)
 	{
@@ -1633,13 +1669,15 @@ void GameScene::Render2()
 		modelStack.PopMatrix();
 	}
 
+	MiniMap();
+
 	RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship02Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
 	RenderUI(partsCount, 20, 7, 7, 26);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship02Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship02Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
 	RenderUI(healthBar, ship02Stats->getHealth(), 3.5, 5, 20);
 
-	glDisable(GL_SCISSOR_TEST);
+
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
@@ -1936,6 +1974,29 @@ void GameScene::splashTime(GameObject& other)
 			}
 		}
 	}
+}
+
+void GameScene::MiniMap()
+{
+	int ship1x = sceneObjects["ship01"]->GetPosition().z;
+	int ship1y = sceneObjects["ship01"]->GetPosition().x;
+	int ship2x = sceneObjects["ship02"]->GetPosition().z;
+	int ship2y = sceneObjects["ship02"]->GetPosition().x;
+
+	RenderUI(MapWater, 13, 13, 22, 58);
+	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 1400, (ship1y) * 1.3 + 3800);
+	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 1400, (ship2y) * 1.3 + 3800);
+
+	for (int i = 0; i <= 8; i++)
+	{
+		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 1400, (islandposxA[i]) * 1.3 + 3800);
+	}
+
+	for (int i = 0; i < partsmarkervector.size(); i++)
+	{
+		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 1400, partsmarkervector[i].x * 1.3 + 3800);
+	}
+
 }
 
 void GameScene::Exit()
