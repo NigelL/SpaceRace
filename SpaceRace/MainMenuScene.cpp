@@ -10,6 +10,14 @@ MainMenuScene::MainMenuScene()
 	//mode = true;
 }
 
+
+MainMenuScene::MainMenuScene(MenuFunctionality _func)
+{
+	menuFunctions = _func;
+	//play = false;
+	//mode = true;
+}
+
 MainMenuScene::~MainMenuScene()
 {
 }
@@ -83,9 +91,33 @@ void MainMenuScene::Init()
 
 void MainMenuScene::RenderMainMenu()
 {
-	RenderMesh(meshList[GEO_AXES], false);
+	//RenderMesh(meshList[GEO_AXES], false);
+	modelStack.PushMatrix();
 	modelStack.Scale(1.7, 1.1, 0);
 	RenderMesh(meshList[MainMenu], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(menuFunctions.GetHighLight()->GetPosition().x, menuFunctions.GetHighLight()->GetPosition().y, menuFunctions.GetHighLight()->GetPosition().z);
+	modelStack.PushMatrix();
+	modelStack.Scale(menuFunctions.GetHighLight()->GetScale().x, menuFunctions.GetHighLight()->GetScale().y, menuFunctions.GetHighLight()->GetScale().z);
+	RenderMesh(menuFunctions.GetHighLight()->GetMesh(), false);
+
+	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+
+	for (auto buttons : menuFunctions.GetAllButtons()) {
+		modelStack.PushMatrix();
+		modelStack.Translate(buttons->GetPosition().x, buttons->GetPosition().y, buttons->GetPosition().z);
+		modelStack.PushMatrix();
+		modelStack.Scale(buttons->GetScale().x, buttons->GetScale().y, buttons->GetScale().z);
+		RenderMesh(buttons->GetMesh(), false);
+
+		modelStack.PopMatrix();
+		modelStack.PopMatrix();
+	}
+
+
 }
 
 void MainMenuScene::RenderMesh(Mesh *mesh, bool enableLight)
@@ -176,6 +208,15 @@ void MainMenuScene::Update(double dt)
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
+
+	if (Application::IsKeyPressed(VK_DOWN)) {
+		menuFunctions.ScrollDown();
+	}
+
+	if (Application::IsKeyPressed(VK_UP)) {
+		menuFunctions.ScrollUp();
+	}
+
 
 	if (MainMenuScene::play)
 	{

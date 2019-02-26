@@ -17,7 +17,9 @@ cannonball::~cannonball()
 }
 
 void cannonball::Update() {
-	SetPosition(GetPosition() + (dir * speed));
+	if (GetPosition().Length() < 2000) {
+		SetPosition(GetPosition() + (dir * speed));
+	}
 }
 
 void cannonball::OnCollide(GameObject& other)

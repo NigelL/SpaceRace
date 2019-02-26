@@ -36,6 +36,9 @@ public:
 	void SetTransform(Transform _trans);
 
 
+	void TranslateShip(Vector3 curVec);
+
+
 	void translateObj(int speed, double dt);
 	void translateWater(float water);
 	void translateCannon(int speed, double dt);

@@ -137,11 +137,13 @@
     <ClCompile Include="LoadTGA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
+    <ClCompile Include="MenuFunctionality.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshBuilder.cpp" />
     <ClCompile Include="PartConsumable.cpp" />
     <ClCompile Include="Physic.cpp" />
     <ClCompile Include="ReadMesh.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="SpeedConsumable.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="LoadTGA.h" />
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MenuFunctionality.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshBuilder.h" />
     <ClInclude Include="PartConsumable.h" />

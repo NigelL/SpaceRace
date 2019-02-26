@@ -134,10 +134,17 @@ void Application::GetMousePos(double& x, double& y) {
 
 void Application::Run()
 {
-	MainMenuScene MainMenu;
-	Scene* scene = new MainMenuScene();
+
+	MenuFunctionality curFunc;
+	curFunc.SetHighlight(new GameObject(MeshBuilder::GenerateRealQuad("HighLight", Color(1, 1, 1), 1, 1)));
+	curFunc.AddButton(new GameObject(MeshBuilder::GenerateRealQuad("Button", Color(1, 1, 1), 1, 1)));
+	curFunc.AddButton(new GameObject(MeshBuilder::GenerateRealQuad("Button", Color(1, 1, 1), 1, 1)));
+
+	curFunc.InitialiseMenu(-2.0f, 3.0f, 2.0f, 0.5f);
+
+	Scene* scene = new MainMenuScene(curFunc);
+	Scene* scene2 = nullptr;
 	scene->Init();
-	Scene* scene2 = scene;
 
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 
@@ -148,17 +155,23 @@ void Application::Run()
 
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
-		scene->Update(m_timer.getElapsedTime());
+		scene->Update(0.01f);
+		if (scene2 != nullptr) {
+			scene2->Update2(0.01f);
 
+			//	m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
+
+		}
 		scene->Render();
+		if (scene2 != nullptr) {
+			scene2->Render2();
+		}
 
-		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
-		scene2->Update2(m_timer.getElapsedTime());
-		scene2->Render2();
+
 
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
-		glfwPollEvents();
-		       // Frame rate limiter. Limits each frame to a specified time in ms.  
+
+			   // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 		//if (Application::IsKeyPressed(VK_SPACE))
 		//{
@@ -185,16 +198,29 @@ void Application::Run()
 		//	}
 		//}
 
-		if (Application::IsKeyPressed(VK_SPACE) && !MainMenu.getPlay())
+		if (Application::IsKeyPressed(VK_SPACE) && scene2 == nullptr)
 		{
-			MainMenu.setPlay(true);
-			scene = new GameScene();
-			scene->Init();
-			scene2 = scene;
-			scene2->Init2();
+			if (dynamic_cast<MainMenuScene*>(scene)->menuFunctions.GetChosen() == 0) {
+				scene = new GameScene();
+				scene->Init();
+				scene2 = scene;
+				scene2->Init2();
+			}
+			else {
+				scene = new BuildScene();
+				scene->Init();
+			}
 		}
 
-		
+		if (scene->Return())
+		{
+			scene = new MainMenuScene(curFunc);
+			Scene* scene2 = nullptr;
+			scene->Init();
+		}
+
+
+
 		//Swap buffers
 		glfwSwapBuffers(m_window);
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...

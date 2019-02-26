@@ -69,6 +69,7 @@ int CShipStats::getFireDist()
 
 void CShipStats::SetHealth(int _health)
 {
+	_health = Math::Clamp<int>(_health, 0, 15);
 	health = _health;
 }
 
@@ -81,3 +82,4 @@ void CShipStats::SetSpeed(double _speed)
 void CShipStats::SetParts(int _parts) {
 	parts = _parts;
 }
+

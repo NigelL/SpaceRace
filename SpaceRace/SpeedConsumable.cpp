@@ -14,10 +14,8 @@ void SpeedConsumable::OnCollide(GameObject& other) {
 	Consumable::OnCollide(other);
 	CShipStats* curShip = static_cast<CShipStats*>(&other);
 	curShip->SetSpeed(curShip->getSpeed() + speedIncreased);
-	spdup = true;
+	//spdup = true;
 }
-
-bool SpeedConsumable::spdup = false;
 
 
 void SpeedConsumable::Timer(double dt)

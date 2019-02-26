@@ -162,8 +162,8 @@ bool Collision::CheckCollision(Transform& otherObj) {
 		)) {
 		if (std::find(collidedList.begin(), collidedList.end(), &otherObj) == collidedList.end()) {
 			collidedList.push_back(&otherObj);
-			return true;
 		}
+		return true;
 	}
 	else {
 		auto index = std::find(collidedList.begin(), collidedList.end(), &otherObj);

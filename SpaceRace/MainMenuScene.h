@@ -18,6 +18,7 @@
 
 #include "LoadTGA.h"
 #include "Application.h"
+#include "MenuFunctionality.h"
 
 #include <iostream>
 
@@ -32,11 +33,14 @@ private:
 
 public:
 	MainMenuScene();
+	MainMenuScene(MenuFunctionality _func);
 	~MainMenuScene();
 	void setPlay(bool _play);
 	void setMode(int _mode);
 	bool getPlay();
 	int getMode();
+	MenuFunctionality menuFunctions;
+
 
 
 	Mtx44 MVP;

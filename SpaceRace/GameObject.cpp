@@ -85,6 +85,12 @@ void GameObject::translateObj(int speed, double dt)
 	SetPosition(Vector3(GetPosition().x + (sin(direction) * ((float)(speed * dt))), GetPosition().y, GetPosition().z + (cos(direction) * ((float)(speed * dt)))));
 }
 
+
+void GameObject::TranslateShip(Vector3 curVec) {
+	SetPosition(GetPosition() + curVec);
+}
+
+
 void GameObject::translateWater(float water)
 {
 	if (water > 0.6 && transform.translateY < 0.25)

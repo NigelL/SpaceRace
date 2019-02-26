@@ -40,6 +40,8 @@ private:
 	Mesh* PartsMarker;
 	Mesh* HealthMarker;
 	Mesh* SpeedUpMarker;
+	Mesh* Win;
+	Mesh* Lose;
 	float sceneFPS;
 	float translateY;
 	float rotateAmt;
@@ -49,6 +51,9 @@ private:
 	int ship02Type;
 	bool winCondition1;
 	bool winCondition2;
+
+	float firstShipY,secondShipY;
+
 	std::map<std::string, GameObject*> sceneObjects;
 public:
 	GameScene();
@@ -133,8 +138,8 @@ private:
 
 	void SpawnPowerUp();
 	void renderSkybox();
-	void renderDamage(GameObject& other);
-	void damageTime(GameObject& other);
+	void renderDamage(GameObject& ship, GameObject** smoke);
+	void damageTime(GameObject& ship, GameObject** smoke);
 	void renderSplash(GameObject& other);
 	void splashTime(GameObject& other);
 	void RenderMesh(GameObject* curMesh, bool enableLight);
@@ -145,6 +150,11 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	double getTimer();
 	void setTimer(double _timer);
+	void MiniMap();
+	void MiniMap2();
+	void renderWin();
+	void renderLose();
+
 public:
 	virtual void Init();
 	virtual void Init2();
@@ -153,8 +163,8 @@ public:
 	virtual void Render();
 	virtual void Render2();
 	virtual void Exit();
-	virtual void MiniMap();
-
+	bool Return();
+	
 };
 
 #endif
