@@ -136,6 +136,8 @@ GameScene::GameScene()
 	gameText->textureID = LoadTGA("Image//calibri.tga");
 	healthBar = MeshBuilder::GenerateMenu("hpbar", Color(1, 0, 0), 10);
 	healthBar->textureID = LoadTGA("Image//hpbar.tga");
+	speedometer = MeshBuilder::GenerateMenu("speedometer", Color(1, 0, 0), 10);
+	speedometer->textureID = LoadTGA("Image//speedometer.tga");
 	partsCount = MeshBuilder::GenerateMenu("partsUI", Color(1, 0, 0), 10);
 	partsCount->textureID = LoadTGA("Image//partsUI.tga");
 
@@ -1204,6 +1206,9 @@ void GameScene::Render()
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship01Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship01Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
 	RenderUI(healthBar, ship01Stats->getHealth(), 3.5, 5, 20);
+
+	RenderUI(speedometer, 5, 5, 5, 20);
+	RenderUI(needle, ship01Stats->getHealth(), 3.5, 5, 20);
 
 	//RenderTextOnScreen(gameText, "Collision : ", Color(0, 1, 0), 10, 2, 15);
 

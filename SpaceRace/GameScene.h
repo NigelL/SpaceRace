@@ -32,6 +32,7 @@ private:
 	MS modelStack, viewStack, projectionStack;
 	Mesh* gameText;
 	Mesh* healthBar;
+	Mesh* speedometer;
 	Mesh* partsCount;
 	Mesh* MapWater;
 	Mesh* ShipMarker1;
