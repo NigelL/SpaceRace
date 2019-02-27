@@ -29,7 +29,7 @@ public:
 	static Mesh* MeshBuilder::GenerateText(const std::string &meshName, unsigned numRow,
 		unsigned numCol);
 	static Mesh* MeshBuilder::GenerateRealQuad(const std::string &meshName, Color color, float lengthX, float lengthY);
-
+	static Mesh*GenerateBound(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ);
 
 };
 

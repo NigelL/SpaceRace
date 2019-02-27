@@ -56,20 +56,24 @@ GameScene::GameScene()
 	Transform t3;
 	Transform t4;
 
-	t1.position = Vector3(0, 0, -985);
+	//t1.position = Vector3(0, 0, -985);
+	t1.position = Vector3(0, 0, 0);
 	t1.rotation = Vector3(0, 1, 0);
 	t1.amt = 0;
 	t1.scale = Vector3(2000, 10, 10);
-	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	t1.SetBounds(Vector3(2500, 1000, 100));
+	meshList.push_back(GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1));
 	t1.position = Vector3(985, 0, 30);
 	t1.rotation = Vector3(0, 1, 0);
 	t1.amt = 0;
 	t1.scale = Vector3(10, 10, 1990);
+	t1.SetBounds(Vector3(10, 1000, 2500));
 	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB2", mat1, t2);
 	t1.position = Vector3(0, 0, 995);
 	t1.rotation = Vector3(0, 1, 0);
 	t1.amt = 0;
 	t1.scale = Vector3(2000, 10, 10);
+	t1.SetBounds(Vector3(2500, 1000, 10));
 	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB3", mat1, t3);
 	//t1.position = Vector3(0, 0, -985);
 	//t1.rotation = Vector3(0, 1, 0);
