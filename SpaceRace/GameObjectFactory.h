@@ -5,6 +5,7 @@
 #include "CShipStats.h"
 #include "PartConsumable.h"
 #include "IslandEnvironment.h"
+#include "Boundary.h"
 #include "cannonball.h"
 #include <string>
 
@@ -22,6 +23,7 @@ public:
 		PARTSCONSUMABLE,
 		ISLAND,
 		CANNON,
+		BOUNDARY,
 		OBJECT_TOTAL
 	};
 
@@ -35,6 +37,6 @@ public:
 	static SpeedConsumable* SpawnSpeedConsumable(std::string name, Material *material, Transform);
 	static PartConsumable* SpawnPartConsumable(std::string name, Material *material, Transform);
 	static IslandEnvironment* SpawnIsland(std::string name, Material *material, Transform);
-	//void SpawnEnvironment();
+	static Boundary* SpawnBoundary(std::string name, Material *material, Transform transform);
 };
 

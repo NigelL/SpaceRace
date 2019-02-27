@@ -118,6 +118,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Boundary.cpp" />
     <ClCompile Include="BuildScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Camera2.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Boundary.h" />
     <ClInclude Include="BuildScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Camera2.h" />

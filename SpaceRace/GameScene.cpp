@@ -45,6 +45,44 @@ GameScene::GameScene()
 
 	///////////////////////////////////////////////
 
+	Material *mat1 = new Material;
+	mat1->kAmbient.Set(0.4f, 0.4f, 0.4f);
+	mat1->kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	mat1->kSpecular.Set(0.2f, 0.2f, 0.2f);
+	mat1->kShininess = 1.0f;
+
+	Transform t1;
+	Transform t2;
+	Transform t3;
+	Transform t4;
+
+	t1.position = Vector3(0, 0, -985);
+	t1.rotation = Vector3(0, 1, 0);
+	t1.amt = 0;
+	t1.scale = Vector3(2000, 10, 10);
+	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	t1.position = Vector3(985, 0, 30);
+	t1.rotation = Vector3(0, 1, 0);
+	t1.amt = 0;
+	t1.scale = Vector3(10, 10, 1990);
+	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB2", mat1, t2);
+	t1.position = Vector3(0, 0, 995);
+	t1.rotation = Vector3(0, 1, 0);
+	t1.amt = 0;
+	t1.scale = Vector3(2000, 10, 10);
+	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB3", mat1, t3);
+	//t1.position = Vector3(0, 0, -985);
+	//t1.rotation = Vector3(0, 1, 0);
+	//t1.amt = 0;
+	//t1.scale = Vector3(2000, 10, 10);
+	//GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB4", mat1, t4);
+
+
+	//Mesh* boundBox4 = MeshBuilder::GenerateBound("BB4", Color(1, 1, 1), 10, 10, 10);
+	//boundBox4->material = *mat1;
+	//GameObject* BoundBox4 = new GameObject(boundBox1, Vector3(0, 0, -985), 0, Vector3(0, 1, 0), Vector3(2000, 10, 10));
+	//meshList.push_back(BoundBox4);
+
 	//Read From Text File 
 	std::vector<MeshInfo> readInfo = ReadFromMesh("text.txt");
 	for (auto info : readInfo) {
