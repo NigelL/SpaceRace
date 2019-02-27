@@ -14,7 +14,7 @@ Mesh* curCube;
 GameObject* damage[5];
 GameObject* damage2[5];
 
-int islandx, islandz, islandposx, islandposz, islandposxA[38], islandposzA[38];
+int islandx, islandz, islandposx, islandposz, islandposxA[62], islandposzA[62];
 
 GameScene* GameScene::instance;
 
@@ -84,7 +84,7 @@ GameScene::GameScene()
 	Transform t;
 	t.boxHalf = Vector3(1.5f, 1.5f, 1.5f);
 
-	for (int numberofislands = 0; numberofislands < 38; numberofislands++)
+	for (int numberofislands = 0; numberofislands < 20; numberofislands++)
 	{
 		bool overlaps = false;
 		islandposx = rand() % 1700 + (-900);
@@ -609,7 +609,7 @@ void GameScene::Init()
 	renderSkybox();
 
 	ship01Stats = dynamic_cast<CShipStats*>(sceneObjects["ship01"]);
-	ship01Stats->setStats(0, 500, 15, 0, 15, 1000, 15);
+	ship01Stats->setStats(0, 300, 15, 0, 15, 0, 15);
 	
 	Material *mat = new Material;
 	mat->kAmbient.Set(0.3f, 0.3f, 0.3f);
@@ -634,9 +634,9 @@ void GameScene::Init()
 
 	for (int i = 0; i < 8; i++)
 	{
-		CannonBall[i] = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+		CannonBall[i] = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(9999,9999,9999), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
 		meshList.push_back(CannonBall[i]);
-		CannonBall2[i] = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+		CannonBall2[i] = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(9999, 9999, 9999), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
 		meshList.push_back(CannonBall2[i]);
 	}
 } 
@@ -1348,7 +1348,7 @@ void GameScene::Init2() {
 	Transform t;
 
 	ship02Stats = dynamic_cast<CShipStats*>(sceneObjects["ship02"]);
-	ship02Stats->setStats(0, 500, 15, 5, 15, 1000, 20);
+	ship02Stats->setStats(0, 300, 15, 5, 15, 0, 20);
 	ship02_2 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship02-2", mat, t);
 	ship02_2->SetScale(Vector3(0.7, 0.7, 0.7));
 	ship02_3 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship02-3", mat, t);
@@ -1973,8 +1973,8 @@ void GameScene::SpawnPowerUp()
 
 	for (int numberOfPowerUps = 0; numberOfPowerUps <= 20; numberOfPowerUps++)
 	{
-		powerUpX = rand() % 500;
-		powerUpZ = rand() % 500 - 500;
+		powerUpX = rand() % 1700 + (-900);
+		powerUpZ = rand() % 1800 + (-800);
 		powerUpSpawn = rand() % 2;
 
 		if (powerUpSpawn == 0)

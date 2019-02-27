@@ -17,7 +17,7 @@ cannonball::~cannonball()
 }
 
 void cannonball::Update() {
-	if (GetPosition().Length() < 1000) {
+	if (GetPosition().Length() < 2000) {
 		SetPosition(GetPosition() + (dir * speed));
 	}
 }
