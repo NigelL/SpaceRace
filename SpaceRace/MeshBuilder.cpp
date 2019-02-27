@@ -788,3 +788,94 @@ Mesh* MeshBuilder::GenerateSphere(const std::string &meshName, Color color, floa
 	return mesh;
 
 }
+
+Mesh* MeshBuilder::GenerateBound(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ)
+{
+	std::vector<Vertex> vertex_buffer_data;
+	Vertex v;
+
+	v.pos.Set(-0.5f, -0.5f, -0.5f); // Index No. 0
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(0.5f, -0.5f, -0.5f); // Index No. 1
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(0.5f, 0.5f, -0.5f); // Index No. 2
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(-0.5f, 0.5f, -0.5f); // Index No. 3
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(-0.5f, -0.5f, 0.5f); // Index No. 4
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(0.5f, -0.5f, 0.5f); // Index No. 5
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(0.5f, 0.5f, 0.5f); // Index No. 6
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	v.pos.Set(-0.5f, 0.5f, 0.5f); // Index No. 7
+	v.color = color;
+	vertex_buffer_data.push_back(v);
+
+	std::vector<GLuint> index_buffer_data;
+	index_buffer_data.push_back(7); // front
+	index_buffer_data.push_back(4);
+	index_buffer_data.push_back(6);
+	index_buffer_data.push_back(5);
+	index_buffer_data.push_back(6);
+	index_buffer_data.push_back(4);
+	index_buffer_data.push_back(3); // top
+	index_buffer_data.push_back(7);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(6);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(7);
+	index_buffer_data.push_back(3); // left
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(7);
+	index_buffer_data.push_back(4);
+	index_buffer_data.push_back(7);
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(6); // right
+	index_buffer_data.push_back(5);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(2);
+	index_buffer_data.push_back(5);
+	index_buffer_data.push_back(2); // back
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(3);
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(3);
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(4); // bottom
+	index_buffer_data.push_back(0);
+	index_buffer_data.push_back(5);
+	index_buffer_data.push_back(1);
+	index_buffer_data.push_back(5);
+	index_buffer_data.push_back(0);
+
+	Mesh *mesh = new Mesh(meshName);
+
+	//Set the current active buffer
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->vertexBuffer);
+	//Transfer vertices to OpenGL
+	glBufferData(GL_ARRAY_BUFFER, vertex_buffer_data.size() * sizeof(Vertex), &vertex_buffer_data[0], GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->indexBuffer); // bind index buffer
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_data.size() * sizeof(GLuint), &index_buffer_data[0], GL_STATIC_DRAW);
+
+	mesh->indexSize = 36;
+	mesh->mode = Mesh::DRAW_TRIANGLES;
+
+	return mesh;
+}

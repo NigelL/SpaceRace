@@ -18,19 +18,19 @@ public:
 	static Mesh* GenerateCube(const std::string &meshName,Color color, float lengthX, float lengthY, float lengthZ);
 	static Mesh* GenerateOBJ(const std::string &meshName, const std::string
 		&file_path);
-	static Mesh* MeshBuilder::GenerateCircle(const std::string &meshName,Color color, float
+	static Mesh* GenerateCircle(const std::string &meshName,Color color, float
 		lengthX, float lengthY, float lengthZ);
-	static Mesh* MeshBuilder::GenerateSphere(const std::string &meshName, Color color, float
+	static Mesh* GenerateSphere(const std::string &meshName, Color color, float
 		radius);
-	static Mesh* MeshBuilder::GenerateHemiSphere(const std::string &meshName, Color color, float
+	static Mesh* GenerateHemiSphere(const std::string &meshName, Color color, float
 		radius);
-	static Mesh* MeshBuilder::GenerateCylinder(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius, float height);
-	static Mesh* MeshBuilder::GenerateTorus(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float outerR, float innerR);
-	static Mesh* MeshBuilder::GenerateText(const std::string &meshName, unsigned numRow,
+	static Mesh* GenerateCylinder(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius, float height);
+	static Mesh* GenerateTorus(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float outerR, float innerR);
+	static Mesh* GenerateText(const std::string &meshName, unsigned numRow,
 		unsigned numCol);
-	static Mesh* MeshBuilder::GenerateRealQuad(const std::string &meshName, Color color, float lengthX, float lengthY);
+	static Mesh* GenerateRealQuad(const std::string &meshName, Color color, float lengthX, float lengthY);
 
-
+	static Mesh* GenerateBound(const std::string &meshName, Color color, float lengthX, float lengthY, float lengthZ);
 };
 
 #endif

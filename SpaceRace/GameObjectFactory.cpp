@@ -145,3 +145,16 @@ IslandEnvironment* GameObjectFactory::SpawnIsland(std::string name, Material *ma
 	retThis->SetTransform(transform);
 	return retThis;
 }
+
+//Boundary* GameObjectFactory::SpawnBoundary(std::string name, Material *material, Transform transform)
+//{
+//	Mesh* name1 = MeshBuilder::GenerateCube(name, Color(0, 1, 0), 1, 1, 1);
+//
+//	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
+//	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);
+//	name1->material.kSpecular.Set(material->kSpecular.r, material->kSpecular.g, material->kSpecular.b);
+//	name1->material.kShininess = material->kShininess;
+//	Boundary* retThis = new Boundary(name1, transform.position, transform.amt, transform.rotation, transform.scale);
+//	retThis->SetTransform(transform);
+//	return retThis;
+//}

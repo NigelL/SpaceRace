@@ -40,6 +40,44 @@ GameScene::GameScene()
 	meshList.push_back(sceneObjects["Water"]);
 
 	///////////////////////////////////////////////
+	
+	Material *mat1 = new Material;
+	mat1->kAmbient.Set(0.4f, 0.4f, 0.4f);
+	mat1->kDiffuse.Set(0.1f, 0.1f, 0.1f);
+	mat1->kSpecular.Set(0.2f, 0.2f, 0.2f);
+	mat1->kShininess = 1.0f;
+
+	Transform t1;
+	Transform t2;
+	Transform t3;
+	Transform t4;
+
+	//t1.position = Vector3(0, 0, -985);
+	//t1.rotation = Vector3(0, 1, 0);
+	//t1.amt = 0;
+	//t1.scale = Vector3(2000, 10, 10);
+	//GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	//t1.position = Vector3(985, 0, 30);
+	//t1.rotation = Vector3(0, 1, 0);
+	//t1.amt = 0;
+	//t1.scale = Vector3(10, 10, 1990);
+	//GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB2", mat1, t2);
+	//t1.position = Vector3(0, 0, 995);
+	//t1.rotation = Vector3(0, 1, 0);
+	//t1.amt = 0;
+	//t1.scale = Vector3(2000, 10, 10);
+	//GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB3", mat1, t3);
+	//t1.position = Vector3(0, 0, -985);
+	//t1.rotation = Vector3(0, 1, 0);
+	//t1.amt = 0;
+	//t1.scale = Vector3(2000, 10, 10);
+	//GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB4", mat1, t4);
+
+
+	//Mesh* boundBox4 = MeshBuilder::GenerateBound("BB4", Color(1, 1, 1), 10, 10, 10);
+	//boundBox4->material = *mat1;
+	//GameObject* BoundBox4 = new GameObject(boundBox1, Vector3(0, 0, -985), 0, Vector3(0, 1, 0), Vector3(2000, 10, 10));
+	//meshList.push_back(BoundBox4);
 
 	//Read From Text File 
 	std::vector<MeshInfo> readInfo = ReadFromMesh("text.txt");
@@ -138,6 +176,8 @@ GameScene::GameScene()
 	healthBar->textureID = LoadTGA("Image//hpbar.tga");
 	speedometer = MeshBuilder::GenerateMenu("speedometer", Color(1, 0, 0), 10);
 	speedometer->textureID = LoadTGA("Image//speedometer.tga");
+	needle = MeshBuilder::GenerateMenu("needle", Color(1, 0, 0), 10);
+	needle->textureID = LoadTGA("Image//needle.tga");
 	partsCount = MeshBuilder::GenerateMenu("partsUI", Color(1, 0, 0), 10);
 	partsCount->textureID = LoadTGA("Image//partsUI.tga");
 
@@ -238,7 +278,7 @@ void GameScene::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	glEnable(GL_DEPTH_TEST);
 }
 
-void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y)
+void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y, float amt, int Rx, int Ry, int Rz)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -250,10 +290,11 @@ void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y)
 	projectionStack.LoadMatrix(ortho);
 	viewStack.PushMatrix();
 	viewStack.LoadIdentity(); //No need camera for ortho mode
-	modelStack.PushMatrix();
 	modelStack.LoadIdentity(); //Reset modelStack
+	modelStack.PushMatrix();
 	modelStack.Scale(sizeX, sizeY, 0);
 	modelStack.Translate(x, y, 0);
+	modelStack.Rotate(amt, Rx, Ry, Rz);
 	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
 	glActiveTexture(GL_TEXTURE0);
@@ -626,6 +667,9 @@ GameObject* spaceship1;
 
 void GameScene::Update(double dt)
 {
+	std::cout << sceneObjects["ship01"]->GetPosition().x << std::endl;
+	std::cout << sceneObjects["ship01"]->GetPosition().z << std::endl;
+
 	setTimer(dt);
 	if (Application::IsKeyPressed('M'))
 	{
@@ -1200,17 +1244,13 @@ void GameScene::Render()
 		modelStack.PopMatrix();
 	}
 
-	RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship01Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
-	RenderTextOnScreen(gameText, "Pray for fps : " + std::to_string(sceneFPS), Color(0, 1, 0), 50, 2, 17.5);
-	RenderUI(partsCount, 20, 7, 7, 26);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship01Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
+	RenderUI(partsCount, 20, 7, 7, 26, 0, 0, 1, 0);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship01Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
-	RenderUI(healthBar, ship01Stats->getHealth(), 3.5, 5, 20);
-
-	RenderUI(speedometer, 5, 5, 5, 20);
-	RenderUI(needle, ship01Stats->getHealth(), 3.5, 5, 20);
-
-	//RenderTextOnScreen(gameText, "Collision : ", Color(0, 1, 0), 10, 2, 15);
+	RenderUI(healthBar, ((ship01Stats->getHealth()/ship01Stats->getMaxHP()) * 100), 3.5, 5, 20, 0, 0, 1, 0);
+	RenderTextOnScreen(gameText, std::to_string(trunc(ship01Stats->getSpeed())), Color(0, 1, 0), 60, 20, 1.5);
+	RenderUI(speedometer, 45, 25, 38, 7, 0, 0, 1, 0);
+	RenderUI(needle, 30, 28, 57, 6, (-(ship01Stats->getSpeed()/ship01Stats->getMaxSpeed()) * 250), 0, 0, 1);
 
 	
 	MiniMap();
@@ -1677,10 +1717,10 @@ void GameScene::Render2()
 	MiniMap();
 
 	RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship02Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
-	RenderUI(partsCount, 20, 7, 7, 26);
+	RenderUI(partsCount, 20, 7, 7, 26, 0, 0, 1, 0);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship02Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship02Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
-	RenderUI(healthBar, ship02Stats->getHealth(), 3.5, 5, 20);
+	RenderUI(healthBar, ship02Stats->getHealth(), 3.5, 5, 20, 0, 0, 1, 0);
 
 
 	glDisableVertexAttribArray(2);
@@ -1988,18 +2028,18 @@ void GameScene::MiniMap()
 	int ship2x = sceneObjects["ship02"]->GetPosition().z;
 	int ship2y = sceneObjects["ship02"]->GetPosition().x;
 
-	RenderUI(MapWater, 13, 13, 22, 58);
-	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 1400, (ship1y) * 1.3 + 3800);
-	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 1400, (ship2y) * 1.3 + 3800);
+	RenderUI(MapWater, 13, 13, 22, 58, 0, 0, 1, 0);
+	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 1400, (ship1y) * 1.3 + 3800, 0, 0, 1, 0);
+	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 1400, (ship2y) * 1.3 + 3800, 0, 0, 1, 0);
 
 	for (int i = 0; i <= 8; i++)
 	{
-		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 1400, (islandposxA[i]) * 1.3 + 3800);
+		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 1400, (islandposxA[i]) * 1.3 + 3800, 0, 0, 1, 0);
 	}
 
 	for (int i = 0; i < partsmarkervector.size(); i++)
 	{
-		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 1400, partsmarkervector[i].x * 1.3 + 3800);
+		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 1400, partsmarkervector[i].x * 1.3 + 3800, 0, 0, 1, 0);
 	}
 
 }

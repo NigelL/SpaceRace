@@ -129,6 +129,9 @@
     <ClCompile Include="UIObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Boundary.cpp">
+      <Filter>Source Files\src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vertex.h">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="UIObject.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Boundary.h">
+      <Filter>Source Files\src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

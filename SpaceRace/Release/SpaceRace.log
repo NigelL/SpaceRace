@@ -1,0 +1,63 @@
+﻿  Application.cpp
+d:\users\l533\desktop\spacerace\spacerace\application.h(5): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  BuildScene.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Camera.cpp
+d:\users\l533\desktop\spacerace\spacerace\camera.h(4): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Camera2.cpp
+d:\users\l533\desktop\spacerace\spacerace\camera.h(4): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Camera3.cpp
+d:\users\l533\desktop\spacerace\spacerace\camera.h(4): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  CamMenu.cpp
+d:\users\l533\desktop\spacerace\spacerace\camera.h(4): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  cannonball.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Collision.cpp
+d:\users\l533\desktop\spacerace\spacerace\transform.h(4): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Consumable.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  CShipStats.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  GameObject.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  GameObjectFactory.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  GameScene.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  GameSound.cpp
+d:\users\l533\desktop\spacerace\spacerace\gamesound.h(2): fatal error C1083: Cannot open include file: 'irrKlang.h': No such file or directory
+  HealthConsumable.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  IslandEnvironment.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  LoadOBJ.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  LoadTGA.cpp
+d:\users\l533\desktop\spacerace\spacerace\loadtga.cpp(3): fatal error C1083: Cannot open include file: 'GL\glew.h': No such file or directory
+  main.cpp
+d:\users\l533\desktop\spacerace\spacerace\application.h(5): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  MainMenuScene.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Compiling...
+  Mesh.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  MeshBuilder.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  PartConsumable.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Physic.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  ReadMesh.cpp
+d:\users\l533\desktop\spacerace\spacerace\readmesh.h(8): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  shader.cpp
+d:\users\l533\desktop\spacerace\spacerace\shader.cpp(12): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  SpeedConsumable.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Transform.cpp
+d:\users\l533\desktop\spacerace\spacerace\transform.h(4): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  UIObject.cpp
+d:\users\l533\desktop\spacerace\spacerace\vertex.h(3): fatal error C1083: Cannot open include file: 'Vector3.h': No such file or directory
+  Utility.cpp
+d:\users\l533\desktop\spacerace\spacerace\utility.h(3): fatal error C1083: Cannot open include file: 'MatrixStack.h': No such file or directory
+  Water.cpp
+d:\users\l533\desktop\spacerace\spacerace\utility.h(3): fatal error C1083: Cannot open include file: 'MatrixStack.h': No such file or directory

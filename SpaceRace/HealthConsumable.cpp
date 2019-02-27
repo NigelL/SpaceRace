@@ -22,7 +22,7 @@ void HealthConsumable::OnCollide(GameObject& other) {
 
 HealthConsumable::HealthConsumable()
 {
-	healthConsumed = 25;
+	healthConsumed = 5;
 }
 
 HealthConsumable::HealthConsumable(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca) : Consumable(_curMesh, _pos, amt, _rot, _sca)

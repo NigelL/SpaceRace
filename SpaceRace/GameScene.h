@@ -33,6 +33,7 @@ private:
 	Mesh* gameText;
 	Mesh* healthBar;
 	Mesh* speedometer;
+	Mesh* needle;
 	Mesh* partsCount;
 	Mesh* MapWater;
 	Mesh* ShipMarker1;
@@ -141,7 +142,7 @@ private:
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
-	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y);
+	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y, float amt, int Rx, int Ry, int Rz);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	double getTimer();
