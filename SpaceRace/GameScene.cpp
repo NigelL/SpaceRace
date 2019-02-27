@@ -14,9 +14,7 @@ Mesh* curCube;
 GameObject* damage[5];
 GameObject* damage2[5];
 
-
 int islandx, islandz, islandposx, islandposz, islandposxA[38], islandposzA[38];
-
 
 GameScene* GameScene::instance;
 
@@ -160,10 +158,16 @@ GameScene::GameScene()
 	SpeedUpMarker->textureID = LoadTGA("Image//Purple.tga");
 
 	Win = MeshBuilder::GenerateMenu("win", Color(1, 0, 0), 40);
-	Win->textureID = LoadTGA("Image//Green.tga");
-
+	Win->textureID = LoadTGA("Image//win.tga");
 	Lose = MeshBuilder::GenerateMenu("lose", Color(1, 0, 0), 40);
-	Lose->textureID = LoadTGA("Image//Red.tga");
+	Lose->textureID = LoadTGA("Image//lose.tga");
+	Select = MeshBuilder::GenerateMenu("select", Color(1, 0, 0), 10);
+	Select->textureID = LoadTGA("Image//select.tga");
+
+	speedometer = MeshBuilder::GenerateMenu("speedometer", Color(1, 0, 0), 10);
+	speedometer->textureID = LoadTGA("Image//speedometer.tga");
+	needle = MeshBuilder::GenerateMenu("needle", Color(1, 0, 0), 10);
+	needle->textureID = LoadTGA("Image//needle.tga");
 }
 
 GameScene::~GameScene()
@@ -247,7 +251,7 @@ void GameScene::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	glEnable(GL_DEPTH_TEST);
 }
 
-void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y)
+void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y, float amt, int Rx, int Ry, int Rz)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -263,6 +267,7 @@ void GameScene::RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y)
 	modelStack.LoadIdentity(); //Reset modelStack
 	modelStack.Scale(sizeX, sizeY, 0);
 	modelStack.Translate(x, y, 0);
+	modelStack.Rotate(amt, Rx, Ry, Rz);
 	glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
 	glActiveTexture(GL_TEXTURE0);
@@ -446,14 +451,17 @@ GameObject* ship01_2;
 GameObject* ship01_3;
 GameObject* ship01_4;
 GameObject* spaceship1;
+cannonball* CannonBall[8];
+cannonball* CannonBall2[8];
 
 void GameScene::Init()
 {
 	//Camera Init
 	camera.Init(Vector3(10, 20, 0), Vector3(0, 0, 0), Vector3(0, 1, 0));
 
-	//GameSound::instance()->GameBGM->setDefaultVolume(0.1f);
-	//GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
+	GameSound::instance()->engine->stopAllSounds();
+	GameSound::instance()->GameBGM->setDefaultVolume(0.1f);
+	GameSound::instance()->engine->play2D(GameSound::instance()->GameBGM, true);
 
 	Mtx44 projection;
 	projection.SetToPerspective(45.f, 4.f / 3.f, 0.1f, 1000.f);
@@ -602,7 +610,6 @@ void GameScene::Init()
 
 	ship01Stats = dynamic_cast<CShipStats*>(sceneObjects["ship01"]);
 	ship01Stats->setStats(0, 500, 15, 0, 15, 1000, 15);
-	ship02Stats = dynamic_cast<CShipStats*>(sceneObjects["ship02"]);
 	
 	Material *mat = new Material;
 	mat->kAmbient.Set(0.3f, 0.3f, 0.3f);
@@ -613,9 +620,10 @@ void GameScene::Init()
 	Transform t;
 
 	ship01_2 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship01-2", mat, t);
+	ship01_2->SetScale(Vector3(0.7, 0.7, 0.7));
 	ship01_3 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship01-3", mat, t);
 	ship01_4 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship01-4", mat, t);
-	spaceship1 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "spaceship", mat, t);
+	spaceship1 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "spaceship1", mat, t);
 
 	translateY = sceneObjects["ship01"]->GetPosition().y;
 	rotateAmt = 0;
@@ -623,6 +631,14 @@ void GameScene::Init()
 	ship01Type = 0;
 	winCondition1 = false;
 	winCondition2 = false;
+
+	for (int i = 0; i < 8; i++)
+	{
+		CannonBall[i] = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+		meshList.push_back(CannonBall[i]);
+		CannonBall2[i] = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(0, 0, 0), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+		meshList.push_back(CannonBall2[i]);
+	}
 } 
 
 static double LSPEED = 10.0;
@@ -635,12 +651,16 @@ Vector3 ray_Clip;
 Vector3 curHitPoint;
 
 static double bounceTime = 0.0;
+static double bounceTime2 = 0.0;
 static double cannonHit_01 = 0.0f;
 static double cannonHit_02 = 0.0f;
 
 bool floating_01 = false;
 bool floating_02 = false;
 bool cannonForce_01 = false;
+
+int cannonCount = 0;
+int cannonCount2 = 0;
 
 void GameScene::Update(double dt)
 {
@@ -674,12 +694,10 @@ void GameScene::Update(double dt)
 	}
 	if (shipUpgrade)
 	{
-
 		Transform t;
 		t.SetBounds(Vector3(1.3f, 1.3f, 1.3f));
 		t.position.x = sceneObjects["ship01"]->GetPosition().x;
 		t.position.z = sceneObjects["ship01"]->GetPosition().z;
-
 
 		if (ship01Type == 0)
 		{
@@ -695,15 +713,13 @@ void GameScene::Update(double dt)
 
 					if (sceneObjects["ship01"]->GetAmt() >= 1000 && sceneObjects["ship01"]->GetPosition().y >= 20)
 					{
-
 						sceneObjects["ship01"] = ship01_2;
 						sceneObjects["ship01"]->SetPosition(t.position);
-						sceneObjects["ship01"]->GetTransform().SetBounds(Vector3(10.0f, 10.0f, 10.0f));
+						sceneObjects["ship01"]->GetTransform().SetBounds(Vector3(5.0f, 10.0f, 10.0f));
 						meshList[j] = ship01_2;
 						ship01Stats->SetParts(ship01Stats->getParts() - 5);
 						shipUpgrade = false;
 						ship01Type = 1;
-						winCondition1 = true;
 					}
 				}
 			}
@@ -722,11 +738,9 @@ void GameScene::Update(double dt)
 
 					if (sceneObjects["ship01"]->GetAmt() >= 1000 && sceneObjects["ship01"]->GetPosition().y >= 20)
 					{
-
 						sceneObjects["ship01"] = ship01_3;
 						sceneObjects["ship01"]->SetPosition(t.position);
-						sceneObjects["ship01"]->GetTransform().SetBounds(Vector3(20.0f, 10.0f, 10.0f));
-
+						sceneObjects["ship01"]->GetTransform().SetBounds(Vector3(5.0f, 10.0f, 15.0f));
 						meshList[j] = ship01_3;
 						ship01Stats->SetParts(ship01Stats->getParts() - 7);
 						shipUpgrade = false;
@@ -750,7 +764,7 @@ void GameScene::Update(double dt)
 					if (sceneObjects["ship01"]->GetAmt() >= 1000 && sceneObjects["ship01"]->GetPosition().y >= 20)
 					{
 						sceneObjects["ship01"] = ship01_4;
-						sceneObjects["ship01"]->GetTransform().SetBounds(Vector3(20.0f, 10.0f, 10.0f));
+						sceneObjects["ship01"]->GetTransform().SetBounds(Vector3(5.0f, 10.0f, 18.0f));
 						sceneObjects["ship01"]->SetPosition(t.position);
 						meshList[j] = ship01_4;
 						ship01Stats->SetParts(ship01Stats->getParts() - 10);
@@ -780,7 +794,6 @@ void GameScene::Update(double dt)
 						ship01Stats->SetParts(ship01Stats->getParts() - 15);
 						shipUpgrade = false;
 						ship01Type = 4;
-						// winCondition1 = true;
 					}
 				}
 			}
@@ -788,7 +801,7 @@ void GameScene::Update(double dt)
 	}
 	else {
 
-		if (!shipUpgrade)
+		if (!shipUpgrade && ship01Type != 4)
 		{
 			if (sceneObjects["ship01"]->GetPosition().y >= -2)
 			{
@@ -797,7 +810,6 @@ void GameScene::Update(double dt)
 				sceneObjects["ship01"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship01"]->GetAmt() + 500 * dt);
 			}
 		}
-
 		/*
 		if (SpeedConsumable::spdup)
 		{
@@ -811,14 +823,29 @@ void GameScene::Update(double dt)
 			}
 		}
 		*/
-		curWater->UpdateWater(10, dt / 2);
+		if (ship01Type == 4)
+		{
+			camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z);
+			camera.SetPosition(sceneObjects["ship01"]->GetPosition().x + 50, sceneObjects["ship01"]->GetPosition().y - 15, sceneObjects["ship01"]->GetPosition().z + 50);
 
-		/////////
+			if (sceneObjects["ship01"]->GetPosition().y > 1000)
+			{
+				winCondition1 = true;
+			}
+			else if (!winCondition2)
+			{
+				sceneObjects["ship01"]->TranslateShip(Vector3(0, 300 * dt, 0));
+				sceneObjects["ship01"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship01"]->GetAmt() + 500 * dt);
+			}
+		}
 
+		if (ship02Stats->getHealth() <= 0)
+		{
+			winCondition1 = true;
+		}
 
+		curWater->UpdateWater(10, dt / 2); 
 
-
-		/////////
 		std::vector<Consumable*> toBeErased;
 		for (int j = 0; j < meshList.size(); j++)
 		{
@@ -848,14 +875,6 @@ void GameScene::Update(double dt)
 						isPtr->collidedOnce = true;
 					}
 
-					physic.bounceBack(*ship01Stats, dt, 50);
-					if (ship01Stats->getSpeed() >= 100.0f) {
-						sceneObjects["ship01"]->translateObj(-ship01Stats->getSpeed()* 10.0f, dt);
-					}
-					else {
-						sceneObjects["ship01"]->translateObj(-500.0f, dt);
-					}
-
 				}
 
 				if (cPtr != nullptr) {
@@ -881,10 +900,10 @@ void GameScene::Update(double dt)
 				}
 			}
 
-			cannonball* checkCannon = dynamic_cast<cannonball*>(meshList[j]);
+			/*cannonball* checkCannon = dynamic_cast<cannonball*>(meshList[j]);
 			if (checkCannon != nullptr) {
 				checkCannon->Update();
-			}
+			}*/
 		}
 		for (auto eraseThis : toBeErased) {
 			eraseThis->OnCollide(*ship01Stats);
@@ -914,7 +933,7 @@ void GameScene::Update(double dt)
 
 		physic.floating(*sceneObjects["ship01"], 7.5, dt, floating_01);
 
-		if (ship01Stats->getHealth() < 10)
+		if (ship01Stats->getHealth() < 10 && ship01Type != 4)
 		{
 			renderDamage(*sceneObjects["ship01"], damage);
 		}
@@ -923,10 +942,7 @@ void GameScene::Update(double dt)
 		light[1].position.y = sceneObjects["ship01"]->GetPosition().y + 0.25;
 		light[1].position.z = sceneObjects["ship01"]->GetPosition().z + (cos(DegreeToRadian(sceneObjects["ship01"]->GetAmt())) * 1.5);
 
-
-
 		// control the sceneObjects["ship01"]
-
 		if (Application::IsKeyPressed('W')) // 270
 		{
 
@@ -960,89 +976,153 @@ void GameScene::Update(double dt)
 			if (Application::IsKeyPressed('S')) // shoot cannonball
 			{
 				float direction = sceneObjects["ship01"]->GetAmt() * 3.142f / 180.0f;
+
 				if (ship01Type == 0)
 				{
-					cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall1->dir = ship01Stats->objectDir;
-					CannonBall1->speed = ship01Stats->getFireRate();
-					CannonBall1->playerType = 0;
-					meshList.push_back(CannonBall1);
+					//cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction), 0, cos(direction));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
 				}
 				if (ship01Type == 1)
 				{
-					cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall1->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-					CannonBall1->speed = ship01Stats->getFireRate();
-					CannonBall1->playerType = 0;
-					meshList.push_back(CannonBall1);
-					cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall2->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall2->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-					CannonBall2->speed = ship01Stats->getFireRate();
-					CannonBall2->playerType = 0;
-					meshList.push_back(CannonBall2);
+					// cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					// cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
 				}
 				if (ship01Type == 2)
 				{
-					cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall1->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-					CannonBall1->speed = ship01Stats->getFireRate();
-					CannonBall1->playerType = 0;
-					meshList.push_back(CannonBall1);
-					cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall2->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall2->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-					CannonBall2->speed = ship01Stats->getFireRate();
-					CannonBall2->playerType = 0;
-					meshList.push_back(CannonBall2);
-					cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall3->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall3->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-					CannonBall3->speed = ship01Stats->getFireRate();
-					CannonBall3->playerType = 0;
-					meshList.push_back(CannonBall3);
-					cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall4->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall4->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-					CannonBall4->speed = ship01Stats->getFireRate();
-					CannonBall4->playerType = 0;
-					meshList.push_back(CannonBall4);
+					//cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					//cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship01"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					//cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					//cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
 				}
 				if (ship01Type == 3)
 				{
-					cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall1->dir = Vector3(sin(direction), 0, cos(direction));
-					CannonBall1->speed = ship01Stats->getFireRate();
-					CannonBall1->playerType = 0;
-					meshList.push_back(CannonBall1);
-					cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z + 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall2->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall2->dir = Vector3(sin(direction), 0, cos(direction));
-					CannonBall2->speed = ship01Stats->getFireRate();
-					CannonBall2->playerType = 0;
-					meshList.push_back(CannonBall2);
-					cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall3->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall3->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-					CannonBall3->speed = ship01Stats->getFireRate();
-					CannonBall3->playerType = 0;
-					meshList.push_back(CannonBall3);
-					cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-					CannonBall4->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-					CannonBall4->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-					CannonBall4->speed = ship01Stats->getFireRate();
-					CannonBall4->playerType = 0;
-					meshList.push_back(CannonBall4);
+					//cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction), 0, cos(direction));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					//cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z + 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction), 0, cos(direction));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					//cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
+					//cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship01"]->GetPosition().x - 8, sceneObjects["ship01"]->GetPosition().y, sceneObjects["ship01"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall[cannonCount]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall[cannonCount]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall[cannonCount]->speed = ship01Stats->getFireRate();
+					CannonBall[cannonCount]->playerType = 0;
+					CannonBall[cannonCount]->SetPosition(sceneObjects["ship01"]->GetPosition());
+					//meshList.push_back(CannonBall[cannonCount]);
+					cannonCount++;
+					if (cannonCount > 7)
+					{
+						cannonCount = 0;
+					}
 				}
+
 				bounceTime = 0.5;
-			}
-			else
-			{
-//				cannonBall = nullptr;
 			}
 		}
 		else
@@ -1050,6 +1130,13 @@ void GameScene::Update(double dt)
 			bounceTime -= dt;
 		}
 
+		for (int i = 0; i < 8; i++)
+		{
+			if (CannonBall[i] != nullptr)
+			{
+				CannonBall[i]->Update();
+			}
+		}
 
 		if (Application::IsKeyPressed('R'))
 		{
@@ -1075,26 +1162,18 @@ void GameScene::Update(double dt)
 		camera.UpdateCameraSkyBox();
 
 		//Camera Logic
-		if (!shipUpgrade)
+		if (!shipUpgrade && ship01Type != 4)
 		{
 			float yaw = DegreeToRadian(sceneObjects["ship01"]->GetAmt());
 			Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
 			Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 50;
-			camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 10, sceneObjects["ship01"]->GetPosition().z);
+			camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 15, sceneObjects["ship01"]->GetPosition().z);
 			camera.SetPosition(position.x, position.y + 15, position.z);
 		}
-
-		//Camera Logic
-		float yaw = DegreeToRadian(sceneObjects["ship01"]->GetAmt());
-		Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
-		Vector3 position = sceneObjects["ship01"]->GetPosition() - direction * 50;
-		camera.SetTarget(sceneObjects["ship01"]->GetPosition().x, sceneObjects["ship01"]->GetPosition().y + 6, sceneObjects["ship01"]->GetPosition().z);
-		camera.SetPosition(position.x, position.y + 15, position.z);
-
-		damageTime(*sceneObjects["ship01"], damage);
 		// splashTime(*sceneObjects["ship01"]);
-
 	}
+
+	damageTime(*sceneObjects["ship01"], damage);
 }
 
 void GameScene::Render()
@@ -1182,8 +1261,6 @@ void GameScene::Render()
 	for (int i = 0; i < (int)meshList.size(); i++) {
 
 		for (int j = 0; j < 8; j++) {
-
-
 			modelStack.PushMatrix();
 			modelStack.Translate(meshList[i]->GetPosition().x + meshList[i]->GetTransform().allBounds[j].x, meshList[i]->GetPosition().y + meshList[i]->GetTransform().allBounds[j].y, meshList[i]->GetPosition().z + meshList[i]->GetTransform().allBounds[j].z);
 
@@ -1211,12 +1288,14 @@ void GameScene::Render()
 		modelStack.PopMatrix();
 	}
 
-	RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship01Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
-	RenderTextOnScreen(gameText, "Pray for fps : " + std::to_string(sceneFPS), Color(0, 1, 0), 50, 2, 17.5);
-	RenderUI(partsCount, 20, 7, 7, 26);
+	//RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship01Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
+	//RenderTextOnScreen(gameText, "Pray for fps : " + std::to_string(sceneFPS), Color(0, 1, 0), 50, 2, 17.5);
+	RenderUI(partsCount, 20, 7, 7, 26, 0, 0, 1, 0);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship01Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship01Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
-	RenderUI(healthBar, ship01Stats->getHealth(), 3.5, 5, 20);
+	RenderUI(healthBar, ship01Stats->getHealth(), 3.5, 5, 20, 0, 0, 1, 0);
+	RenderUI(speedometer, 45, 25, 38, 7, 0, 0, 1, 0);
+	RenderUI(needle, 30, 28, 57, 6, (-(ship01Stats->getSpeed() / ship01Stats->getMaxSpeed()) * 250), 0, 0, 1);
 
 	//RenderTextOnScreen(gameText, "Collision : ", Color(0, 1, 0), 10, 2, 15);
 
@@ -1269,18 +1348,16 @@ void GameScene::Init2() {
 	Transform t;
 
 	ship02Stats = dynamic_cast<CShipStats*>(sceneObjects["ship02"]);
-	ship02Stats->setStats(0, 500, 15, 5, 50, 0, 20);
+	ship02Stats->setStats(0, 500, 15, 5, 15, 1000, 20);
 	ship02_2 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship02-2", mat, t);
+	ship02_2->SetScale(Vector3(0.7, 0.7, 0.7));
 	ship02_3 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship02-3", mat, t);
 	ship02_4 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "ship02-4", mat, t);
-	spaceship2 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "spaceship", mat, t);
-
-	
+	spaceship2 = GameObjectFactory::SpawnGameObject(GameObjectFactory::SHIP, "spaceship2", mat, t);
 }
 
 void GameScene::Update2(double dt)
 {
-
 	//secondCamera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z);
 	//secondCamera.SetPosition(sceneObjects["ship02"]->GetPosition().x + 100, sceneObjects["ship02"]->GetPosition().y + 15, sceneObjects["ship02"]->GetPosition().z + 50);
 
@@ -1318,7 +1395,7 @@ void GameScene::Update2(double dt)
 		t.SetBounds(Vector3(1.3f, 1.3f, 1.3f));
 		t.position.x = sceneObjects["ship02"]->GetPosition().x;
 		t.position.z = sceneObjects["ship02"]->GetPosition().z;
-				
+		
 		if (ship02Type == 0)
 		{
 			for (int j = 0; j < meshList.size(); j++)
@@ -1330,12 +1407,12 @@ void GameScene::Update2(double dt)
 
 					
 					sceneObjects["ship02"]->TranslateShip(Vector3(0, 30 * dt, 0));
-					sceneObjects["ship02"]->GetTransform().SetBounds(Vector3(10.0f, 10.0f, 10.0f));
 					sceneObjects["ship02"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship02"]->GetAmt() + 500 * dt);
 
 					if (sceneObjects["ship02"]->GetAmt() >= 1000 && sceneObjects["ship02"]->GetPosition().y >= 20)
 					{
 						sceneObjects["ship02"] = ship02_2;
+						sceneObjects["ship02"]->GetTransform().SetBounds(Vector3(5.0f, 10.0f, 10.0f));
 						sceneObjects["ship02"]->SetPosition(t.position);
 						meshList[j] = ship02_2;
 						ship02Stats->SetParts(ship02Stats->getParts() - 5);
@@ -1345,7 +1422,7 @@ void GameScene::Update2(double dt)
 				}
 			}
 		}
-		if (ship02Type == 1)
+		else if (ship02Type == 1)
 		{
 			for (int j = 0; j < meshList.size(); j++)
 			{
@@ -1357,11 +1434,11 @@ void GameScene::Update2(double dt)
 				
 
 					sceneObjects["ship02"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship02"]->GetAmt() + 500 * dt);
-					sceneObjects["ship02"]->GetTransform().SetBounds(Vector3(20.0f, 10.0f, 10.0f));
 					sceneObjects["ship02"]->TranslateShip(Vector3(0, 30 * dt, 0));
 					if (sceneObjects["ship02"]->GetAmt() >= 1000 && sceneObjects["ship02"]->GetPosition().y >= 20)
 					{
 						sceneObjects["ship02"] = ship02_3;
+						sceneObjects["ship02"]->GetTransform().SetBounds(Vector3(5.0f, 10.0f, 15.0f));
 						sceneObjects["ship02"]->SetPosition(t.position);
 						meshList[j] = ship02_3;
 						ship02Stats->SetParts(ship02Stats->getParts() - 7);
@@ -1371,7 +1448,7 @@ void GameScene::Update2(double dt)
 				}
 			}
 		}
-		if (ship02Type == 2)
+		else if (ship02Type == 2)
 		{
 			for (int j = 0; j < meshList.size(); j++)
 			{
@@ -1382,11 +1459,11 @@ void GameScene::Update2(double dt)
 
 				
 					sceneObjects["ship02"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship02"]->GetAmt() + 500 * dt);
-					sceneObjects["ship02"]->GetTransform().SetBounds(Vector3(20.0f, 10.0f, 10.0f));
 					sceneObjects["ship02"]->TranslateShip(Vector3(0, 30 * dt, 0));
 					if (sceneObjects["ship02"]->GetAmt() >= 1000 && sceneObjects["ship02"]->GetPosition().y >= 20)
 					{
 						sceneObjects["ship02"] = ship02_4;
+						sceneObjects["ship02"]->GetTransform().SetBounds(Vector3(5.0f, 10.0f, 18.0f));
 						sceneObjects["ship02"]->SetPosition(t.position);
 						meshList[j] = ship02_4;
 						ship02Stats->SetParts(ship01Stats->getParts() - 10);
@@ -1396,7 +1473,7 @@ void GameScene::Update2(double dt)
 				}
 			}
 		}
-		if (ship02Type == 3)
+		else if (ship02Type == 3)
 		{
 			for (int j = 0; j < meshList.size(); j++)
 			{
@@ -1410,25 +1487,25 @@ void GameScene::Update2(double dt)
 
 					if (sceneObjects["ship02"]->GetAmt() >= 1000 && sceneObjects["ship02"]->GetPosition().y >= 20)
 					{
-						sceneObjects["ship02"] = ship02_4;
+						sceneObjects["ship02"] = spaceship2;
 						sceneObjects["ship02"]->SetPosition(t.position);
-						meshList[j] = ship02_4;
+						meshList[j] = spaceship2;
 						ship02Stats->SetParts(ship02Stats->getParts() - 15);
 						shipUpgrade2 = false;
 						ship02Type = 4;
-						winCondition2 = true;
 					}
 				}
 			}
 		}
 	}
 	else {
-		if (!shipUpgrade)
+
+		if (!shipUpgrade2 && ship02Type != 4)
 		{
-			if (sceneObjects["ship02"]->GetPosition().y >= 0)
+			if (sceneObjects["ship02"]->GetPosition().y >= -2)
 			{
 				sceneObjects["ship02"]->TranslateShip(Vector3(0, -30 * dt, 0));
-				sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, translateY, sceneObjects["ship02"]->GetPosition().z));
+				//sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, translateY, sceneObjects["ship02"]->GetPosition().z));
 				sceneObjects["ship02"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship02"]->GetAmt() + 500 * dt);
 			}
 		}
@@ -1448,11 +1525,29 @@ void GameScene::Update2(double dt)
 		*/
 		//dt = getTimer(); // get same dt as update()
 
+		if (ship02Type == 4)
+		{
+			secondCamera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z);
+			secondCamera.SetPosition(sceneObjects["ship02"]->GetPosition().x + 50, sceneObjects["ship02"]->GetPosition().y - 15, sceneObjects["ship02"]->GetPosition().z + 50);
+
+			if (sceneObjects["ship02"]->GetPosition().y > 1000)
+			{
+				winCondition2 = true;
+			}
+			else if (!winCondition1)
+			{
+				sceneObjects["ship02"]->TranslateShip(Vector3(0, 300 * dt, 0));
+				sceneObjects["ship02"]->SetRotation(Vector3(0, 1, 0), sceneObjects["ship02"]->GetAmt() + 500 * dt);
+			}
+		}
+
+		if (ship01Stats->getHealth() <= 0)
+		{
+			winCondition2 = true;
+		}
+
 		curWater->UpdateWater(10, dt / 2);
 
-		/////////
-
-		/////////
 		std::vector<Consumable*> toBeErased;
 
 		for (int j = 0; j < meshList.size(); j++) {
@@ -1480,13 +1575,6 @@ void GameScene::Update2(double dt)
 					if (!isPtr->collidedOnce) {
 						isPtr->OnCollide(*ship02Stats); //Ship Collision with island
 						isPtr->collidedOnce = true;
-					}
-					physic.bounceBack(*ship02Stats, dt, 50);
-					if (ship02Stats->getSpeed() >= 100.0f) {
-						sceneObjects["ship02"]->translateObj(-ship02Stats->getSpeed()* 10.0f, dt);
-					}
-					else {
-						sceneObjects["ship02"]->translateObj(-50.0f, dt);
 					}
 					//sceneObjects["ship02"]->translateObj(-ship02Stats->getSpeed()* 10.0f * 10.0f, dt);
 
@@ -1522,8 +1610,6 @@ void GameScene::Update2(double dt)
 
 		short int multipler = 1;
 
-
-
 		//Game Logic
 		sceneFPS = 1.0f / (float)dt;
 		double mouseX, mouseY;
@@ -1540,10 +1626,6 @@ void GameScene::Update2(double dt)
 			}
 		}
 
-		//sceneObjects["ship02"]->SetPosition(Vector3(sceneObjects["ship02"]->GetPosition().x, -6, sceneObjects["ship02"]->GetPosition().z));
-
-		//std::cout << "float : " << floating << std::endl;
-
 		if (sceneObjects["ship02"]->GetPosition().y > -5.75)
 		{
 			floating_02 = false;
@@ -1551,7 +1633,7 @@ void GameScene::Update2(double dt)
 
 		physic.floating(*sceneObjects["ship02"], 7.5, dt, floating_02);
 
-		if (ship02Stats->getHealth() < 10)
+		if (ship02Stats->getHealth() < 10 && ship02Type != 4)
 		{
 			renderDamage(*sceneObjects["ship02"], damage2);
 		}
@@ -1589,117 +1671,186 @@ void GameScene::Update2(double dt)
 			sceneObjects["ship02"]->rotateObj(-(ship02Stats->getSpeed() * 0.025));
 		}
 
-
-
-
-		if (bounceTime <= 0)
+		if (bounceTime2 <= 0)
 		{
-		
-				if (Application::IsKeyPressed(VK_DOWN)) // shoot cannonball
-				{
-					float direction = sceneObjects["ship02"]->GetAmt() * 3.142f / 180.0f;
-					if (ship01Type == 0)
-					{
-						cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall1->dir = ship02Stats->objectDir;
-						CannonBall1->speed = ship02Stats->getFireRate();
-						CannonBall1->playerType = 1;
-						meshList.push_back(CannonBall1);
-					}
-					if (ship02Type == 1)
-					{
-						cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall1->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-						CannonBall1->speed = ship02Stats->getFireRate();
-						CannonBall1->playerType = 1;
-						meshList.push_back(CannonBall1);
-						cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall2->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall2->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-						CannonBall2->speed = ship02Stats->getFireRate();
-						CannonBall2->playerType = 1;
-						meshList.push_back(CannonBall2);
-					}
-					if (ship02Type == 2)
-					{
-						cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall1->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-						CannonBall1->speed = ship02Stats->getFireRate();
-						CannonBall1->playerType = 1;
-						meshList.push_back(CannonBall1);
-						cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall2->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall2->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-						CannonBall2->speed = ship02Stats->getFireRate();
-						CannonBall2->playerType = 0;
-						meshList.push_back(CannonBall2);
-						cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall3->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall3->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-						CannonBall3->speed = ship02Stats->getFireRate();
-						CannonBall3->playerType = 1;
-						meshList.push_back(CannonBall3);
-						cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall4->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall4->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-						CannonBall4->speed = ship02Stats->getFireRate();
-						CannonBall4->playerType = 1;
-						meshList.push_back(CannonBall4);
-					}
-					if (ship02Type == 3)
-					{
-						cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall1->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall1->dir = Vector3(sin(direction), 0, cos(direction));
-						CannonBall1->speed = ship02Stats->getFireRate();
-						CannonBall1->playerType = 1;
-						meshList.push_back(CannonBall1);
-						cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z + 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall2->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall2->dir = Vector3(sin(direction), 0, cos(direction));
-						CannonBall2->speed = ship02Stats->getFireRate();
-						CannonBall2->playerType = 1;
-						meshList.push_back(CannonBall2);
-						cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall3->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall3->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
-						CannonBall3->speed = ship02Stats->getFireRate();
-						CannonBall3->playerType = 1;
-						meshList.push_back(CannonBall3);
-						cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
-						CannonBall4->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
-						CannonBall4->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
-						CannonBall4->speed = ship02Stats->getFireRate();
-						CannonBall4->playerType = 1;
-						meshList.push_back(CannonBall4);
-					}
-					bounceTime = 0.5;
-				
-			}
-			else
+			if (Application::IsKeyPressed(VK_DOWN)) // shoot cannonball
 			{
-				bounceTime -= dt;
-			}
+				float direction = sceneObjects["ship02"]->GetAmt() * 3.142f / 180.0f;
 
+				if (ship02Type == 0)
+				{
+					//cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction), 0, cos(direction));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+				}
+				if (ship02Type == 1)
+				{
+					// cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					// cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+				}
+				if (ship02Type == 2)
+				{
+					//cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					//cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, sceneObjects["ship02"]->GetPosition(), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					//cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					//cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+				}
+				if (ship02Type == 3)
+				{
+					//cannonball* CannonBall1 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction), 0, cos(direction));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					//cannonball* CannonBall2 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z + 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction), 0, cos(direction));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					//cannonball* CannonBall3 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction + (30 * 3.142f / 180.0f)), 0, cos(direction + (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+					//cannonball* CannonBall4 = new cannonball(sceneObjects["cannon01"]->curObject, Vector3(sceneObjects["ship02"]->GetPosition().x - 8, sceneObjects["ship02"]->GetPosition().y, sceneObjects["ship02"]->GetPosition().z - 8), 0, Vector3(0, 1, 0), Vector3(1.5f, 1.5f, 1.5f));
+					CannonBall2[cannonCount2]->GetTransform().SetBounds(Vector3(5.0f, 5.0f, 5.0f));
+					CannonBall2[cannonCount2]->dir = Vector3(sin(direction - (30 * 3.142f / 180.0f)), 0, cos(direction - (30 * 3.142f / 180.0f)));
+					CannonBall2[cannonCount2]->speed = ship02Stats->getFireRate();
+					CannonBall2[cannonCount2]->playerType = 1;
+					CannonBall2[cannonCount2]->SetPosition(sceneObjects["ship02"]->GetPosition());
+					//meshList.push_back(CannonBall2[cannonCount2]);
+					cannonCount2++;
+					if (cannonCount2 > 7)
+					{
+						cannonCount2 = 0;
+					}
+				}
+
+				bounceTime2 = 0.5;
+			}
 		}
 		else
 		{
-			bounceTime -= dt;
+			bounceTime2 -= dt;
+		}
+
+		for (int i = 0; i < 8; i++)
+		{
+			if (CannonBall2[i] != nullptr)
+			{
+				CannonBall2[i]->Update();
+			}
 		}
 
 		secondCamera.UpdateCameraSkyBox();
 		//Camera Logic
-		float yaw = DegreeToRadian(sceneObjects["ship02"]->GetAmt());
-		Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
-		Vector3 position = sceneObjects["ship02"]->GetPosition() - direction * 50;
-		secondCamera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 6, sceneObjects["ship02"]->GetPosition().z);
-		secondCamera.SetPosition(position.x, position.y + 15, position.z);
-
-		damageTime(*sceneObjects["ship02"], damage2);
+		if (!shipUpgrade2 && ship02Type != 4)
+		{
+			float yaw = DegreeToRadian(sceneObjects["ship02"]->GetAmt());
+			Vector3 direction = Vector3(sin(yaw), 0, cos(yaw));
+			Vector3 position = sceneObjects["ship02"]->GetPosition() - direction * 50;
+			secondCamera.SetTarget(sceneObjects["ship02"]->GetPosition().x, sceneObjects["ship02"]->GetPosition().y + 15, sceneObjects["ship02"]->GetPosition().z);
+			secondCamera.SetPosition(position.x, position.y + 15, position.z);
+		}
 	}
+
+	damageTime(*sceneObjects["ship02"], damage2);
 	// splashTime(*sceneObjects["ship02"]);
 }
 
@@ -1781,11 +1932,13 @@ void GameScene::Render2()
 
 	MiniMap2();
 
-	RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship02Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
-	RenderUI(partsCount, 20, 7, 7, 26);
+	// RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship02Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
+	RenderUI(partsCount, 20, 7, 7, 26, 0, 0, 1, 0);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship02Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship02Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
-	RenderUI(healthBar, ship02Stats->getHealth(), 3.5, 5, 20);
+	RenderUI(healthBar, ship02Stats->getHealth(), 3.5, 5, 20, 0, 0, 1, 0);
+	RenderUI(speedometer, 45, 25, 38, 7, 0, 0, 1, 0);
+	RenderUI(needle, 30, 28, 57, 6, (-(ship02Stats->getSpeed() / ship02Stats->getMaxSpeed()) * 250), 0, 0, 1);
 
 	if (!winCondition1 && winCondition2)
 	{
@@ -2006,8 +2159,8 @@ void GameScene::renderSplash(GameObject& other)
 	{
 		if (num == 0)
 		{
-			GameSound::instance()->WaterSplash->setDefaultVolume(0.25f);
-			GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
+			//GameSound::instance()->WaterSplash->setDefaultVolume(0.25f);
+			//GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
 		}
 
 		if (timing <= 0)
@@ -2024,8 +2177,8 @@ void GameScene::renderSplash(GameObject& other)
 				meshList.push_back(splash[num]);
 				timing = 0.5;
 
-				GameSound::instance()->WaterSplash->setDefaultVolume(1.f);
-				GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
+				//GameSound::instance()->WaterSplash->setDefaultVolume(1.f);
+				//GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
 			}
 		}
 		else
@@ -2099,18 +2252,18 @@ void GameScene::MiniMap()
 	int ship2x = sceneObjects["ship02"]->GetPosition().z;
 	int ship2y = sceneObjects["ship02"]->GetPosition().x;
 
-	RenderUI(MapWater, 13, 13, 140, 58); // 22
-	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 9600, (ship1y) * 1.3 + 3800); // 1400
-	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 9600, (ship2y) * 1.3 + 3800);
+	RenderUI(MapWater, 13, 13, 140, 58, 0, 0, 1, 0); // 22
+	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 9600, (ship1y) * 1.3 + 3800, 0, 0, 1, 0); // 1400
+	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 9600, (ship2y) * 1.3 + 3800, 0, 0, 1, 0);
 
 	for (int i = 0; i <= 8; i++)
 	{
-		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 9600, (islandposxA[i]) * 1.3 + 3800);
+		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 9600, (islandposxA[i]) * 1.3 + 3800, 0, 0, 1, 0);
 	}
 
 	for (int i = 0; i < partsmarkervector.size(); i++)
 	{
-		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 9600, partsmarkervector[i].x * 1.3 + 3800);
+		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 9600, partsmarkervector[i].x * 1.3 + 3800, 0, 0, 1, 0);
 	}
 
 }
@@ -2122,86 +2275,153 @@ void GameScene::MiniMap2()
 	int ship2x = sceneObjects["ship02"]->GetPosition().z;
 	int ship2y = sceneObjects["ship02"]->GetPosition().x;
 
-	RenderUI(MapWater, 13, 13, 10, 58);
-	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 0, (ship1y) * 1.3 + 3800);
-	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 0, (ship2y) * 1.3 + 3800);
+	RenderUI(MapWater, 13, 13, 10, 58, 0, 0, 1, 0);
+	RenderUI(ShipMarker1, 0.2, 0.2, (ship1x) * 1.3 + 0, (ship1y) * 1.3 + 3800, 0, 0, 1, 0);
+	RenderUI(ShipMarker2, 0.2, 0.2, (ship2x) * 1.3 + 0, (ship2y) * 1.3 + 3800, 0, 0, 1, 0);
 
 	for (int i = 0; i <= 8; i++)
 	{
-		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 0, (islandposxA[i]) * 1.3 + 3800);
+		RenderUI(IslandMarker, 0.2, 0.2, (islandposzA[i]) * 1.3 + 0, (islandposxA[i]) * 1.3 + 3800, 0, 0, 1, 0);
 	}
 
 	for (int i = 0; i < partsmarkervector.size(); i++)
 	{
-		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 0, partsmarkervector[i].x * 1.3 + 3800);
+		RenderUI(PartsMarker, 0.2, 0.2, partsmarkervector[i].z * 1.3 + 0, partsmarkervector[i].x * 1.3 + 3800, 0, 0, 1, 0);
 	}
 
 }
 
-int UIx = 0;
-int UIy = 15;
-bool MainMenu = false;
+int UIy = 29;
+int UIy2 = 29;
 
 void GameScene::renderWin()
 {
-	RenderUI(Win, 50, 50, 20, 5);
-	// RenderUI(Win, 50, 50, UIx, UIy);
+	RenderUI(Win, 50, 27, 20, 20, 0, 0, 1, 0);
 
-	RenderUI(partsCount, 20, 7, 30, UIy);
-	RenderUI(healthBar, 50, 5, 20, 20);
-	RenderUI(healthBar, 50, 5, 20, 35);
-
-
-	if (Application::IsKeyPressed('Z'))
+	if (winCondition1)
 	{
-		UIy = 26;
-	}
-	if (Application::IsKeyPressed('X'))
-	{
-		UIy = 15;
-	}
+		RenderUI(Select, 20, 7, 30, UIy, 0, 0, 1, 0); // x 30 y 29 11
 
-	if (Application::IsKeyPressed(VK_SPACE))
-	{
-		if (UIy == 26)
+		if (Application::IsKeyPressed('W'))
 		{
-			Return();
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy = 29;
 		}
-		else
+			
+		if (Application::IsKeyPressed('S'))
 		{
-			exit(0);
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy = 11;
+		}
+
+		if (Application::IsKeyPressed(VK_SPACE))
+		{
+			GameSound::instance()->WaterSplash->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
+
+			if (UIy == 29)
+				returnMainMenu = true;
+			else
+				exit(0);
 		}
 	}
 
-	/*if (Application::IsKeyPressed('Z'))
+	if (winCondition2)
 	{
-		UIx++;
-		std::cout << "X : " << UIx << std::endl;
+		RenderUI(Select, 20, 7, 30, UIy2, 0, 0, 1, 0); // x 30 y 29 11
+
+		if (Application::IsKeyPressed(VK_UP))
+		{
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy2 = 29;
+		}
+
+		if (Application::IsKeyPressed(VK_DOWN))
+		{
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy2 = 11;
+		}
+
+		if (Application::IsKeyPressed(VK_SPACE))
+		{
+			GameSound::instance()->WaterSplash->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
+
+			if (UIy2 == 29)
+				returnMainMenu = true;
+			else
+				exit(0);
+		}
 	}
-	if (Application::IsKeyPressed('X'))
-	{
-		UIx--;
-		std::cout << "X : " << UIx << std::endl;
-	}*/
-
-	/*if (Application::IsKeyPressed('C'))
-	{
-		UIy++;
-		std::cout << "Y : " << UIy << std::endl;
-	}
-	if (Application::IsKeyPressed('V'))
-	{
-		UIy--;
-		std::cout << "Y : " << UIy << std::endl;
-	}*/
-
-
 }
 
 void GameScene::renderLose()
 {
-	RenderUI(Lose, 50, 50, 20, 5);
-	// RenderUI(Lose, 50, 50, UIx, UIy);
+	RenderUI(Lose, 50, 27, 20, 20, 0, 0, 1, 0);
+
+	if (!winCondition1)
+	{
+		RenderUI(Select, 20, 7, 30, UIy, 0, 0, 1, 0); // x 30 y 29 11
+
+		if (Application::IsKeyPressed('W'))
+		{
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy = 29;
+		}
+
+		if (Application::IsKeyPressed('S'))
+		{
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy = 11;
+		}
+
+		if (Application::IsKeyPressed(VK_SPACE))
+		{
+			GameSound::instance()->WaterSplash->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
+
+			if (UIy == 29)
+				returnMainMenu = true;
+			else
+				exit(0);
+		}
+	}
+
+	if (!winCondition2)
+	{
+		RenderUI(Select, 20, 7, 30, UIy2, 0, 0, 1, 0); // x 30 y 29 11
+
+		if (Application::IsKeyPressed(VK_UP))
+		{
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy2 = 29;
+		}
+
+		if (Application::IsKeyPressed(VK_DOWN))
+		{
+			GameSound::instance()->Select->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->Select, false);
+			UIy2 = 11;
+		}
+
+		if (Application::IsKeyPressed(VK_SPACE))
+		{
+			GameSound::instance()->WaterSplash->setDefaultVolume(1.0f);
+			GameSound::instance()->engine->play2D(GameSound::instance()->WaterSplash, false);
+
+			if (UIy2 == 29)
+				returnMainMenu = true;
+			else
+				exit(0);
+		}
+	}
 
 	/*if (Application::IsKeyPressed('Z'))
 	{
@@ -2213,6 +2433,7 @@ void GameScene::renderLose()
 		UIx--;
 		std::cout << "X : " << UIx << std::endl;
 	}
+
 	if (Application::IsKeyPressed('C'))
 	{
 		UIy++;
@@ -2223,11 +2444,6 @@ void GameScene::renderLose()
 		UIy--;
 		std::cout << "Y : " << UIy << std::endl;
 	}*/
-}
-
-bool GameScene::Return()
-{
-	return true;
 }
 
 void GameScene::Exit()

@@ -12,11 +12,9 @@
 #include "SplashScene.h"
 #include "BuildScene.h"
 
-
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
-
 
 //Define an error callback
 static void error_callback(int error, const char* description)
@@ -36,9 +34,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }
+
 void cursor_enter_callback(GLFWwindow* window, int entered)
 {
-	
 }
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
@@ -84,10 +82,8 @@ void Application::Init()
 	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //We don't want the old OpenGL 
 
-
 	//Create a window and create its OpenGL context
 	m_window = glfwCreateWindow(1920, 1440, "Test Window", NULL, NULL);
-
 
 	//If the window couldn't be created
 	if (!m_window)
@@ -116,8 +112,6 @@ void Application::Init()
 		fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 		//return -1;
 	}
-
-	
 }
 
 HWND Application::windowHWND()  {
@@ -134,7 +128,6 @@ void Application::GetMousePos(double& x, double& y) {
 
 void Application::Run()
 {
-
 	MenuFunctionality curFunc;
 	curFunc.SetHighlight(new GameObject(MeshBuilder::GenerateRealQuad("HighLight", Color(1, 1, 1), 1, 1)));
 	curFunc.AddButton(new GameObject(MeshBuilder::GenerateRealQuad("Button", Color(1, 1, 1), 1, 1)));
@@ -142,36 +135,29 @@ void Application::Run()
 
 	curFunc.InitialiseMenu(-2.0f, 3.0f, 2.0f, 0.5f);
 
+	GameScene* game = new GameScene();
+
 	Scene* scene = new MainMenuScene(curFunc);
 	Scene* scene2 = nullptr;
 	scene->Init();
 
 	glfwSetCursorPosCallback(m_window, cursor_position_callback);
 
-
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-
 		m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 		scene->Update(0.01f);
 		if (scene2 != nullptr) {
 			scene2->Update2(0.01f);
-
-			//	m_timer.waitUntil(frameTime);       // Frame rate limiter. Limits each frame to a specified time in ms.  
-
 		}
 		scene->Render();
 		if (scene2 != nullptr) {
 			scene2->Render2();
 		}
 
-
-
 		//Get and organize events, like keyboard and mouse input, window resizing, etc...
-
-			   // Frame rate limiter. Limits each frame to a specified time in ms.  
 
 		//if (Application::IsKeyPressed(VK_SPACE))
 		//{
@@ -200,26 +186,28 @@ void Application::Run()
 
 		if (Application::IsKeyPressed(VK_SPACE) && scene2 == nullptr)
 		{
+			GameSound::instance()->engine->play2D(GameSound::instance()->MenuSelect);
+
 			if (dynamic_cast<MainMenuScene*>(scene)->menuFunctions.GetChosen() == 0) {
 				scene = new GameScene();
 				scene->Init();
 				scene2 = scene;
 				scene2->Init2();
 			}
-			else {
+			else 
+			{
 				scene = new BuildScene();
 				scene->Init();
 			}
 		}
 
-		if (scene->Return())
+		if (scene2 != nullptr && dynamic_cast<GameScene*>(scene)->returnMainMenu)
 		{
+			dynamic_cast<GameScene*>(scene)->returnMainMenu = false;
+			scene2 = nullptr;
 			scene = new MainMenuScene(curFunc);
-			Scene* scene2 = nullptr;
 			scene->Init();
 		}
-
-
 
 		//Swap buffers
 		glfwSwapBuffers(m_window);

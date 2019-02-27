@@ -145,7 +145,6 @@ public:
 	virtual void Render();
 	virtual void Render2();
 	virtual void Exit();
-
 };
 
 #endif

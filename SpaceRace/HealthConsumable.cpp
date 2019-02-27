@@ -12,6 +12,7 @@ int HealthConsumable::GetHealth() const {
 void HealthConsumable::OnCollide(GameObject& other) {
 	Consumable::OnCollide(other);
 	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
+	GameSound::instance()->engine->play2D(GameSound::instance()->HealthUp);
 	if (tryShip != nullptr) {
 		
 		tryShip->SetHealth(tryShip->getHealth() + healthConsumed);

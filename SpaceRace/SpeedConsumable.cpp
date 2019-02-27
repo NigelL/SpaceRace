@@ -13,6 +13,7 @@ float SpeedConsumable::GetSpeed() const {
 void SpeedConsumable::OnCollide(GameObject& other) {
 	Consumable::OnCollide(other);
 	CShipStats* curShip = static_cast<CShipStats*>(&other);
+	GameSound::instance()->engine->play2D(GameSound::instance()->SpeedUp, false);
 	curShip->SetSpeed(curShip->getSpeed() + speedIncreased);
 	//spdup = true;
 }

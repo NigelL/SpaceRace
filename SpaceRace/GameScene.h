@@ -42,6 +42,9 @@ private:
 	Mesh* SpeedUpMarker;
 	Mesh* Win;
 	Mesh* Lose;
+	Mesh* Select;
+	Mesh* speedometer;
+	Mesh* needle;
 	float sceneFPS;
 	float translateY;
 	float rotateAmt;
@@ -53,7 +56,6 @@ private:
 	bool winCondition2;
 
 	float firstShipY,secondShipY;
-
 	std::map<std::string, GameObject*> sceneObjects;
 public:
 	GameScene();
@@ -124,6 +126,7 @@ public:
 		U_TOTAL,
 	};
 
+	bool returnMainMenu = false;
 private:
 	unsigned m_vertexArrayID;
 	unsigned m_vertexBuffer[MAX_GEOMETRY];
@@ -145,7 +148,7 @@ private:
 	void RenderMesh(GameObject* curMesh, bool enableLight);
 	void RenderMesh(Mesh* curMesh, bool enableLight);
 	void RenderMesh(GEOMETRY_TYPE curType, bool enableLight);
-	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y);
+	void RenderUI(Mesh* mesh, float sizeX, float sizeY, float x, float y, float amt, int Rx, int Ry, int Rz);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	double getTimer();
@@ -154,7 +157,6 @@ private:
 	void MiniMap2();
 	void renderWin();
 	void renderLose();
-
 public:
 	virtual void Init();
 	virtual void Init2();
@@ -163,8 +165,6 @@ public:
 	virtual void Render();
 	virtual void Render2();
 	virtual void Exit();
-	bool Return();
-	
 };
 
 #endif

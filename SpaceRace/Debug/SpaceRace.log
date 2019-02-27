@@ -1,191 +1,171 @@
-﻿  Application.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(156): error C2059: syntax error: '='
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(158): error C2334: unexpected token(s) preceding ':'; skipping apparent function body
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(50): error C3254: 'GameScene': class contains explicit override 'IsKeyPressed' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(50): error C2838: 'IsKeyPressed': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(54): error C3254: 'GameScene': class contains explicit override 'IsGlfwKeyPressed' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(54): error C2838: 'IsGlfwKeyPressed': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(62): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(62): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(62): error C2535: 'GameScene::GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(59): note: see declaration of 'GameScene::GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(66): error C3254: 'GameScene': class contains explicit override '{dtor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(66): error C2838: '{dtor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(66): error C2535: 'GameScene::~GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(60): note: see declaration of 'GameScene::~GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(70): error C3254: 'GameScene': class contains explicit override 'Init' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(70): error C2838: 'Init': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(123): error C3254: 'GameScene': class contains explicit override 'windowHWND' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(123): error C2838: 'windowHWND': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(126): error C3254: 'GameScene': class contains explicit override 'getGLFWWindow' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(126): error C2838: 'getGLFWWindow': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(131): error C3254: 'GameScene': class contains explicit override 'GetMousePos' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(131): error C2838: 'GetMousePos': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(136): error C3254: 'GameScene': class contains explicit override 'Run' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(136): error C2838: 'Run': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(229): error C3254: 'GameScene': class contains explicit override 'Exit' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(229): error C2838: 'Exit': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\application.cpp(235): fatal error C1004: unexpected end-of-file found
-  Consumable.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(156): error C2059: syntax error: '='
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(158): error C2334: unexpected token(s) preceding ':'; skipping apparent function body
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(4): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(4): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(4): error C2535: 'GameScene::GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(59): note: see declaration of 'GameScene::GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(9): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(9): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(14): error C3254: 'GameScene': class contains explicit override 'OnCollide' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(14): error C2838: 'OnCollide': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(23): error C3254: 'GameScene': class contains explicit override '{dtor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(23): error C2838: '{dtor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(23): error C2535: 'GameScene::~GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(60): note: see declaration of 'GameScene::~GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\consumable.cpp(25): fatal error C1004: unexpected end-of-file found
-  GameObject.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(156): error C2059: syntax error: '='
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(158): error C2334: unexpected token(s) preceding ':'; skipping apparent function body
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(4): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(4): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(4): error C2535: 'GameScene::GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(59): note: see declaration of 'GameScene::GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(11): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(11): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(17): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(17): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(27): error C3254: 'GameScene': class contains explicit override 'GetMesh' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(27): error C2838: 'GetMesh': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(30): error C3254: 'GameScene': class contains explicit override 'GetPosition' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(30): error C2838: 'GetPosition': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(33): error C3254: 'GameScene': class contains explicit override 'GetRotation' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(33): error C2838: 'GetRotation': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(36): error C3254: 'GameScene': class contains explicit override 'GetScale' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(36): error C2838: 'GetScale': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(39): error C3254: 'GameScene': class contains explicit override 'GetAmt' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(39): error C2838: 'GetAmt': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(42): error C3254: 'GameScene': class contains explicit override 'GetTranslateX' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(42): error C2838: 'GetTranslateX': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(45): error C3254: 'GameScene': class contains explicit override 'GetTranslateY' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(45): error C2838: 'GetTranslateY': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(48): error C3254: 'GameScene': class contains explicit override 'GetTranslateZ' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(48): error C2838: 'GetTranslateZ': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(51): error C3254: 'GameScene': class contains explicit override 'SetPosition' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(51): error C2838: 'SetPosition': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(54): error C3254: 'GameScene': class contains explicit override 'SetRotation' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(54): error C2838: 'SetRotation': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(58): error C3254: 'GameScene': class contains explicit override 'SetScale' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(58): error C2838: 'SetScale': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(61): error C3254: 'GameScene': class contains explicit override 'SetAmt' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(61): error C2838: 'SetAmt': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(64): error C3254: 'GameScene': class contains explicit override 'SetTranslateX' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(64): error C2838: 'SetTranslateX': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(67): error C3254: 'GameScene': class contains explicit override 'SetTranslateY' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(67): error C2838: 'SetTranslateY': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(70): error C3254: 'GameScene': class contains explicit override 'SetTranslateZ' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(70): error C2838: 'SetTranslateZ': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(73): error C3254: 'GameScene': class contains explicit override 'GetTransform' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(73): error C2838: 'GetTransform': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(76): error C3254: 'GameScene': class contains explicit override 'SetTransform' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(76): error C2838: 'SetTransform': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(82): error C3254: 'GameScene': class contains explicit override 'translateObj' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(82): error C2838: 'translateObj': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(89): error C3254: 'GameScene': class contains explicit override 'TranslateShip' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(89): error C2838: 'TranslateShip': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(95): error C3254: 'GameScene': class contains explicit override 'translateWater' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(95): error C2838: 'translateWater': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(138): error C3254: 'GameScene': class contains explicit override 'translateCannon' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(138): error C2838: 'translateCannon': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(144): error C3254: 'GameScene': class contains explicit override 'rotateObj' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(144): error C2838: 'rotateObj': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(160): error C3254: 'GameScene': class contains explicit override '{dtor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(160): error C2838: '{dtor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(160): error C2535: 'GameScene::~GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(60): note: see declaration of 'GameScene::~GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\gameobject.cpp(163): fatal error C1004: unexpected end-of-file found
-  GameObjectFactory.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(156): error C2059: syntax error: '='
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(158): error C2334: unexpected token(s) preceding ':'; skipping apparent function body
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(8): error C3254: 'GameScene': class contains explicit override '{ctor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(8): error C2838: '{ctor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(8): error C2535: 'GameScene::GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(59): note: see declaration of 'GameScene::GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(13): error C3254: 'GameScene': class contains explicit override '{dtor}' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(13): error C2838: '{dtor}': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(13): error C2535: 'GameScene::~GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(60): note: see declaration of 'GameScene::~GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(17): error C3254: 'GameScene': class contains explicit override 'SpawnGameObject' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(17): error C2838: 'SpawnGameObject': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(51): error C3254: 'GameScene': class contains explicit override 'SpawnShip' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(51): error C2838: 'SpawnShip': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(68): error C3254: 'GameScene': class contains explicit override 'SpawnCannonBall' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(68): error C2838: 'SpawnCannonBall': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(86): error C3254: 'GameScene': class contains explicit override 'SpawnHealthConsumable' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(86): error C2838: 'SpawnHealthConsumable': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(102): error C3254: 'GameScene': class contains explicit override 'SpawnSpeedConsumable' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(102): error C2838: 'SpawnSpeedConsumable': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(117): error C3254: 'GameScene': class contains explicit override 'SpawnPartConsumable' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(117): error C2838: 'SpawnPartConsumable': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(134): error C3254: 'GameScene': class contains explicit override 'SpawnIsland' but does not derive from an interface that contains the function declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(134): error C2838: 'SpawnIsland': illegal qualified name in member declaration
-d:\users\l533\documents\github\spacerace\spacerace\gameobjectfactory.cpp(148): fatal error C1004: unexpected end-of-file found
-  GameScene.cpp
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(156): error C2059: syntax error: '='
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(158): error C2334: unexpected token(s) preceding ':'; skipping apparent function body
-d:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.15.26726\include\sstream(14): error C2059: syntax error: 'namespace'
-d:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.15.26726\include\sstream(14): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(21): error C2086: 'GameScene *GameScene::instance': redefinition
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(62): note: see declaration of 'GameScene::instance'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(24): error C2535: 'GameScene::GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(59): note: see declaration of 'GameScene::GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(170): error C2535: 'GameScene::~GameScene(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(60): note: see declaration of 'GameScene::~GameScene'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(180): error C2535: 'void GameScene::RenderText(Mesh *,std::string,Color)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(149): note: see declaration of 'GameScene::RenderText'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(209): error C2535: 'void GameScene::RenderTextOnScreen(Mesh *,std::string,Color,float,float,float)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(150): note: see declaration of 'GameScene::RenderTextOnScreen'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(251): error C2535: 'void GameScene::RenderUI(Mesh *,float,float,float,float)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(148): note: see declaration of 'GameScene::RenderUI'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(286): error C2535: 'double GameScene::getTimer(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(151): note: see declaration of 'GameScene::getTimer'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(291): error C2535: 'void GameScene::setTimer(double)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(152): note: see declaration of 'GameScene::setTimer'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(296): error C2535: 'void GameScene::RenderMesh(GameObject *,bool)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(145): note: see declaration of 'GameScene::RenderMesh'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(343): error C2535: 'void GameScene::RenderMesh(Mesh *,bool)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(146): note: see declaration of 'GameScene::RenderMesh'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(390): error C2535: 'void GameScene::RenderMesh(GameScene::GEOMETRY_TYPE,bool)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(147): note: see declaration of 'GameScene::RenderMesh'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(435): error C2535: 'void GameScene::SetGameText(Mesh *)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(61): note: see declaration of 'GameScene::SetGameText'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(628): error C2864: 'GameScene::LSPEED': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(628): note: type is 'double'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(629): error C2864: 'GameScene::lightType': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(629): note: type is 'short'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(637): error C2864: 'GameScene::bounceTime': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(637): note: type is 'double'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(638): error C2864: 'GameScene::cannonHit_01': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(638): note: type is 'double'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(639): error C2864: 'GameScene::cannonHit_02': a static data member with an in-class initializer must have non-volatile const integral type or be specified as 'inline'
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(639): note: type is 'double'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1806): error C2535: 'void GameScene::SpawnPowerUp(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(139): note: see declaration of 'GameScene::SpawnPowerUp'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1849): error C2535: 'void GameScene::renderSkybox(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(140): note: see declaration of 'GameScene::renderSkybox'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1925): error C2535: 'void GameScene::renderDamage(GameObject &,GameObject **)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(141): note: see declaration of 'GameScene::renderDamage'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1953): error C2535: 'void GameScene::damageTime(GameObject &,GameObject **)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(142): note: see declaration of 'GameScene::damageTime'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1995): error C2535: 'void GameScene::renderSplash(GameObject &)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(143): note: see declaration of 'GameScene::renderSplash'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2062): error C2535: 'void GameScene::splashTime(GameObject &)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(144): note: see declaration of 'GameScene::splashTime'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2096): error C2535: 'void GameScene::MiniMap(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(153): note: see declaration of 'GameScene::MiniMap'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2119): error C2535: 'void GameScene::MiniMap2(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(154): note: see declaration of 'GameScene::MiniMap2'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2146): error C2535: 'void GameScene::renderWin(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(155): note: see declaration of 'GameScene::renderWin'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2202): error C2535: 'void GameScene::renderLose(void)': member function already defined or declared
-  d:\users\l533\documents\github\spacerace\spacerace\gamescene.h(156): note: see declaration of 'GameScene::renderLose'
-d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2239): fatal error C1004: unexpected end-of-file found
-  Generating Code...
+﻿  GameScene.cpp
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(23): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(28): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(30): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(52): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(53): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(54): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(55): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(56): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(68): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(69): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(70): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(71): warning C4244: '=': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(118): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(127): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(131): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(270): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(546): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(558): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(623): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(704): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(711): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(712): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(729): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(735): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(737): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(754): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(761): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(762): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(779): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(786): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(787): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(808): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(810): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(837): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(838): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(847): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(850): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(941): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(942): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(943): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(957): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(962): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(967): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(971): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(985): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1000): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1012): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1027): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1039): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1051): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1063): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1078): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1090): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1102): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1114): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1296): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1298): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1353): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1401): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1409): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1410): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1427): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1436): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1437): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1453): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1461): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1462): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1478): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1485): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1486): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1507): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1509): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1539): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1540): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1549): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1553): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1641): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1642): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1643): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1657): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1662): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1667): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1671): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1685): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1700): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1712): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1727): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1739): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1751): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1763): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1778): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1790): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1802): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1814): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1939): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1941): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1960): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1976): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(1977): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2093): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2093): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2113): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2224): warning C4305: '+=': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2250): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2251): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2252): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2253): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2256): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2256): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2257): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2257): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2261): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2261): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2264): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2266): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2266): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2273): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2274): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2275): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2276): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2279): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2279): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2280): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2280): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2284): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2284): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2287): warning C4018: '<': signed/unsigned mismatch
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2289): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2289): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2303): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2333): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2368): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\users\l533\documents\github\spacerace\spacerace\gamescene.cpp(2398): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  SpaceRace.vcxproj -> D:\Users\l533\Documents\GitHub\SpaceRace\Debug\SpaceRace.exe

@@ -9,7 +9,6 @@ public:
 	float speed;
 	int playerType = 0;
 
-
 	cannonball();
 	~cannonball();
 	cannonball(Mesh* _curMesh, Vector3 _pos, float amt, Vector3 _rot, Vector3 _sca);

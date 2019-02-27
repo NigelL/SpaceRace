@@ -3,6 +3,7 @@
 
 bool MainMenuScene::play = false;
 int MainMenuScene::mode = 1;
+static double bouncetime;
 
 MainMenuScene::MainMenuScene()
 {
@@ -29,6 +30,9 @@ static inline float DegreeToRadian(float value)
 
 void MainMenuScene::Init()
 {
+	GameSound::instance()->MenuBGM->setDefaultVolume(0.1f);
+	GameSound::instance()->engine->play2D(GameSound::instance()->MenuBGM, false);
+
 	// Set background color to dark blue
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	// Enable Depth Test
@@ -210,10 +214,28 @@ void MainMenuScene::Update(double dt)
 	}
 
 	if (Application::IsKeyPressed(VK_DOWN)) {
+		if (bouncetime <= 0)
+		{
+			GameSound::instance()->engine->play2D(GameSound::instance()->MenuMove);
+			bouncetime = 0.04;
+		}
+		else
+		{
+			bouncetime -= dt;
+		}
 		menuFunctions.ScrollDown();
 	}
 
 	if (Application::IsKeyPressed(VK_UP)) {
+		if (bouncetime <= 0)
+		{
+			GameSound::instance()->engine->play2D(GameSound::instance()->MenuMove);
+			bouncetime = 0.04;
+		}
+		else
+		{
+			bouncetime -= dt;
+		}
 		menuFunctions.ScrollUp();
 	}
 

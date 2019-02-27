@@ -13,6 +13,7 @@ void PartConsumable::OnCollide(GameObject& other)
 {
 	Consumable::OnCollide(other);
 	CShipStats* murShip = static_cast<CShipStats*>(&other);
+	GameSound::instance()->engine->play2D(GameSound::instance()->PartsPickUp);
 	murShip->SetParts(murShip->getParts() + 1);
 }
 

@@ -17,7 +17,6 @@ public:
 	virtual void Init2() = 0;
 	virtual void Update2(double dt) = 0;
 	virtual void Render2() = 0;
-	virtual bool Return();
 };
 
 #endif

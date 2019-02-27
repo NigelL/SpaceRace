@@ -2,6 +2,7 @@
 #define CONSUMABLE
 
 #include "CShipStats.h"
+#include "GameSound.h"
 
 
 class Consumable : public GameObject

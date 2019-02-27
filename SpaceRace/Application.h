@@ -27,9 +27,7 @@ public:
 	static void GetMousePos(double& x, double& y);
 	static bool IsKeyPressed(unsigned short key);
 	static bool IsGlfwKeyPressed(int key);
-
 private:
-
 	//Declare a window object
 	StopWatch m_timer;
 };
