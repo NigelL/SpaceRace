@@ -20,6 +20,6 @@ void Boundary::OnCollide(GameObject & other)
 	CShipStats* tryShip = dynamic_cast<CShipStats*>(&other);
 	if (tryShip != nullptr) {
 		tryShip->SetRotation(other.GetRotation(), other.GetAmt() + 180);
-		tryShip->SetSpeed(tryShip->getSpeed() / 3);
+		tryShip->SetSpeed(tryShip->getSpeed());
 	}
 }

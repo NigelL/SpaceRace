@@ -45,6 +45,10 @@ GameObject* GameObjectFactory::SpawnGameObject(OBJECT_TYPE type, std::string _na
 		cannonball* can = SpawnCannonBall(_name, material, _transform);
 		return can;
 	}
+	if (type == BOUNDARY) {
+		Boundary* cB = SpawnBoundary(_name, material, _transform);
+		return cB;
+	}
 }
 
 CShipStats* GameObjectFactory::SpawnShip(std::string name, Material *material, Transform transform)
@@ -148,7 +152,7 @@ IslandEnvironment* GameObjectFactory::SpawnIsland(std::string name, Material *ma
 
 Boundary* GameObjectFactory::SpawnBoundary(std::string name, Material *material, Transform transform)
 {
-	Mesh* name1 = MeshBuilder::GenerateBound(name, Color(0, 1, 0), 1, 1, 1);
+	Mesh* name1 = MeshBuilder::GenerateCube(name, Color(0, 1, 0), 1, 1, 1);
 
 	name1->material.kAmbient.Set(material->kAmbient.r, material->kAmbient.g, material->kAmbient.b);
 	name1->material.kDiffuse.Set(material->kDiffuse.r, material->kDiffuse.g, material->kDiffuse.b);

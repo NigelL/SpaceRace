@@ -56,36 +56,38 @@ GameScene::GameScene()
 	Transform t3;
 	Transform t4;
 
-	//t1.position = Vector3(0, 0, -985);
-	t1.position = Vector3(0, 0, 0);
-	t1.rotation = Vector3(0, 1, 0);
-	t1.amt = 0;
-	t1.scale = Vector3(2000, 10, 10);
-	t1.SetBounds(Vector3(2500, 1000, 100));
-	meshList.push_back(GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1));
-	t1.position = Vector3(985, 0, 30);
-	t1.rotation = Vector3(0, 1, 0);
-	t1.amt = 0;
-	t1.scale = Vector3(10, 10, 1990);
-	t1.SetBounds(Vector3(10, 1000, 2500));
-	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB2", mat1, t2);
-	t1.position = Vector3(0, 0, 995);
-	t1.rotation = Vector3(0, 1, 0);
-	t1.amt = 0;
-	t1.scale = Vector3(2000, 10, 10);
-	t1.SetBounds(Vector3(2500, 1000, 10));
-	GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB3", mat1, t3);
-	//t1.position = Vector3(0, 0, -985);
-	//t1.rotation = Vector3(0, 1, 0);
-	//t1.amt = 0;
-	//t1.scale = Vector3(2000, 10, 10);
-	//GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB4", mat1, t4);
+	//t1.SetBounds(Vector3(2200, 500, 100));
+	GameObject* Bb1;
+	Bb1 = GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	Bb1->SetPosition(Vector3(10, -20, -985));
+	Bb1->SetRotation(Vector3(0, 1, 0), 0);
+	Bb1->SetScale(Vector3(2000, 10, 10));
+	Bb1->GetTransform().SetBounds(Vector3(2200, 500, 10));
+	meshList.push_back(Bb1);
 
+	GameObject* Bb2;
+	Bb2 = GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	Bb2->SetPosition(Vector3(985, -20, 10));
+	Bb2->SetRotation(Vector3(0, 1, 0), 0);
+	Bb2->SetScale(Vector3(10, 10, 1990));
+	Bb2->GetTransform().SetBounds(Vector3(10, 1000, 2500));
+	meshList.push_back(Bb2);
 
-	//Mesh* boundBox4 = MeshBuilder::GenerateBound("BB4", Color(1, 1, 1), 10, 10, 10);
-	//boundBox4->material = *mat1;
-	//GameObject* BoundBox4 = new GameObject(boundBox1, Vector3(0, 0, -985), 0, Vector3(0, 1, 0), Vector3(2000, 10, 10));
-	//meshList.push_back(BoundBox4);
+	GameObject* Bb3;
+	Bb3 = GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	Bb3->SetPosition(Vector3(10, -20, 995));
+	Bb3->SetRotation(Vector3(0, 1, 0), 0);
+	Bb3->SetScale(Vector3(2000, 10, 10));
+	Bb3->GetTransform().SetBounds(Vector3(2200, 500, 10));
+	meshList.push_back(Bb3);
+
+	GameObject* Bb4;
+	Bb4 = GameObjectFactory::SpawnGameObject(GameObjectFactory::BOUNDARY, "BB1", mat1, t1);
+	Bb4->SetPosition(Vector3(-985, -20, 10));
+	Bb4->SetRotation(Vector3(0, 1, 0), 0);
+	Bb4->SetScale(Vector3(2000, 10, 10));
+	Bb4->GetTransform().SetBounds(Vector3(10, 1000, 2500));
+	meshList.push_back(Bb4);
 
 	//Read From Text File 
 	std::vector<MeshInfo> readInfo = ReadFromMesh("text.txt");
@@ -706,6 +708,8 @@ int cannonCount2 = 0;
 
 void GameScene::Update(double dt)
 {
+	std::cout << sceneObjects["ship01"]->GetPosition().x << std::endl;
+	std::cout << sceneObjects["ship01"]->GetPosition().z << std::endl;
 	setTimer(dt);
 	if (Application::IsKeyPressed('B'))
 	{
@@ -897,21 +901,9 @@ void GameScene::Update(double dt)
 				Consumable* cPtr = dynamic_cast<Consumable*>(meshList[j]);
 				IslandEnvironment* isPtr = dynamic_cast<IslandEnvironment*>(meshList[j]);
 				cannonball* cannonPtr = dynamic_cast<cannonball*>(meshList[j]);
+				Boundary* boundaryPtr = dynamic_cast<Boundary*>(meshList[j]);
 
 				if (isPtr != nullptr) {
-
-					/*
-					float dirDot = ship01Stats->objectDir.Dot(ship01Stats->GetPosition() - meshList[j]->GetPosition());
-					if (dirDot >= 0) {
-						if (!isPtr->collidedOnce) {
-							isPtr->OnCollide(*ship01Stats); //Ship Collision with island
-							isPtr->collidedOnce = true;
-						}
-						physic.bounceBack(*ship01Stats, dt, 100);
-						sceneObjects["ship01"]->translateObj(-ship01Stats->getSpeed() * 6.0f, dt);
-					}
-					*/
-
 					if (!isPtr->collidedOnce) {
 						isPtr->OnCollide(*ship01Stats); //Ship Collision with island
 						isPtr->collidedOnce = true;
@@ -931,8 +923,12 @@ void GameScene::Update(double dt)
 				if (cannonPtr != nullptr && cannonPtr->playerType == 1) { // other ship cannon hit ship01
 					cannonPtr->OnCollide(*ship01Stats);
 					if (meshList[j] != nullptr) {
-						//	meshList.erase(meshList.begin() + j);
+						//meshList.erase(meshList.begin() + j);
 					}
+				}
+				if (boundaryPtr != nullptr)
+				{
+					boundaryPtr->OnCollide(*ship01Stats);
 				}
 			}
 			else {
@@ -1330,8 +1326,6 @@ void GameScene::Render()
 		modelStack.PopMatrix();
 	}
 
-	//RenderTextOnScreen(gameText, "Speed : " + std::to_string(ship01Stats->getSpeed()), Color(0, 1, 0), 50, 2, 20);
-	//RenderTextOnScreen(gameText, "Pray for fps : " + std::to_string(sceneFPS), Color(0, 1, 0), 50, 2, 17.5);
 	RenderUI(partsCount, 20, 7, 7, 26, 0, 0, 1, 0);
 	RenderTextOnScreen(gameText, " :" + std::to_string(ship01Stats->getParts()), Color(0, 1, 0), 50, 5, 3);
 	RenderTextOnScreen(gameText, "Health : " + std::to_string(ship01Stats->getHealth()), Color(0, 1, 0), 50, 1, 2);
@@ -1599,21 +1593,9 @@ void GameScene::Update2(double dt)
 				Consumable* cPtr = dynamic_cast<Consumable*>(meshList[j]);
 				IslandEnvironment* isPtr = dynamic_cast<IslandEnvironment*>(meshList[j]);
 				cannonball* cannonPtr = dynamic_cast<cannonball*>(meshList[j]);
-
-				//std::cout << "Consumable : " << cPtr << "," << "Island : " << isPtr << std::endl;
+				Boundary* boundaryPtr = dynamic_cast<Boundary*>(meshList[j]);
 
 				if (isPtr != nullptr) {
-					/*
-					float dirDot = ship02Stats->objectDir.Dot(ship02Stats->GetPosition() - meshList[j]->GetPosition());
-					if (dirDot >= 0) {
-						if (!isPtr->collidedOnce) {
-							isPtr->OnCollide(*ship02Stats); //Ship Collision with island
-							isPtr->collidedOnce = true;
-						}
-						physic.bounceBack(*ship02Stats, dt, 100);
-						sceneObjects["ship02"]->translateObj(-ship02Stats->getSpeed() * 6.0f, dt);
-					}
-					*/
 					if (!isPtr->collidedOnce) {
 						isPtr->OnCollide(*ship02Stats); //Ship Collision with island
 						isPtr->collidedOnce = true;
@@ -1636,6 +1618,10 @@ void GameScene::Update2(double dt)
 				if (cannonPtr != nullptr && cannonPtr->playerType == 0) { // other ship cannon hit ship02
 					cannonPtr->OnCollide(*ship02Stats);
 					//	meshList.erase(meshList.begin() + j);
+				}
+				if (boundaryPtr != nullptr)
+				{
+					boundaryPtr->OnCollide(*ship02Stats);
 				}
 			}
 			else {
